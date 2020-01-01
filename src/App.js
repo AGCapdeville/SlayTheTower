@@ -1,26 +1,29 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react'
+import TitleScreen from './screens/title'
+import HeroScreen from './screens/hero'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+const App = () => {
+  const state = {};
+
+  const [currentScreen, setCurrentScreen] = useState('TitleScreen');
+
+  const Bonfire = () => <div onClick={() => setCurrentScreen('TitleScreen')} >Bonfire</div>
+  const Battle = () => <div onClick={() => setCurrentScreen('TitleScreen')} >Battle</div>
+  const Shop = () => <div onClick={() => setCurrentScreen('TitleScreen')} >Shop</div>
+  const Settings = () => <div onClick={() => setCurrentScreen('TitleScreen')} >Settings</div>
+
+  const screens = {
+    TitleScreen,
+    HeroScreen,
+    Bonfire,
+    Battle,
+    Shop,
+    Settings,    
+  };
+
+  const currentScreenComponent = screens[currentScreen];
+  
+  return currentScreenComponent({ setCurrentScreen })
 }
 
-export default App;
+export default App
