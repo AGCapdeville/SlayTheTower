@@ -1,5 +1,14 @@
 @import "../../design-standards/constants.scss";
 
+.sword {
+    width: auto;
+    height: 155px; 
+}
+
+.staff {
+    width: auto;
+    height: 155px;  
+}
 
 .game {
     display: flex;
@@ -14,21 +23,24 @@
     font-family: $gameFont;
 }
 
+.row {
+    display: flex;
+    flex-direction: row;
+}
+
 .menu {
-    margin: 20px;
-    padding: 5px;
+    position: relative;
+    margin-left: 50px;
+    margin-right: 50px;
 
-    width: 25vw;
-    height: 20px;
-
-    font-size: 12px;
-    color: white;
+    width: auto;
+    height: 175px;
 
     display: flex;
     align-items: center;
     justify-content: center;
 
-    background: linear-gradient(to bottom, #6c6eb2 0%,#181870 64%,#000028 100%);
+    // background: linear-gradient(to bottom, #6c6eb2 0%,#181870 64%,#000028 100%);
     border-radius: 8px;
     border: 1px solid #424542;
     
@@ -42,10 +54,40 @@
     overflow: auto;
 }
 
+.validOverlay {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    width: 100%;
+    opacity: 0;
+    transition: .5s ease;
+    background-color: rgb(5, 75, 150);
+}
+
+.menu:hover .validOverlay {
+    opacity: 50%;
+}
+
+
+.invalidOverlay {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    width: 100%;
+    opacity: 50%;
+    background-color: #0e0e0e;
+}
+
 .title{
     display: flex;
     align-items: center;
-    height: 40vh;
+    height: 35vh;
     font-size: 30px;
     // text-align: center;
 }

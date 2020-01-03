@@ -108,7 +108,7 @@ export const guardianData = [
                 def: [10],
             },
             skill: {
-                move: [grow],
+                move: ['grow'],
                 dmg: [0],
                 def: [10],
                 heal: [10]
@@ -137,7 +137,7 @@ export const guardianData = [
                 def: [5],
             },
             skill: {
-                move: [grow],
+                move: ['grow'],
                 dmg: [0],
                 def: [6],
                 heal: [6]

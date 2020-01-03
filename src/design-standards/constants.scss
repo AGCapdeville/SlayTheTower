@@ -3,6 +3,44 @@
 $font: cursive, sans-serif;
 $gameFont: 'Press Start 2P';
 
-$screenWidth: 350px* 1.6180339887498948482;
-$screenHeight: 350px;
+
 $phi: 1.6180339887498948482;
+
+// Desktop:
+$screenHeightDesktop: 50%;
+$screenWidthDesktop: 75%;
+
+// Mobile: 
+$screenHeight: 100%;
+$screenWidth: 100%;
+
+// - - - FOE ZONE : - - - -
+
+$foeZoneHeight: 48vh;
+$foeZoneWidth: 100vw;
+
+$FoeHeight: 25px;
+$FoeWidth: 15px;
+
+// - - - PLAYER ZONE : - - - -
+
+$playerZoneHeight: 52vh;
+$playerZoneWidth: 100vw;
+
+$healthBarHeight: 5vh;
+$healthBarWidth: 80vw;
+
+$cardHeight: 20vh;// of 55%
+$cardWidth: 10vw;// of 80% width of screen
+
+$energyHeight: 8vh;
+$energyWidth: 8vw; 
+
+$deckCountHeight: 5vh;
+$deckCountWidth: 5vw;
+
+$deckDiscardHeight: 5vh;
+$deckDiscardWidth: 5vw;
+
+$deckVoidHeight: 5vh;
+$deckVoidWidth: 5vw;

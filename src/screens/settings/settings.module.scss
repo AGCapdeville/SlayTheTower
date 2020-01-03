@@ -1,0 +1,65 @@
+@import "../../design-standards/constants.scss";
+
+// Specific styling here:
+
+
+
+// For desktop ver.
+// .background {
+//     width: 100vw;
+//     height: 100vh;
+//     display: flex;
+//     flex-direction: row;
+//     font-family: $gameFont;
+//     color: black;
+//     background-color: black;
+// }
+
+.game {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    align-content: center;
+    justify-items: center;
+
+    background: white;
+    color: black;
+
+    font-family: $gameFont;
+}
+
+.menu {
+    margin: 20px;
+    padding: 5px;
+
+    width: 25vw;
+    height: 20px;
+
+    font-size: 12px;
+    color: white;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: linear-gradient(to bottom, #6c6eb2 0%,#181870 64%,#000028 100%);
+    border-radius: 8px;
+    border: 1px solid #424542;
+    
+    box-shadow: 4px 4px #e7dfe7,
+                -4px -4px #e7dfe7,
+                4px -4px #e7dfe7,
+                -4px 4px #e7dfe7,
+                0 -2px #9c9a9c,
+                -2px 0 #7b757b,
+                0 2px #424542;
+    overflow: auto;
+}
+
+.title{
+    display: flex;
+    align-items: center;
+    height: 40vh;
+    font-size: 30px;
+    // text-align: center;
+}

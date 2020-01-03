@@ -1,2 +1,1 @@
-
-const Start = () => <div onClick={() => setCurrentScreen('TitleScreen')} >Start</div>
+export { default } from './encounter.jsx' 

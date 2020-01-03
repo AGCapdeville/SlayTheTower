@@ -1,29 +1,33 @@
 import React, { useState } from 'react'
-import TitleScreen from './screens/title'
-import HeroScreen from './screens/hero'
+import Title from './screens/title'
+import Hero from './screens/hero'
+import Settings from './screens/settings'
+import Encounter from './screens/encounter'
+import gameData from './game-data.js';
+
 
 const App = () => {
-  const state = {};
 
-  const [currentScreen, setCurrentScreen] = useState('TitleScreen');
+  const [currentScreen, setCurrentScreen] = useState('Title');
+  const [gameState, setCurrentGameState] = useState({});
 
-  const Bonfire = () => <div onClick={() => setCurrentScreen('TitleScreen')} >Bonfire</div>
-  const Battle = () => <div onClick={() => setCurrentScreen('TitleScreen')} >Battle</div>
-  const Shop = () => <div onClick={() => setCurrentScreen('TitleScreen')} >Shop</div>
-  const Settings = () => <div onClick={() => setCurrentScreen('TitleScreen')} >Settings</div>
+  const initializeHero = (type) => {
+  }
 
   const screens = {
-    TitleScreen,
-    HeroScreen,
-    Bonfire,
-    Battle,
-    Shop,
+    Title,
+    Hero,
+    Encounter,
+    // Bonfire,
+    // Battle,
+    // Shop,
     Settings,    
   };
 
   const currentScreenComponent = screens[currentScreen];
   
-  return currentScreenComponent({ setCurrentScreen })
+  return currentScreenComponent({ setCurrentScreen, initializeHero })
+
 }
 
 export default App
