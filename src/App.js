@@ -5,11 +5,15 @@ import Settings from './screens/settings'
 import Encounter from './screens/encounter'
 import gameData from './game-data.js';
 
+import { useHealth } from './ducks/health'
+
 
 const App = () => {
-
+  
+  const health = useHealth()
+  
   const [currentScreen, setCurrentScreen] = useState('Title');
-  const [gameState, setCurrentGameState] = useState({});
+  // const [gameState, setCurrentGameState] = useState({});
 
   const initializeHero = (type) => {
   }
