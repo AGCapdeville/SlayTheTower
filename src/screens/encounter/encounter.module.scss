@@ -46,7 +46,6 @@
     display: flex;
     justify-content: center;
     align-items: flex-end;
-
     font-size: 12px;
     color: white;
 
@@ -143,7 +142,7 @@
 
 .drawZone {
     height: 52vh;
-    width: 20vw;
+    width: 15vw;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -158,10 +157,12 @@
     margin-bottom: 10px;
 }
 .deck {
-    height: 20vh;
-    width: 10vw;
+    height: 4vh;
+    width: 4vw;
     color: white;
     background-color: black;
+    flex-direction: column;
+    text-align: center;
 }
 
 
@@ -188,7 +189,7 @@
 
 .discardZone {
     height: 52vh;
-    width: 10vw;
+    width: 15vw;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -203,10 +204,11 @@
 }
 
 .discard {
-    height: 20vh;
-    width: 10vw;
+    height: 4vh;
+    width: 4vw;
     color: white;
     background-color: black;
+    margin-bottom: 10px;
 }
 
 .menu {

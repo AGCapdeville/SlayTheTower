@@ -1,33 +1,24 @@
 import React from 'react'
 import titleStyle from "./title.module.scss";
+import { setScreen, useScreen } from '../../ducks/screen'
 
 import { useDispatch } from 'react-redux';
-import { useHealth, addHealth, removeHealth, clearHealth, setHealth, restoreHealth} from '../../ducks/health'
+// import { useHealth, addHealth, removeHealth, clearHealth, setHealth, restoreHealth} from '../../ducks/health'
+
+// const dispatch = useDispatch();
 
 
-const Title = ({ setCurrentScreen }) => {
-    const dispatch = useDispatch();
-    const health = useHealth();
-
-
-
+// pass the screen call back function to this dumb method
+const Title = () => {
+    // const health = useHealth();
     return (
         <div className={titleStyle.game} >
-            <p>
-                Health: {health}
-            </p>
-
-            <button onClick={ () => dispatch(addHealth()) }>ADD</button>
-            <button onClick={ () => dispatch(removeHealth()) }>DMG</button>
-            <button onClick={ () => dispatch(clearHealth()) }>KILL</button>
-            <button onClick={ () => dispatch(restoreHealth()) }>PHOENIX POTION</button>
-            <button onClick={ () => dispatch(setHealth(10)) }>HP POTION</button>
-
-
+            
+            {/* TODO: Push the logic handaling screens into a duck */}
             <div className={titleStyle.title} >SLAY THE TOWER</div>
-            <div className={titleStyle.menu} onClick={() => setCurrentScreen('Hero')}> START </div>
-            <div className={titleStyle.menu} onClick={() => setCurrentScreen('Settings')}> SETTINGS </div>
-    
+            <div className={titleStyle.menu} onClick={() => setScreen('Encounter')}> START ENCOUNTER</div>
+
+
         </div>
     );
 }

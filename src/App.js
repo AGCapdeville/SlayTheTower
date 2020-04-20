@@ -1,37 +1,21 @@
-import React, { useState } from 'react'
-import Title from './screens/title'
-import Hero from './screens/hero'
-import Settings from './screens/settings'
-import Encounter from './screens/encounter'
-import gameData from './game-data.js';
+import { useDispatch } from 'react-redux';
+import { useState } from 'react'
 
-import { useHealth } from './ducks/health'
+// screens:
+import Title from './screens/title'
+import Encounter from './screens/encounter'
+
+import { setScreen, useScreen } from './ducks/screen'
+
 
 
 const App = () => {
-  
-  const health = useHealth()
-  
-  const [currentScreen, setCurrentScreen] = useState('Title');
-  // const [gameState, setCurrentGameState] = useState({});
 
-  const initializeHero = (type) => {
-  }
+  const dispatch = useDispatch();
+  const screen = useScreen();
 
-  const screens = {
-    Title,
-    Hero,
-    Encounter,
-    // Bonfire,
-    // Battle,
-    // Shop,
-    Settings,    
-  };
 
-  const currentScreenComponent = screens[currentScreen];
-  
-  return currentScreenComponent({ setCurrentScreen, initializeHero })
-
+  return ( screen )
 }
 
 export default App
