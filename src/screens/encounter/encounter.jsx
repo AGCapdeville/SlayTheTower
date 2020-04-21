@@ -1,5 +1,5 @@
 import React from 'react'
-import encounterStyle from "./encounter.module.scss"
+import styles from "./encounter.module.scss"
 
 // var leftFoeHeight = 20;
 // var leftFoeWidth = 10;
@@ -12,57 +12,49 @@ import encounterStyle from "./encounter.module.scss"
 
 // pull from monster list, if small/medium/large monster, render apropriatly 
 
-const HeroScreen = ({ setCurrentScreen }) => {
+const HeroScreen = () => {
 
     return (
-    <div className={encounterStyle.game}>
-        
-        <div className={encounterStyle.foeZone}>
-            
-            <div className = {encounterStyle.playerHealthBorder}> 
-                <div className = {encounterStyle.playerHealthBar}>
+    <div className={styles.game}>
+        <div className={styles.foeZone}>
+            <div className = {styles.playerHealthBorder}> 
+                <div className = {styles.playerHealthBar}>
                     55/55
                 </div> 
             </div>
 
-            
             {/* Shield : https://i.imgur.com/OtrV2sJ.png */}
 
-
-            <div className = {encounterStyle.foes}> 
-                
-
-                <div className = {encounterStyle.foe}>
-                    <div className = {encounterStyle.foeImg}> 
+            <div className = {styles.foes}> 
+                <div className = {styles.foe}>
+                    <div className = {styles.foeImg}> 
                         slime
-                        <img src="https://i.imgur.com/Sun4iBT.png?1" 
-                        alt="slime"/>
+                        <img src="https://i.imgur.com/Sun4iBT.png?1" alt="slime"/>
                     </div>
-                    <div className = {encounterStyle.foeHealthBorder}>
-                        <div className = {encounterStyle.foeHealthBar}>
+                    <div className = {styles.foeHealthBorder}>
+                        <div className = {styles.foeHealthBar}>
                         12/12
                         </div>
                     </div>
                 </div>  
-            
             </div>
         </div>        
 
-        <div className={encounterStyle.playerZone}> 
-            <div className = {encounterStyle.drawZone}>
-                <div className = {encounterStyle.energy}> 3 </div>
-                <div className = {encounterStyle.deck}> 5 </div>
+        <div className={styles.playerZone}> 
+            <div className = {styles.drawZone}>
+                <div className = {styles.energy}> 3 </div>
+                <div className = {styles.deck}> 5 </div>
             </div>
 
-            <div className = {encounterStyle.activeZone}>
-                <div className = {encounterStyle.hand}>
+            <div className = {styles.activeZone}>
+                <div className = {styles.hand}>
                     CARDS HERE
                 </div>
             </div>
 
-            <div className = {encounterStyle.discardZone}>
-                <div className = {encounterStyle.void}> 0 </div>
-                <div className = {encounterStyle.discard}> 0 </div>
+            <div className = {styles.discardZone}>
+                <div className = {styles.void}> 0 </div>
+                <div className = {styles.discard}> 0 </div>
             </div>
         </div>
     </div>

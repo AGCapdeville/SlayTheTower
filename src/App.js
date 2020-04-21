@@ -1,21 +1,18 @@
-import { useDispatch } from 'react-redux';
-import { useState } from 'react'
+import React from 'react';
+import Title from './screens/title';
+import Encounter from './screens/encounter';
+import { useScreen } from './ducks/screen';
 
-// screens:
-import Title from './screens/title'
-import Encounter from './screens/encounter'
-
-import { setScreen, useScreen } from './ducks/screen'
-
-
+const screens = {
+  Title,
+  Encounter,
+}
 
 const App = () => {
-
-  const dispatch = useDispatch();
   const screen = useScreen();
+  const Screen = screens[screen];
 
-
-  return ( screen )
+  return <Screen />
 }
 
 export default App
