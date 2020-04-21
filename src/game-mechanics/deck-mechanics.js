@@ -80,11 +80,7 @@ function rando(deck) {
     title: "sword",
     health: 55, 
     energy: 3,
-    deck: [
-        {id:0, card:'slash'}, {id:1, card:'slash'}, {id:2, card:'slash'}, {id:3, card:'slash'}, {id:4, card:'slash'},
-        {id:5, card:'guard'}, {id:6, card:'guard'}, {id:7, card:'guard'}, {id:8, card:'guard'}, {id:9, card:'heal'}
-    ],
-    last_id: 9
+    deck: [ 0,0,0,0,0,1,1,1,1,1,2 ],
   }
   // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
   

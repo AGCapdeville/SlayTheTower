@@ -21,7 +21,8 @@
 //
 
 export const cards = [
-    {   name: 'slash',
+    {   id : 0,
+        name: 'slash',
         art: 'art uri',
         type: 'attack',
         energy: 1,
@@ -33,7 +34,8 @@ export const cards = [
         },
         description: "Slash target foe, deal 5 damage."
     },
-    {   name: 'guard',
+    {   id: 1,
+        name: 'guard',
         art: 'art uri',
         type: 'defend',
         energy: 1,
@@ -45,7 +47,8 @@ export const cards = [
         },
         description: "Gear up, gain 5 armor."
     },
-    {   name: 'heal',
+    {   id: 2,
+        name: 'heal',
         art: 'art uri',
         type: 'skill',
         energy: 2,

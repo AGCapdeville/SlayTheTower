@@ -29,8 +29,9 @@ export default handleActions({
     [addHealth]: (state, action) => ({...state, health: state.health + action.payload }),
     [removeHealth]: (state, action) => ({...state, health: state.health - action.payload }),
     // deck handle:
-    [setDeck]: (state, action) => ({...state, deck: action }),
-    [usedCard]: (state, action) =>({...state, hand: state.hand.remove[action], graveyard: [...graveyard, state.hand[action]] }),
+    [setDeck]: (state, action) => ({...state, deck: action.payload }),
+    // replace remove with splice.. or something
+    [usedCard]: (state, action) =>({...state, hand: state.hand.remove[action.payload], graveyard: [...graveyard, state.hand[action.payload]] }),
     [drawCard]: (state) => ({...state, deck: state.deck.slice( 0, state.deck.length - 1), hand: [...hand, state.deck.slice(-1, 1)] }),
 }, initialState);
 
