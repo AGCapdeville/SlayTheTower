@@ -1,6 +1,9 @@
 import React from 'react'
 import styles from "./encounter.module.scss"
 
+import Encounter from '../../game-mechanics/encounter'
+import {useFoe} from '../../ducks/foe'
+
 // var leftFoeHeight = 20;
 // var leftFoeWidth = 10;
 
@@ -12,7 +15,16 @@ import styles from "./encounter.module.scss"
 
 // pull from monster list, if small/medium/large monster, render apropriatly 
 
-const HeroScreen = () => {
+
+// all screen elements need to be put into individual components?
+
+const EncounterScreen = () => {
+    
+    const encounter = new Encounter();
+    encounter.spawnCreep()
+
+    const foe = useFoe()
+    // console.log(foe.name)
 
     return (
     <div className={styles.game}>
@@ -28,12 +40,13 @@ const HeroScreen = () => {
             <div className = {styles.foes}> 
                 <div className = {styles.foe}>
                     <div className = {styles.foeImg}> 
-                        slime
-                        <img src="https://i.imgur.com/Sun4iBT.png?1" alt="slime"/>
+                        {foe.name}
+                        <img src={foe.img} alt="foe img"/>
                     </div>
                     <div className = {styles.foeHealthBorder}>
                         <div className = {styles.foeHealthBar}>
-                        12/12
+                        {/* 12/12 */}
+                        {foe.health} / {foe.totalHealth}
                         </div>
                     </div>
                 </div>  
@@ -62,5 +75,5 @@ const HeroScreen = () => {
 }
 
 
-export default HeroScreen;
+export default EncounterScreen;
 

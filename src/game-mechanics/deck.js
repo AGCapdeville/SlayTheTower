@@ -1,11 +1,10 @@
 
 class DeckMechanic{
-    constructor(deckTitle, deck){
-        // grab card from JSON file
-        this.title = deckTitle
-        this.deck = []
-        this.
-    }
+	constructor(deckTitle, deck){
+		// grab card from JSON file
+		this.title = deckTitle
+		this.deck = []
+	}
 
 
     shuffle_deck(self){
@@ -76,25 +75,19 @@ function rando(deck) {
   
   // !!!!!!!!!!!!! This would be in a hero-data file !!!!!!!!!!!!!
   // import { sword } from './heros.js'
-  const sword = {
-    title: "sword",
-    health: 55, 
-    energy: 3,
-    deck: [ 0,0,0,0,0,1,1,1,1,1,2 ],
-  }
+
   // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
   
-  const player = {
-    title: "",
-    health: 0,
-    energy: 0,
-    armor: 0,
-    deck: [],
-    hand: [],
-    grave: [],
-    void: [],
-    last_id: 0
-  }
+//   const player = {
+//     title: "",
+//     health: 0,
+//     energy: 0,
+//     armor: 0,
+//     deck: [],
+//     hand: [],
+//     grave: [],
+//     void: [],
+//   }
   
   // initialize deck: ( from a import )
   console.log(sword.deck);

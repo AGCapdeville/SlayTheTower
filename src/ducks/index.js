@@ -1,8 +1,10 @@
 import { combineReducers } from 'redux';
-import health from "./health"
+import player from "./player"
+import foe from "./foe"
 import screen from "./screen"
 
 export default combineReducers({
-    health,
+    player,
+    foe,
     screen
 })
