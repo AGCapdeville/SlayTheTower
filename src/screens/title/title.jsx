@@ -6,19 +6,11 @@ import { useDispatch } from 'react-redux';
 import Start from '../../game-mechanics/start'
 
 
-// move to game start
-// import { usePlayer } from '../../ducks/player'
-// const player = usePlayer();
-
-
-
-
 const Title = () => {
     const dispatch = useDispatch();
 
     const start = new Start();
     start.initialize()
-    
 
     return (
         <div className={titleStyle.game} >

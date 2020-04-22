@@ -1,8 +1,6 @@
 import { createAction, handleActions } from "redux-actions";
 import { useSelector } from "react-redux";
 import { createSelector } from "reselect";
-import { act } from "react-dom/test-utils";
-
 // Alter Health, Energy & Armor Actions:
 export const setHealth = createAction('player/SET_HEALTH');
 export const alterHealth = createAction('player/ALTER_HEALTH');
@@ -17,6 +15,10 @@ export const drawCard = createAction('player/DRAW_CARD');
 export const useCard = createAction('player/USE_CARD');
 export const voidCard = createAction('player/VOID_CARD');
 
+export const shuffleDeck = createAction('player/SHUFFLE_DECK');
+
+// Hand actions
+export const drawHand = createAction('player/DRAW_HAND');
 
 const initialState = {
     health: 55,
@@ -25,11 +27,24 @@ const initialState = {
     deck: [],
     hand: [],
     discard: [],
-    voidPile: []
+    void: []
 }
 
 
+function rando(deck) {
+    var j, x, i
+    for (i = deck.length - 1; i > 0; i--) {
+        j = Math.floor(Math.random() * (i + 1))
+        x = deck[i]
+        deck[i] = deck[j]
+        deck[j] = x
+    }
+    return deck
+}
+
 export default handleActions({
+    [drawHand]: (state) => ({...state, deck: state.deck.slice( 0, state.deck.length - 1 - 5), hand: [...state.hand, ...state.deck.slice(-5)]}),
+    [shuffleDeck]: (state) => ({...state, deck: rando(state.deck)}),
     // player Health, Energy & Armor actions:
     [setHealth]: (state, action) => ({...state, health: action.payload}),
     [alterHealth]: (state, action) => ({...state, health: state.health + action.payload}),
@@ -40,9 +55,9 @@ export default handleActions({
     // [newRound]: (state) => ({...state, energy: initialState.energy, armor: initialState.armor}),
     // deck handle:
     [setDeck]: (state, action) => ({...state, deck: action.payload }),
-    // [drawCard]: (state) => ({...state, deck: state.deck.slice( 0, state.deck.length - 1), hand: [...hand, state.deck.slice(-1, 1)]}),
-    // [useCard]: (state, action) =>({...state, hand: state.hand.slice(action.payload, 1), discard: [...discard, state.hand.slice(action.payload, 1)]}),
-    // [voidCard]: (state, action) => ({...state, hand: state.hand.slice(action.payload, 1), voidPile: [...voidPile, state.hand.slice(action.payload, 1)]}),
+    [drawCard]: (state) => ({...state, deck: state.deck.slice( 0, state.deck.length - 1), hand: [...state.hand, state.deck.slice(-1, 1)]}),
+    [useCard]: (state, action) =>({...state, hand: state.hand.slice(action.payload, 1), discard: [...state.discard, state.hand.slice(action.payload, 1)]}),
+    [voidCard]: (state, action) => ({...state, hand: state.hand.slice(action.payload, 1), voidPile: [...state.void, state.hand.slice(action.payload, 1)]}),
 }, initialState);
 
 

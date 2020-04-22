@@ -1,7 +1,5 @@
-
-
-
 // This class should be called when the player enters an encounter
+import sample from 'lodash/sample';
 import {creeps} from '../game-data/creep-data'
 // import { setHealth } from '../ducks/player'
 // import { useFoe } from '../ducks/foe';
@@ -15,16 +13,18 @@ export default class Encounter{
     constructor(){
     }
 
-    spawnCreep(){
-        const dispatcher = useDispatch()
-        let creep = creeps[0] //Slime
-        const creepHealth = creep.health + Math.floor(Math.random() * creep.mod)
-        dispatcher(setFoeTotalHealth(creepHealth))
-        dispatcher(alterFoeHealth(creepHealth))
-        dispatcher(alterFoeArmor(creep.armor))
-        dispatcher(setFoeName(creep.name))
-        dispatcher(setFoeImg(creep.art))
-        dispatcher(setFoeMoves(creep.moves))
+    spawnCreep() {
+        // const dispatcher = useDispatch()
+        // const creep = sample(creeps);
+        // // let creep = creeps[Math.floor(Math.random()*2)] //random creep
+        // // let creep = creeps[0] // slime
+        // const creepHealth = creep.health + Math.floor(Math.random() * creep.mod)
+        // dispatcher(setFoeTotalHealth(creepHealth))
+        // dispatcher(alterFoeHealth(creepHealth))
+        // dispatcher(alterFoeArmor(creep.armor))
+        // dispatcher(setFoeName(creep.name))
+        // dispatcher(setFoeImg(creep.art))
+        // dispatcher(setFoeMoves(creep.moves))
     }
 
     gameRound(self){

@@ -30,6 +30,27 @@ export const creeps = [
             }
         }
     },
+    {
+        name: 'Living Armor',
+        art: 'https://i.imgur.com/yl0eGRj.png?4',
+        health: 20,
+        mod: 7,
+        armor: 0,
+        moves: {
+            'strike':{
+                priority: 0,
+                target: ['hero'],
+                effect: ['damage'],
+                power: [7]
+            },
+            'Repair':{
+                priority: 1,
+                target: ['self'],
+                effect: ['damage'],
+                power: [10]
+            },
+        }
+    },
     // TO REDO: - - - - - - - - - - - - - - - - WIP:
     // {
     //     name: 'living armor',

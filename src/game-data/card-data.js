@@ -1,27 +1,8 @@
-
-
-
-
-
-//  lets break it down:
-//  So we want to parse it, and have a methodlogy of understanding what each card does.
-//  
-// 
-//  name: "uniq name" 
-//  art: art url to get art from
-//  type: mostly used for effects of other cards
-//  energy: cost of card in energy terms
-//  exhaust: if true, put card into void pile after use
-//  action: 
-//      target: []   // hero OR foe 
-//      effect: []   // heal, damage, armor
-//      power: []    // number of effect
-//  description: "About cards effect, to display on card"
-//  
-//
+import { usePlayer, setHealth } from '../ducks/player';
 
 export const cards = [
-    {   id : 0,
+    {
+        id : 0,
         name: 'slash',
         art: 'art url',
         type: 'attack',
@@ -32,9 +13,11 @@ export const cards = [
             effect: ['damage'],
             power: [5]
         },
-        description: "Slash target foe, deal 5 damage."
+        description: "Slash target foe, deal 5 damage.",
+        
     },
-    {   id: 1,
+    {   
+        id: 1,
         name: 'guard',
         art: 'art url',
         type: 'defend',
@@ -47,7 +30,8 @@ export const cards = [
         },
         description: "Gear up, gain 5 armor."
     },
-    {   id: 2,
+    {   
+        id: 2,
         name: 'heal',
         art: 'art url',
         type: 'skill',
@@ -58,6 +42,6 @@ export const cards = [
             effect: ['heal'],
             power: [8]
         },
-        description: "Heal self for 8 health"
+        description: "Heal self for 8 health",
     },
 ];

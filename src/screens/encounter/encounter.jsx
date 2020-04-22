@@ -1,30 +1,22 @@
-import React from 'react'
-import styles from "./encounter.module.scss"
+import React, { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import styles from "./encounter.module.scss";
 
-import Encounter from '../../game-mechanics/encounter'
-import {useFoe} from '../../ducks/foe'
-
-// var leftFoeHeight = 20;
-// var leftFoeWidth = 10;
-
-// var middleFoeHeight = 20;
-// var middleFoeWidth = 10;
-
-// var rightFoeHeight = 20;
-// var rightFoeWidth = 10;
-
-// pull from monster list, if small/medium/large monster, render apropriatly 
-
-
-// all screen elements need to be put into individual components?
+import Encounter from '../../game-mechanics/encounter';
+import { useFoe, spawnFoe } from '../../ducks/foe';
+import { usePlayer, drawHand, shuffleDeck } from '../../ducks/player';
 
 const EncounterScreen = () => {
-    
-    const encounter = new Encounter();
-    encounter.spawnCreep()
 
-    const foe = useFoe()
-    // console.log(foe.name)
+    const foe = useFoe();
+    const player = usePlayer();
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(spawnFoe());
+        dispatch(shuffleDeck());
+        dispatch(drawHand());
+    }, []);
 
     return (
     <div className={styles.game}>
@@ -41,11 +33,11 @@ const EncounterScreen = () => {
                 <div className = {styles.foe}>
                     <div className = {styles.foeImg}> 
                         {foe.name}
-                        <img src={foe.img} alt="foe img"/>
+                        <img src={foe.art} alt="foe img"/>
                     </div>
                     <div className = {styles.foeHealthBorder}>
                         <div className = {styles.foeHealthBar}>
-                        {/* 12/12 */}
+                        12/12
                         {foe.health} / {foe.totalHealth}
                         </div>
                     </div>
@@ -61,7 +53,7 @@ const EncounterScreen = () => {
 
             <div className = {styles.activeZone}>
                 <div className = {styles.hand}>
-                    CARDS HERE
+                    {/* {player.hand.map(card => <button { }}>{card.name}</button>)} */}
                 </div>
             </div>
 
