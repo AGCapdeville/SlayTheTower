@@ -1,0 +1,26 @@
+@import "../../design-standards/constants.scss";
+
+
+.discardZone {
+    height: 52vh;
+    width: 15vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.void {
+    height: 4vh;
+    width: 4vw;
+    color: white;
+    background-color: purple;
+    margin-bottom: 10px;
+}
+
+.discard {
+    height: 4vh;
+    width: 4vw;
+    color: white;
+    background-color: black;
+    margin-bottom: 10px;
+}

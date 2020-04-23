@@ -1,0 +1,29 @@
+@import "../../design-standards/constants.scss";
+
+
+.drawZone {
+    height: 52vh;
+    width: 15vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.energy {
+    height: 4vh;
+    width: 4vw;
+    color: yellow;
+    background-color: black;
+    text-align: center;
+}
+
+
+.deck {
+    height: 4vh;
+    width: 4vw;
+    color: white;
+    background-color: black;
+    flex-direction: column;
+    text-align: center;
+}

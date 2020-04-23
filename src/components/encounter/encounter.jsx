@@ -8,6 +8,8 @@ import { usePlayer, drawHand, shuffleDeck } from '../../ducks/player';
 import { setupEncounter } from '../../ducks/encounter'
 
 import Hand from '../hand'
+import DrawZone from '../draw-zone'
+import DiscardZone from '../discard-zone'
 
 const EncounterScreen = () => {
 
@@ -50,23 +52,13 @@ const EncounterScreen = () => {
         </div>        
 
         <div className={styles.playerZone}> 
-            <div className = {styles.drawZone}>
-                <div className = {styles.energy}> 3 </div>
-                <div className = {styles.deck}> 5 </div>
-            </div>
+
+            <DrawZone />
 
             <Hand />
-            
-            {/* <div className = {styles.activeZone}>
-                <div className = {styles.hand}>
-                    {hand}
-                </div>
-            </div> */}
 
-            <div className = {styles.discardZone}>
-                <div className = {styles.void}> 0 </div>
-                <div className = {styles.discard}> 0 </div>
-            </div>
+            <DiscardZone />
+            
         </div>
     </div>
     );

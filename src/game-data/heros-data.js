@@ -17,7 +17,7 @@ export const heros = [
         health: 45,
         energy: 4,
         armor: 0,
-        deck: [0,0,0,0,0,1,1,1,1,1,2],
+        deck: [0,0,0,0,0,1,1,1,1,1,2].map(id => cards[id]),
         hand: [],
         discard: [],
         void: []
