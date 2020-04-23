@@ -1,6 +1,6 @@
 import React from 'react';
-import Title from './screens/title';
-import Encounter from './screens/encounter';
+import Title from './components/title';
+import Encounter from './components/encounter';
 import { useScreen } from './ducks/screen';
 
 const screens = {

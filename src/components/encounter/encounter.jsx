@@ -2,9 +2,12 @@ import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import styles from "./encounter.module.scss";
 
-import Encounter from '../../game-mechanics/encounter';
+// import Encounter from '../../game-mechanics/encounter';
 import { useFoe, spawnFoe } from '../../ducks/foe';
 import { usePlayer, drawHand, shuffleDeck } from '../../ducks/player';
+import { setupEncounter } from '../../ducks/encounter'
+
+import Hand from '../hand'
 
 const EncounterScreen = () => {
 
@@ -13,9 +16,11 @@ const EncounterScreen = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
+        
         dispatch(spawnFoe());
         dispatch(shuffleDeck());
         dispatch(drawHand());
+
     }, []);
 
     return (
@@ -37,7 +42,6 @@ const EncounterScreen = () => {
                     </div>
                     <div className = {styles.foeHealthBorder}>
                         <div className = {styles.foeHealthBar}>
-                        12/12
                         {foe.health} / {foe.totalHealth}
                         </div>
                     </div>
@@ -51,11 +55,13 @@ const EncounterScreen = () => {
                 <div className = {styles.deck}> 5 </div>
             </div>
 
-            <div className = {styles.activeZone}>
+            <Hand />
+            
+            {/* <div className = {styles.activeZone}>
                 <div className = {styles.hand}>
-                    {/* {player.hand.map(card => <button { }}>{card.name}</button>)} */}
+                    {hand}
                 </div>
-            </div>
+            </div> */}
 
             <div className = {styles.discardZone}>
                 <div className = {styles.void}> 0 </div>

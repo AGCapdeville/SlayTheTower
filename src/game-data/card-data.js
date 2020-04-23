@@ -2,7 +2,6 @@ import { usePlayer, setHealth } from '../ducks/player';
 
 export const cards = [
     {
-        id : 0,
         name: 'slash',
         art: 'art url',
         type: 'attack',
@@ -14,10 +13,10 @@ export const cards = [
             power: [5]
         },
         description: "Slash target foe, deal 5 damage.",
+        card_id: 0
         
     },
     {   
-        id: 1,
         name: 'guard',
         art: 'art url',
         type: 'defend',
@@ -28,10 +27,10 @@ export const cards = [
             effect: ['armor'],
             power: [5]
         },
-        description: "Gear up, gain 5 armor."
+        description: "Gear up, gain 5 armor.",
+        card_id: 1
     },
     {   
-        id: 2,
         name: 'heal',
         art: 'art url',
         type: 'skill',
@@ -43,5 +42,6 @@ export const cards = [
             power: [8]
         },
         description: "Heal self for 8 health",
+        card_id: 2
     },
 ];

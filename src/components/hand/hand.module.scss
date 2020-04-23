@@ -1,0 +1,61 @@
+@import "../../design-standards/constants.scss";
+
+.customButton {
+    box-shadow: 5px 7px 11px 0px rgba(0, 0, 0, 0.48);
+    align-items: flex-start;
+    padding: 1px;
+    border-width: 0px;
+    margin: 1px;
+    background: #828282bd;
+}
+
+.activeZone {
+
+    height: 52vh;
+    width: 80vw;
+    display: flex;
+    align-items: center;
+}
+.hand {
+    height: 40vh;
+    width: 80vw;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    font-family: $gameFont;
+}
+
+.card {
+    font-size: 8px;
+    height: 35vh;
+    width: 12vw;
+    flex-direction: row;
+    color: whitesmoke;
+    background-color: black;
+    font-family: $gameFont;
+}
+
+.titleSection {
+    padding-top: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    justify-content: space-evenly;
+    flex-direction: row;
+    font-family: $gameFont;
+}
+
+.title{
+
+    display: flex;
+    background-color: darkgray; 
+    font-family: $gameFont;
+}
+
+.energy {
+
+    display: flex;
+    color: yellow;
+    background-color: black;
+    font-family: $gameFont;
+}

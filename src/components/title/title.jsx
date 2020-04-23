@@ -3,14 +3,14 @@ import titleStyle from "./title.module.scss";
 import { setScreen } from '../../ducks/screen';
 import { useDispatch } from 'react-redux';
 
-import Start from '../../game-mechanics/start'
-
+import { updatePlayer } from '../../ducks/player'
+import { heros } from '../../game-data/heros-data'
 
 const Title = () => {
-    const dispatch = useDispatch();
 
-    const start = new Start();
-    start.initialize()
+    const dispatch = useDispatch();
+    dispatch(updatePlayer(heros[0]))
+    
 
     return (
         <div className={titleStyle.game} >

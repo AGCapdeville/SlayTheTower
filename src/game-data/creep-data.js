@@ -7,7 +7,7 @@ export const creeps = [
         name: 'Slime',
         art: 'https://i.imgur.com/Sun4iBT.png?1',
         health: 10,
-        mod: 5,
+        totalHealth: 10,
         armor: 0,
         moves: {
             'whip':{
@@ -34,7 +34,7 @@ export const creeps = [
         name: 'Living Armor',
         art: 'https://i.imgur.com/yl0eGRj.png?4',
         health: 20,
-        mod: 7,
+        totalHealth: 20,
         armor: 0,
         moves: {
             'strike':{
