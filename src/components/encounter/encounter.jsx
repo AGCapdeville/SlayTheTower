@@ -14,40 +14,27 @@ import FoeZone from '../foe-zone'
 
 const EncounterScreen = () => {
 
-    // const foe = useFoe();
-    // const player = usePlayer();
     const dispatch = useDispatch();
 
     useEffect(() => {
-        
         dispatch(spawnFoe());
         dispatch(shuffleDeck());
         dispatch(drawHand());
-
     }, []);
 
     return (
     <div className={styles.game}>
-
-            <button onclick={ dispatch( shuffleDeck() ) }> shuffle </button>
-        
+            <button onClick={ () => dispatch( shuffleDeck() ) }> shuffle </button>
             <PlayerHealth />
-
             <FoeZone />
-        
         <div className={styles.playerZone}> 
-
             <DrawZone />
-
             <Hand />
-
             <DiscardZone />
-            
-
         </div>
-
     </div>
     );
+    
 }
 
 
