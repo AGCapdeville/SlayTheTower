@@ -31,22 +31,39 @@ function rando(deck) {
     return deck
 }
 
+function drawACard(deck, hand, discard) {
+    if (deck.length - 1 == 0){
+        hand = deck.slice(-1, 1)
+        deck = deck.slice(0, deck.length-1)
+        deck = discard
+        deck = rando(deck)
+    }else{
+        hand = deck.slice(-1, 1)
+        deck = deck.slice(0, deck.length-1)
+    }
+}
+
 export default handleActions({
     // new:
     [drawHand]: (state) => ({...state, deck: state.deck.slice( 0, state.deck.length -5), hand: [...state.hand, ...state.deck.slice(-5)]}),
     [shuffleDeck]: (state) => ({...state, deck: rando(state.deck)}),
-
-    // might need to see if I can set initialStates later ???????
-    // [newRound]: (state) => ({...state, energy: initialState.energy, armor: initialState.armor}),
-    // deck handle:
-
+    
     [updatePlayer]: (state, action) => ({ ...state.player, ...action.payload }),
-
+    
     [setDeck]: (state, action) => ({...state, deck: action.payload }),
-    [drawCard]: (state) => ({...state, deck: state.deck.slice( 0, state.deck.length - 1), hand: [...state.hand, state.deck.slice(-1, 1)]}),
+    [drawCard]: (state) => ({...state, hand: drawACard(state.deck, state.hand, state.discard)}),
+    
     [useCard]: (state, action) =>({...state, hand: state.hand.slice(action.payload, 1), discard: [...state.discard, state.hand.slice(action.payload, 1)]}),
     [voidCard]: (state, action) => ({...state, hand: state.hand.slice(action.payload, 1), voidPile: [...state.void, state.hand.slice(action.payload, 1)]}),
 }, initialState);
+
+// old drawCard:
+// [drawCard]: (state) => ({...state, deck: state.deck.slice( 0, state.deck.length - 1), hand: [...state.hand, state.deck.slice(-1, 1)]}),
+
+// notes:
+// might need to see if I can set initialStates later ???????
+// [newRound]: (state) => ({...state, energy: initialState.energy, armor: initialState.armor}),
+// deck handle:
 
 
 // how we grab data from the store

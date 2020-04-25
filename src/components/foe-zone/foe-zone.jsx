@@ -1,9 +1,6 @@
-import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import React from 'react';
 import { useFoe } from '../../ducks/foe'
 import styles from "./foe-zone.module.scss";
-
-import PlayerHealth from '../player-health'
 
 
 

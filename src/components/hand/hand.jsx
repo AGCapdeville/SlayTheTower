@@ -1,15 +1,11 @@
-import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import React from 'react';
 import styles from './hand.module.scss'
-
-// import Encounter from '../../game-mechanics/encounter';
-import { usePlayer, drawHand, shuffleDeck } from '../../ducks/player';
-import { findAllInRenderedTree } from 'react-dom/test-utils';
+import { usePlayer } from '../../ducks/player';
 
 
 const Card = () =>{
+
     const player = usePlayer();
-    const dispatch = useDispatch();
     return(
         <div>
             {
@@ -42,14 +38,28 @@ const Card = () =>{
 
 const Hand = () => {
 
-    const player = usePlayer();
-    const dispatch = useDispatch();
+    // useEffect(() => { 
+    //     // var card = document.createElement("div");
+    //     // var node = document.createTextNode("This is new.");
+    //     // card.appendChild(node);
+        
+    //     // var element = document.getElementById("hand");
+    //     // var child = document.getElementById("c");
+    //     // element.insertBefore(card, child);
+    // }, []);
 
     return (
         <div className = {styles.activeZone}>
             <div className = {styles.hand}>
                 {/* {player.hand.map(card => <button> {card.name} </button>)} */}
+
+                {/* <button onclick="myFunction()">Click me</button> */}
+
                 <Card /> 
+
+                {/* <button onclick={ dispatch(drawCard())}>
+                </button> */}
+
             </div>
         </div>
     );

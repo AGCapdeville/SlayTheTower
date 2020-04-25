@@ -1,5 +1,3 @@
-import { usePlayer, setHealth } from '../ducks/player';
-
 export const cards = [
     {
         name: 'Slash',

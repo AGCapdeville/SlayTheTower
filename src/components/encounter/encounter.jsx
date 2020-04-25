@@ -3,9 +3,8 @@ import { useDispatch } from 'react-redux';
 import styles from "./encounter.module.scss";
 
 // import Encounter from '../../game-mechanics/encounter';
-import { useFoe, spawnFoe } from '../../ducks/foe';
-import { usePlayer, drawHand, shuffleDeck } from '../../ducks/player';
-import { setupEncounter } from '../../ducks/encounter'
+import { spawnFoe } from '../../ducks/foe';
+import { drawHand, shuffleDeck } from '../../ducks/player';
 
 import Hand from '../hand'
 import DrawZone from '../draw-zone'
@@ -15,8 +14,8 @@ import FoeZone from '../foe-zone'
 
 const EncounterScreen = () => {
 
-    const foe = useFoe();
-    const player = usePlayer();
+    // const foe = useFoe();
+    // const player = usePlayer();
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -29,30 +28,13 @@ const EncounterScreen = () => {
 
     return (
     <div className={styles.game}>
+
+            <button onclick={ dispatch( shuffleDeck() ) }> shuffle </button>
         
             <PlayerHealth />
 
             <FoeZone />
-
-        {/* <div className={styles.foeZone}>
-            <div className = {styles.foes}> 
-                <div className = {styles.foe}>
-                    <div className = {styles.foeImg}> 
-                        {foe.name}
-                        <img src={foe.art} alt="foe img"/>
-                    </div>
-                    <div className = {styles.foeHealthBorder}>
-                        <div className = {styles.foeHealthBar}>
-                        {foe.health} / {foe.totalHealth}
-                        </div>
-                    </div>
-                </div>  
-            </div>
-
-        </div>         */}
-
         
-
         <div className={styles.playerZone}> 
 
             <DrawZone />
@@ -61,7 +43,9 @@ const EncounterScreen = () => {
 
             <DiscardZone />
             
+
         </div>
+
     </div>
     );
 }
