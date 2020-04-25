@@ -10,6 +10,8 @@ import { setupEncounter } from '../../ducks/encounter'
 import Hand from '../hand'
 import DrawZone from '../draw-zone'
 import DiscardZone from '../discard-zone'
+import PlayerHealth from '../player-health'
+import FoeZone from '../foe-zone'
 
 const EncounterScreen = () => {
 
@@ -27,15 +29,12 @@ const EncounterScreen = () => {
 
     return (
     <div className={styles.game}>
-        <div className={styles.foeZone}>
-            <div className = {styles.playerHealthBorder}> 
-                <div className = {styles.playerHealthBar}>
-                    55/55
-                </div> 
-            </div>
+        
+            <PlayerHealth />
 
-            {/* Shield : https://i.imgur.com/OtrV2sJ.png */}
+            <FoeZone />
 
+        {/* <div className={styles.foeZone}>
             <div className = {styles.foes}> 
                 <div className = {styles.foe}>
                     <div className = {styles.foeImg}> 
@@ -49,7 +48,10 @@ const EncounterScreen = () => {
                     </div>
                 </div>  
             </div>
-        </div>        
+
+        </div>         */}
+
+        
 
         <div className={styles.playerZone}> 
 

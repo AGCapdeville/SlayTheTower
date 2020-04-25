@@ -9,6 +9,7 @@ export const creeps = [
         health: 10,
         totalHealth: 10,
         armor: 0,
+        telegraphing: ['damage 5'],
         moves: {
             'whip':{
                 priority: 0,
@@ -36,6 +37,7 @@ export const creeps = [
         health: 20,
         totalHealth: 20,
         armor: 0,
+        telegraphing: ['damage 7'],
         moves: {
             'strike':{
                 priority: 0,

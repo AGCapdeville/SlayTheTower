@@ -1,0 +1,45 @@
+@import "../../design-standards/constants.scss";
+
+
+.playerHealthBorder {
+    margin-top: 4px;
+    height: 4vh;
+    width: 80vw;
+    display: flex;
+
+    margin-bottom: 10px;
+    border-radius: 1px;
+    box-shadow: 2px 2px #e7dfe7,
+        -2px -2px #e7dfe7,
+        2px -2px #e7dfe7,
+        -2px 2px #e7dfe7,
+        0 -1px #9c9a9c,
+        -1px 0 #7b757b,
+        0 1px #424542;
+}
+
+.playerHealthBar {
+    height: 4vh;
+    width: 80vw;
+    background-color: darkgreen; // 100% health
+}
+
+
+.playerHealthIndicator {
+    height: 4vh;
+    width: 80vw;
+    font-size: 11px;
+    
+    position: absolute;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: white;
+    text-shadow:
+    -1px -1px 0 #000,  
+     1px -1px 0 #000,
+     -1px 1px 0 #000,
+      1px 1px 0 #000;
+}

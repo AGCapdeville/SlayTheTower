@@ -33,7 +33,7 @@ function rando(deck) {
 
 export default handleActions({
     // new:
-    [drawHand]: (state) => ({...state, deck: state.deck.slice( 0, state.deck.length - 1 - 5), hand: [...state.hand, ...state.deck.slice(-5)]}),
+    [drawHand]: (state) => ({...state, deck: state.deck.slice( 0, state.deck.length -5), hand: [...state.hand, ...state.deck.slice(-5)]}),
     [shuffleDeck]: (state) => ({...state, deck: rando(state.deck)}),
 
     // might need to see if I can set initialStates later ???????

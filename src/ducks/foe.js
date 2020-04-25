@@ -14,7 +14,7 @@ export const updateFoe = createAction('foe/UPDATE_FOE');
 const initialState = {};
 
 export default handleActions({
-    [spawnFoe]: (state) => ({ ...state, ...creeps[1] }),
+    [spawnFoe]: (state) => ({ ...state, ...creeps[0] }),
     [updateFoe]: (state, action) => ({ ...state.foe, ...action.payload }),
 }, initialState);
 
