@@ -12,7 +12,10 @@ import DiscardZone from '../discard-zone'
 import PlayerHealth from '../player-health'
 import FoeZone from '../foe-zone'
 
+import { useFoe } from '../../ducks/foe'
+
 const EncounterScreen = () => {
+    const { health: foeHealth } = useFoe();
 
     const dispatch = useDispatch();
 
@@ -21,6 +24,11 @@ const EncounterScreen = () => {
         dispatch(shuffleDeck());
         dispatch(drawHand());
     }, []);
+
+    useEffect(() => {
+        // This block of code only executes when foeHealth changes
+        console.log("foeHealth:", foeHealth)
+    }, [foeHealth])
 
     return (
     <div className={styles.game}>

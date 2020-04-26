@@ -1,11 +1,9 @@
 import { createAction, handleActions } from "redux-actions";
 import { useSelector } from "react-redux";
 import { createSelector } from "reselect";
+import { updateFoe } from './foe';
 
-
-import ReduxThunk from 'redux-thunk'; 
-
-
+// TODO: clean up and organize
 
 // Alter Health, Energy & Armor Actions:
 export const updatePlayer = createAction('player/UPDATE_PLAYER');
@@ -16,8 +14,8 @@ export const setDeck = createAction('player/SET_DECK');
 export const drawCard = createAction('player/DRAW_CARD');
 export const playCard = createAction('player/PLAY_CARD');
 
+// Test:
 export const playIndexedCard = createAction('player/PLAY_INDEXED_CARD')
-
 
 export const voidCard = createAction('player/VOID_CARD');
 export const shuffleDeck = createAction('player/SHUFFLE_DECK');
@@ -38,6 +36,16 @@ function shuffle(deck) {
     }
     return deck
 }
+
+/**
+ * 
+ * {
+ *  name,
+ *  health,
+ *  deck,
+ *  health,
+ * }
+ */
 
 
 const reduceDrawCard = ({ discard, deck, hand, ...rest }) => {
@@ -68,40 +76,27 @@ const reducePlayCard = ({ discard, hand, ...rest }) => {
     }
 }
 
-const reducePlayIndexedCard = ({ discard, hand, ...rest }, { payload }) => {
+const reducePlayIndexedCard = ({ discard, hand, ...rest } , {payload}) => {
+    const emptyHand = hand.length < 1;
+    console.log(payload)
 
-    // console.log("payload:", payload)
+    if (!emptyHand){
+        const newHand =  hand.slice( payload, 1)
+        const newDiscard = [...discard, hand[payload]]
+        return { ...rest, hand: newHand, discard: newDiscard}
+    }else{
+        return { ...rest, hand, discard}
+    }
 
-    console.log("payload card:", hand[payload])
-
-    // console.log('state:', rest)
-
-    // const card = hand[payload];
-    // const actions = card.action;
-    // const energyCost = actions.enegy;
-    // const target = actions.target;
-    // const effect = actions.effect;
-    // const power = actions.power;
-
-    // console.log("Target: ", target, " Effect: ", effect, " Power: ", power)
-
-
-
-    return { ...rest, hand, discard }
+    return {...rest, discard, hand}
 }
 
-// action: {
-//     target: ['hero'],
-//     effect: ['heal'],
-//     power: [8]
-// },
 
 
 export default handleActions({
-    // new:
     [drawHand]: (state) => ({...state, deck: state.deck.slice( 0, state.deck.length -5), hand: [...state.hand, ...state.deck.slice(-5)]}),
     [shuffleDeck]: (state) => ({...state, deck: shuffle(state.deck)}),
-    [updatePlayer]: (state, action) => ({ ...state.player, ...action.payload }),
+    [updatePlayer]: (state, action) => ({ ...state, ...action.payload }),
     [setDeck]: (state, action) => ({...state, deck: action.payload }),
     
     [drawCard]: reduceDrawCard,
@@ -125,4 +120,41 @@ const selectPlayer = createSelector(
 )
 
 export const usePlayer = () => useSelector(selectPlayer);
+
+// Async Actions
+export const applyCard = (cardIndex) => (dispatch, getState) => {
+    const state = getState();
+
+    const card = state.player.hand[cardIndex]
+    const energyCost = card.energy;
+
+    if (energyCost < state.player.energy) {
+        const newEnergy = state.player.energy - energyCost
+        if (card.action.target=="foe"){
+            if (card.action.effect=="damage"){
+                const damage = card.action.power
+                const newFoeHealth = parseInt(state.foe.health) - parseInt(damage)
+                dispatch(updateFoe({ health: newFoeHealth }))
+                dispatch(updatePlayer({ energy: newEnergy }))
+            }
+        } else {
+            if (card.action.effect=="heal"){
+                const heal = card.action.power
+                const newPlayerHealth = parseInt(state.player.health) + parseInt(heal)
+                dispatch(updatePlayer({ health: newPlayerHealth, energy: newEnergy }))
+            } else if (card.action.effect=="armor"){
+                const armor = card.action.power
+                const newPlayerArmor = parseInt(state.player.armor) + parseInt(armor)
+                dispatch(updatePlayer({ armor: newPlayerArmor, energy: newEnergy}))
+            }
+        }
+        dispatch(playIndexedCard(cardIndex))
+    } else {
+        console.log("! Not Enough Energy !")
+    }
+
+
+}
+
+
 
