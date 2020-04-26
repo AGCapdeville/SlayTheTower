@@ -1,16 +1,19 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
 import styles from './hand.module.scss'
-import { usePlayer } from '../../ducks/player';
+import { usePlayer, playIndexedCard } from '../../ducks/player';
+
 
 
 const Card = () =>{
 
     const player = usePlayer();
+    const dispatch = useDispatch();
     return(
         <div>
             {
-                player.hand.map(card =>
-                    <button className = {styles.customButton}>
+                player.hand.map( (card, index) =>
+                    <button onClick={ () => dispatch( playIndexedCard(index) ) } className = {styles.customButton}>
                         <div className = {styles.card}>
 
                             <div className = {styles.titleSection}>
@@ -48,18 +51,12 @@ const Hand = () => {
     //     // element.insertBefore(card, child);
     // }, []);
 
+    const dispatch = useDispatch()
+
     return (
         <div className = {styles.activeZone}>
             <div className = {styles.hand}>
-                {/* {player.hand.map(card => <button> {card.name} </button>)} */}
-
-                {/* <button onclick="myFunction()">Click me</button> */}
-
                 <Card /> 
-
-                {/* <button onclick={ dispatch(drawCard())}>
-                </button> */}
-
             </div>
         </div>
     );

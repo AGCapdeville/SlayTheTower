@@ -4,7 +4,7 @@ import styles from "./encounter.module.scss";
 
 // import Encounter from '../../game-mechanics/encounter';
 import { spawnFoe } from '../../ducks/foe';
-import { drawHand, shuffleDeck } from '../../ducks/player';
+import { drawHand, shuffleDeck, useCard } from '../../ducks/player';
 
 import Hand from '../hand'
 import DrawZone from '../draw-zone'
@@ -31,6 +31,7 @@ const EncounterScreen = () => {
             <DrawZone />
             <Hand />
             <DiscardZone />
+            
         </div>
     </div>
     );
