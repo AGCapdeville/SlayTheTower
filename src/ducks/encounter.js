@@ -34,7 +34,12 @@ export const endTurn = () => (dispatch, getState) => {
     zone.style.opacity = .75
     zone.style.position = "absolute"
 
+    var turnBttn = document.getElementById('turnBttn');
+
+
+
     
+
     var combatMsgs = document.getElementById('combatMsgs');
 
     combatMsgs.innerHTML = "Foes Turn!"
@@ -78,21 +83,8 @@ export const endTurn = () => (dispatch, getState) => {
     }
 
     const moves = foe.moves
-
-    // Refactor into arrow function:
-    Object.size = function(obj) {
-        var size = 0, key;
-        for (key in obj) {
-            if (obj.hasOwnProperty(key)) size++;
-        }
-        return size;
-    };
-
-    debugger;
-
-    const lengthOfMoves = Object.size(moves);
+    const lengthOfMoves = Object.keys(moves).length
     const position = telegraphing[0].order
-
 
     if ( position + 1 < lengthOfMoves ) {
         const newPos = position+1
@@ -121,6 +113,7 @@ export const endTurn = () => (dispatch, getState) => {
     // with that we have to reset player armor & energy
     // could handle everything from getState and updates here...
 
+    // TODO: await (dispatch)... create a function with Await(game action),(how-long). ( A Promise )
     setTimeout( function(){ combatMsgs.innerHTML = "Foe's Turn Over" }, 5000);
     setTimeout( function(){ combatMsgs.innerHTML = "Armor & Energy Reset" }, 6000);
     setTimeout( function(){ dispatch( updatePlayer({ energy: 3, armor:0 }) )}, 6100);
@@ -146,6 +139,11 @@ export const endTurn = () => (dispatch, getState) => {
         dispatch( drawCard() )
         zone.style.height = "0vh"
         zone.style.width = "0vw"
+
+        // turnBttn.cursor = "allowed";
+        // turnBttn.backgroundColor = "darkslategrey"
+        // turnBttn.style.opacity = 1
+
     }, 8200);
 
 

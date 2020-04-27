@@ -15,7 +15,7 @@ const TurnBttn = () =>{
     const onBttnClick = () =>  dispatch(endTurn());
 
     return(
-        <button onClick={onBttnClick} className = {styles.devButton}>
+        <button id="turnBttn" onClick={onBttnClick} className = {styles.devButton}>
             [ END TURN ]
         </button>
     );

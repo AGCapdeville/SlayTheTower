@@ -7,7 +7,6 @@ import { useEffect } from 'react';
 
 
 function updateHealthBar(health, maxHealth){
-    debugger;
     var bar = document.getElementById("playerHealthBar")
     bar.style.backgroundColor = 'darkgreen'
 
