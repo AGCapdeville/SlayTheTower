@@ -10,7 +10,6 @@ import { creeps } from '../game-data/creep-data';
 export const spawnFoe = createAction('foe/SPAWN_FOE');
 export const updateFoe = createAction('foe/UPDATE_FOE');
 
-
 const initialState = { };
 
 // name: 'Slime',
@@ -39,6 +38,7 @@ const initialState = { };
 //         power: [12]
 //     }
 // }
+
 
 export default handleActions({
     [spawnFoe]: (state) => ({ ...state, ...creeps[0] }),

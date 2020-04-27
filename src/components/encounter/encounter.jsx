@@ -11,6 +11,8 @@ import DrawZone from '../draw-zone'
 import DiscardZone from '../discard-zone'
 import PlayerHealth from '../player-health'
 import FoeZone from '../foe-zone'
+import TurnBttn from '../turn-bttn'
+
 
 import { useFoe } from '../../ducks/foe'
 
@@ -27,19 +29,26 @@ const EncounterScreen = () => {
 
     useEffect(() => {
         // This block of code only executes when foeHealth changes
-        console.log("foeHealth:", foeHealth)
+        console.log("encounter foe hp:", foeHealth)
     }, [foeHealth])
+
 
     return (
     <div className={styles.game}>
-            <button onClick={ () => dispatch( shuffleDeck() ) }> shuffle </button>
+            {/* <button onClick={ () => dispatch( shuffleDeck() ) }> shuffle </button> */}
             <PlayerHealth />
             <FoeZone />
+            <div id='combatZone' className={styles.combatZoneOverlay}>
+                <div id='combatMsgs' className={styles.combatMsgs}> COMBAT MSGS </div>
+                <TurnBttn />
+            </div>
+
+            
         <div className={styles.playerZone}> 
+            <div id='playerZone'> </div>
             <DrawZone />
             <Hand />
             <DiscardZone />
-            
         </div>
     </div>
     );

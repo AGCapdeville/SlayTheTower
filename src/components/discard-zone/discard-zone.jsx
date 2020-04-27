@@ -10,17 +10,14 @@ const DiscardZone = () =>{
     const player = usePlayer();
     const dispatch = useDispatch();
     return(
-
         <div className = {styles.discardZone}>
-            
-            <div className = {styles.void}> 
-                {player.void.length}
+            <div className={styles.void}> 
+                VOID: <div/> {player.void.length}
             </div>
-            
-            <button onClick={ () => dispatch( playCard() ) }> discard/play </button>
-            
-            <div className = {styles.discard}>
-                {player.discard.length}
+            <div className={styles.discard}>
+                DISCARD: <div/> {player.discard.length}
+                {/* <div/> */}
+                {/* <button className={styles.devButton} onClick={ () => dispatch( playCard() ) }> discard/play </button> */}
             </div>
         </div>
     );

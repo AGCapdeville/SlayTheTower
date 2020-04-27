@@ -14,8 +14,8 @@ export const setDeck = createAction('player/SET_DECK');
 export const drawCard = createAction('player/DRAW_CARD');
 export const playCard = createAction('player/PLAY_CARD');
 
-// Test:
-export const playIndexedCard = createAction('player/PLAY_INDEXED_CARD')
+export const playIndexedCard = createAction('player/PLAY_INDEXED_CARD');
+export const discardHand = createAction('player/DISCARD_HAND');
 
 export const voidCard = createAction('player/VOID_CARD');
 export const shuffleDeck = createAction('player/SHUFFLE_DECK');
@@ -81,16 +81,27 @@ const reducePlayIndexedCard = ({ discard, hand, ...rest } , {payload}) => {
     console.log(payload)
 
     if (!emptyHand){
-        const newHand =  hand.slice( payload, 1)
-        const newDiscard = [...discard, hand[payload]]
+        const grabCard = hand[payload]
+        hand.splice(payload, 1)
+        const newHand = hand
+        const newDiscard = [...discard, grabCard]
         return { ...rest, hand: newHand, discard: newDiscard}
     }else{
         return { ...rest, hand, discard}
     }
-
-    return {...rest, discard, hand}
 }
 
+const reduceDiscardHand = ({ discard, hand, ...rest }) => {
+    const emptyHand = hand.length < 1;
+
+    if (!emptyHand){
+        const newHand = []
+        const newDiscard = [...discard, ...hand ]
+        return { ...rest, hand: newHand, discard: newDiscard}
+    }else{
+        return { ...rest, hand, discard}
+    }
+}
 
 
 export default handleActions({
@@ -101,8 +112,9 @@ export default handleActions({
     
     [drawCard]: reduceDrawCard,
     [playCard]: reducePlayCard,
-
+    
     [playIndexedCard]: reducePlayIndexedCard,
+    [discardHand]: reduceDiscardHand,
 
     [voidCard]: (state, action) => ({...state, hand: state.hand.slice(action.payload, 1), voidPile: [...state.void, state.hand.slice(action.payload, 1)]}),
 }, initialState);
@@ -121,6 +133,8 @@ const selectPlayer = createSelector(
 
 export const usePlayer = () => useSelector(selectPlayer);
 
+
+
 // Async Actions
 export const applyCard = (cardIndex) => (dispatch, getState) => {
     const state = getState();
@@ -128,7 +142,7 @@ export const applyCard = (cardIndex) => (dispatch, getState) => {
     const card = state.player.hand[cardIndex]
     const energyCost = card.energy;
 
-    if (energyCost < state.player.energy) {
+    if (energyCost <= state.player.energy) {
         const newEnergy = state.player.energy - energyCost
         if (card.action.target=="foe"){
             if (card.action.effect=="damage"){

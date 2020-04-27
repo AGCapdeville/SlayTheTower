@@ -2,25 +2,29 @@
 
 
 .discardZone {
-    height: 52vh;
-    width: 15vw;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    display: block;
+    padding: 5px;
+    background-color: black;
+    font-size: 12px;
+
 }
 .void {
-    height: 4vh;
-    width: 4vw;
-    color: white;
-    background-color: purple;
-    margin-bottom: 10px;
+    color: purple;
+    text-align: center;
 }
 
 .discard {
-    height: 4vh;
-    width: 4vw;
     color: white;
+    text-align: center;
+}
+
+.devButton{
+    color: white; 
+    border: none;
+    background-color: darkslategrey;
+    transition-duration: 0.3s;
+}
+
+.devButton:hover{
     background-color: black;
-    margin-bottom: 10px;
 }

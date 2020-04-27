@@ -11,23 +11,28 @@
 
 .activeZone {
 
-    height: 52vh;
-    width: 80vw;
+    height: 42vh;
+    width: 72vw;
+    margin-left: 5px;
+
     display: flex;
     align-items: center;
+    justify-content: center;
 }
 .hand {
     height: 40vh;
-    width: 80vw;
+    width: 65vw;
     display: flex;
     flex-direction: column;
     font-family: $gameFont;
+    align-items: center;
+
 }
 
 .card {
-    font-size: 8px;
-    height: 35vh;
-    width: 12vw;
+    font-size: 11px;
+    height: 25vh;
+    width: 11vw;
     flex-direction: row;
     color: whitesmoke;
     background-color: black;
@@ -48,7 +53,7 @@
 
     display: flex;
     color: white; 
-    background-color: gray;
+    background-color: rgb(83, 83, 83);
     font-family: $gameFont;
     -webkit-text-stroke-width: .5px;
     -webkit-text-stroke-color: black;
