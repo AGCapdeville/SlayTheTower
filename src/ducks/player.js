@@ -139,16 +139,24 @@ export const usePlayer = () => useSelector(selectPlayer);
 export const applyCard = (cardIndex) => (dispatch, getState) => {
     const state = getState();
 
+
     const card = state.player.hand[cardIndex]
     const energyCost = card.energy;
+    const foeArmor = state.foe.armor
 
     if (energyCost <= state.player.energy) {
         const newEnergy = state.player.energy - energyCost
         if (card.action.target=="foe"){
             if (card.action.effect=="damage"){
                 const damage = card.action.power
-                const newFoeHealth = parseInt(state.foe.health) - parseInt(damage)
-                dispatch(updateFoe({ health: newFoeHealth }))
+                const trample = foeArmor - damage
+                if (trample < 0) {
+                    const newFoeHealth = parseInt(state.foe.health) + parseInt(trample)
+                    dispatch(updateFoe({ health: newFoeHealth, armor: 0}))
+                }else{
+                    const newFoeArmor = trample
+                    dispatch(updateFoe({ armor: newFoeArmor }))
+                }
                 dispatch(updatePlayer({ energy: newEnergy }))
             }
         } else {

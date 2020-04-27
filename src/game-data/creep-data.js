@@ -40,6 +40,51 @@ export const creeps = [
             }
         ]
     },
+    {
+        name: 'Living Armor',
+        art: 'https://i.imgur.com/yl0eGRj.png?4',
+        health: 55,
+        total: 55,
+        armor: 0,
+        telegraphing: [
+            {
+                name: ['Lunging Strike'],
+                order: 0,
+                target: ['hero'],
+                effect: ['damage'],
+                power: [30]
+            }],
+        moves: [
+            {
+                name: ['Lunging Strike'],
+                order: 0,
+                target: ['hero'],
+                effect: ['damage'],
+                power: [30]
+            },
+            {
+                name: ['Defensive Mode'],
+                order: 1,
+                target: ['self'],
+                effect: ['wait'],
+                power: [0]
+            },
+            {
+                name: ['Repair'],
+                order: 2,
+                target: ['self'],
+                effect: ['heal'],
+                power: [20]
+            },
+            {
+                name: ['Offensive Mode'],
+                order: 3,
+                target: ['self'],
+                effect: ['wait'],
+                power: [0]
+            },
+        ]
+    }
     // {
     //     name: 'Living Armor',
     //     art: 'https://i.imgur.com/yl0eGRj.png?4',

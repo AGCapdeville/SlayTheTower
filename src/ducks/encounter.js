@@ -70,17 +70,19 @@ export const endTurn = () => (dispatch, getState) => {
             
         } else {
             const newArmor = trample
-            const newHealth = player.health + trample
-            setTimeout( function(){ dispatch( updatePlayer({ health: newHealth, armor: newArmor }) ) },4000);    
+            setTimeout( function(){ dispatch( updatePlayer({ armor: newArmor }) ) },4000);    
         }
         //  if players health drops to 0, exit game... do that later
 
-    } else {
+    } else if (telegraphing[0].effect == 'armor') {
         const newFoeArmor = telegraphing[0].power
         const moveMsg = foe.name + " uses " + telegraphing[0].name + " gaining\n" + telegraphing[0].power + " armor"
         setTimeout( function(){ combatMsgs.innerHTML = moveMsg }, 3000)
         setTimeout( function(){ dispatch( updateFoe({ armor: newFoeArmor })) },4000);
     }
+
+    // adding in a new foe effects...
+    // if ( telegraphing[0].effect == ) 
 
     const moves = foe.moves
     const lengthOfMoves = Object.keys(moves).length

@@ -22,6 +22,23 @@ function updateHealthBar(health, maxHealth){
     }
 }
 
+function updateArmorBar(armor){
+    var bar = document.getElementById("armorBar")
+    bar.style.backgroundColor = 'lightblue'
+    bar.style.position = 'absolute'
+    bar.style.opacity = '.75'
+
+    if (armor == 0){
+        bar.style.height = "4vh"
+        bar.style.width = "0vw" // 80 is max armor... should reach that tho...
+    }
+
+    if (armor > 0 ){
+        const newArmor = (armor/80) // 80vw
+        bar.style.width = armor + "vw"        
+    }
+}
+
 const PlayerHealth = () =>{
 
     const player = usePlayer();
@@ -29,6 +46,10 @@ const PlayerHealth = () =>{
     useEffect( () => {
         updateHealthBar(player.health, player.maxHealth)
     }, [player.health])
+
+    useEffect( () => {
+        updateArmorBar(player.armor)
+    }, [player.armor])
     
     return(
         <div className = {styles.playerHealthBorder}> 
@@ -36,6 +57,7 @@ const PlayerHealth = () =>{
                 {player.health} / {player.maxHealth}
             </div>
             <div id="playerHealthBar"> </div> 
+            <div id="armorBar"> </div>
         </div>
     );
 }

@@ -19,6 +19,24 @@ function updateFoeHealthBar(foeHealth, foeMax){
     }
 }
 
+function updateFoeArmorBar(armor){
+    var x = document.getElementById("foeArmorBar")
+    x.style.backgroundColor = "lightblue"
+    x.style.opacity = ".75"
+    x.style.position = "absolute"
+
+    if (armor == 0){
+        x.style.height = "2vh"
+        x.style.width = "0vw"
+    }
+
+    if (armor > 0){
+        // const dmg = ((foeHealth/foeMax)*20)
+        const newArmor = ((armor/100)*20)
+        x.style.width = newArmor + "vw"        
+    }
+}
+
 function getTelegraph(foe){
     try{
         // debugger;
@@ -35,6 +53,7 @@ const FoeZone = () =>{
 
     const { health: foeHealth } = useFoe();
     const { total: foeMax } = useFoe();
+    const { armor: foeArmor } = useFoe();
     const foe = useFoe();
     // const mv = foe.moves
     // console.log( "test:", foe.moves ) 
@@ -45,6 +64,10 @@ const FoeZone = () =>{
     useEffect(() => {
         updateFoeHealthBar(foeHealth, foeMax)
     }, [foeHealth]);
+
+    useEffect(() => {
+        updateFoeArmorBar(foeArmor)
+    }, [foeArmor])
     
     return(
         <div className={styles.foeZone}>
@@ -58,6 +81,7 @@ const FoeZone = () =>{
                     <div className = {styles.foeHealthIndicator}> 
                         {foe.health} / {foe.total} 
                     </div>
+                    <div id="foeArmorBar"> </div>
                     <div id="foeHealthBar"> </div>
                     {/* className = {styles.foeHealthBar} */}
                 </div>
