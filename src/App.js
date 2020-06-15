@@ -1,11 +1,13 @@
 import React from 'react';
-import Title from './components/title';
-import Encounter from './components/encounter';
+import Title from './components/screens/title';
+import Encounter from './components/screens/encounter';
+import End from './components/screens/end';
 import { useScreen } from './ducks/screen';
 
 const screens = {
   Title,
   Encounter,
+  End,
 }
 
 const App = () => {

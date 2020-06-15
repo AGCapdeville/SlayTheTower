@@ -1,19 +1,4 @@
-@import "../../design-standards/constants.scss";
-
-// Specific styling here:
-
-
-
-// For desktop ver.
-// .background {
-//     width: 100vw;
-//     height: 100vh;
-//     display: flex;
-//     flex-direction: row;
-//     font-family: $gameFont;
-//     color: black;
-//     background-color: black;
-// }
+@import "../../../design-standards/constants.scss";
 
 .game {
     display: flex;

@@ -35,9 +35,6 @@ export const endTurn = () => (dispatch, getState) => {
     zone.style.position = "absolute"
 
     var turnBttn = document.getElementById('turnBttn');
-
-
-
     
 
     var combatMsgs = document.getElementById('combatMsgs');
