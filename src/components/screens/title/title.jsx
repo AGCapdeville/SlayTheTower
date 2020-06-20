@@ -6,12 +6,16 @@ import { useDispatch } from 'react-redux';
 import { updatePlayer } from '../../../ducks/player'
 import { heros } from '../../../game-data/heros-data'
 
+import { updateClimbState } from '../../../ducks/climbState';
+import { gameState } from '../../../game-data/game-state';
+
 const TitleScreen = () => {
 
     const dispatch = useDispatch();
 
     // TODO: MOVE TO HERO WEAPON SELECTION SCREEN
     dispatch(updatePlayer(heros[0]))
+    dispatch(updateClimbState(gameState))
     
     return (
         <div className={titleStyle.game} >

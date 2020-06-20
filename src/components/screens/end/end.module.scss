@@ -1,82 +1,80 @@
 @import "../../../design-standards/constants.scss";
 
-.game {
+.gameScreen {
     height: $screenHeight;
     width: $screenWidth;
+
+    color: white;
 
     display: flex;
     flex-direction: column;
     align-items: center;
     font-family: $gameFont;
-}
 
-.playerZone {
-    height: $playerZoneHeight;
-    width: $playerZoneWidth;
     display: flex;
-    flex-direction: row;
     align-items: center;
-    justify-content: flex-end;
-    background: linear-gradient(to bottom, #6c6eb2 0%,#181870 64%,#000028 100%);
-    box-shadow: 
-    2px 2px #e7dfe7,
-    -2px -2px #e7dfe7,
-    2px -2px #e7dfe7,
-    -2px 2px #e7dfe7,
-    0 -1px #9c9a9c,
-    -1px 0 #7b757b,
-    0 1px #424542;
-    overflow: auto;
+    justify-content: center;
 }
 
-
-
-.combatZoneOverlay {
-    width: 100vw;
-    height: 40vh;
+.menuContainer {
+    height: 95vh;
+    width: 95vw;
+    margin: 5px;
 
     display: flex;
-    justify-content: flex-end; 
-    position: absolute;
-    align-items: flex-end;
     flex-direction: column;
+    background-color: silver;
 }
 
-.combatMsgs {
-    background-color: gray;
+.menuHeader {
+    width: auto;
+    height: 10vh;
+    // margin: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #424542;
+}
+
+.menuBody {
+    width: auto;
+    height: 70vh;
+    display: flex;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    align-items: center;
+    justify-content: center;
+    background-color: #424542;
+
+}
+
+.menuFooter {
+    width: auto;
+    height: 20vh;
+    display: flex;
+    // margin: 5px;
+    align-items: center;
+    justify-content: center;
+    background-color: #424542;
+}
+
+.menuOption {
+    width: auto;
+    height: 5vh;
 
     display: flex;
-    width: 25vw;
-    height: 20vh;
-    margin-right: 15px;
-    padding: 5px;
-    font-size: 9px;
-}
+    align-items: center;
+    justify-content: center;
 
-
-
-// .menu {
-//     position: relative;
-//     margin-left: 20vh;
-//     margin-right: vwpx;
-
-//     width: auto;
-//     height: 175px;
-
-//     display: flex;
-//     align-items: center;
-//     justify-content: center;
-
-//     background: linear-gradient(to bottom, #6c6eb2 0%,#181870 64%,#000028 100%);
-//     border-radius: 8px;
-//     border: 1px solid #424542;
+    background: linear-gradient(to bottom, #6c6eb2 0%,#181870 64%,#000028 100%);
+    border-radius: 8px;
+    border: 1px solid #424542;
     
-//     box-shadow: 4px 4px #e7dfe7,
-//                 -4px -4px #e7dfe7,
-//                 4px -4px #e7dfe7,
-//                 -4px 4px #e7dfe7,
-//                 0 -2px #9c9a9c,
-//                 -2px 0 #7b757b,
-//                 0 2px #424542;
-//     overflow: auto;
-// }
+    box-shadow: 4px 4px #e7dfe7,
+                -4px -4px #e7dfe7,
+                4px -4px #e7dfe7,
+                -4px 4px #e7dfe7,
+                0 -2px #9c9a9c,
+                -2px 0 #7b757b,
+                0 2px #424542;
+}

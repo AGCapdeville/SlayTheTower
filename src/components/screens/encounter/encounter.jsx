@@ -15,13 +15,17 @@ import FoeZone from '../../foe-zone'
 import TurnBttn from '../../turn-bttn'
 
 import { useFoe } from '../../../ducks/foe'
-// import { usePlayer } from '../../../ducks/player'
+
+import { updateClimbState } from '../../../ducks/climbState';
+
+
 
 const EncounterScreen = () => {
     const { health: foeHealth } = useFoe();
     const player = usePlayer();
 
     const dispatch = useDispatch();
+    
 
     useEffect(() => {
         dispatch(spawnFoe());
@@ -33,17 +37,14 @@ const EncounterScreen = () => {
         // This block of code only executes when foeHealth changes
         console.log("encounter foe hp:", foeHealth)
         if (foeHealth <= 0) {
-            alert("Victory")
-            // update end screen with win
             dispatch(setScreen('End'))
         }
     }, [foeHealth]);
 
     useEffect(() => {
         if (player.health <= 0) {
-            alert("Defeat")
-            // update end screen with loss
-            dispatch(setScreen('End'))
+            dispatch( updateClimbState({defeat:true}) )
+            dispatch( setScreen('End') )
         }
     }, [player.health]);
 

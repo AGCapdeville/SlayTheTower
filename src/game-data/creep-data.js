@@ -1,12 +1,12 @@
 
 
 
-
 export const creeps = [
     {
         name: 'Slime',
         art: 'https://i.imgur.com/Sun4iBT.png?1',
-        health: 36,
+        // health: 36, <- normal health
+        health: 5,
         total: 36,
         armor: 0,
         telegraphing: [{ 

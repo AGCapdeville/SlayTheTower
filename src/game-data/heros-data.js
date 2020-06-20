@@ -3,7 +3,8 @@ import {cards} from './card-data'
 export const heros = [
     {
         hero: 'sword',
-        health: 55,
+        // health: 55,
+        health: 10,
         maxHealth: 55,
         energy: 3,
         armor: 0,
