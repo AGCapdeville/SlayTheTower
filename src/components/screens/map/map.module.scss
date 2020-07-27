@@ -1,0 +1,95 @@
+@import "../../../design-standards/constants.scss";
+
+.gameScreen {
+    height: $screenHeight;
+    width: $screenWidth;
+
+    color: white;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: $gameFont;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.menuContainer {
+    height: 95vh;
+    width: 95vw;
+    margin: 5px;
+
+    display: flex;
+    flex-direction: column;
+    background-color: silver;
+}
+
+.menuHeader {
+    width: auto;
+    height: 10vh;
+    // margin: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #424542;
+}
+
+.menuBody {
+    width: auto;
+    height: 70vh;
+    display: flex;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    align-items: center;
+    justify-content: center;
+    background-color: #424542;
+
+}
+
+.menuFooter {
+    width: auto;
+    height: 20vh;
+    display: flex;
+    // margin: 5px;
+    align-items: center;
+    justify-content: center;
+    background-color: #424542;
+}
+
+.menuOption {
+    width: auto;
+    height: 5vh;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: linear-gradient(to bottom, #6c6eb2 0%,#181870 64%,#000028 100%);
+    border-radius: 8px;
+    border: 1px solid #424542;
+    
+    box-shadow: 4px 4px #e7dfe7,
+                -4px -4px #e7dfe7,
+                4px -4px #e7dfe7,
+                -4px 4px #e7dfe7,
+                0 -2px #9c9a9c,
+                -2px 0 #7b757b,
+                0 2px #424542;
+}
+
+.mapContainer {
+}
+.node {
+    width: auto;
+    height: auto;
+    margin: 10px;
+}
+
+.nodeArray{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}

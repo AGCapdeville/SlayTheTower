@@ -15,7 +15,7 @@ const Card = () =>{
         <div>
             {
                 player.hand.map( (card, index) =>
-                    <button onClick={ () => onCardClick(index) } className={styles.customButton}>
+                    <button key={index} onClick={ () => onCardClick(index) } className={styles.customButton}>
                         <div className = {styles.card}>
 
                             <div className = {styles.titleSection}>

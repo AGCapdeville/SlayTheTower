@@ -22,6 +22,7 @@ const TitleScreen = () => {
             <div className={titleStyle.title} >SLAY THE TOWER</div>
             <div className={titleStyle.menu} onClick={() => dispatch(setScreen('Encounter'))}> TEST ENCOUNTER</div>
             <div className={titleStyle.menu} onClick={() => dispatch(setScreen('HeroSelection'))}> NEW GAME </div>
+            <div className={titleStyle.menu} onClick={() => dispatch(setScreen('Map'))}> TEST MAP </div>
         </div>
     );
 }
