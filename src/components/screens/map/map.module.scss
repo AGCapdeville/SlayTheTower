@@ -17,7 +17,7 @@
 }
 
 .menuContainer {
-    height: 95vh;
+    height: auto;
     width: 95vw;
     margin: 5px;
 
@@ -52,7 +52,6 @@
     width: auto;
     height: 20vh;
     display: flex;
-    // margin: 5px;
     align-items: center;
     justify-content: center;
     background-color: #424542;
@@ -79,15 +78,62 @@
                 0 2px #424542;
 }
 
-.mapContainer {
+
+
+
+
+.pathRowContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+.pathRow{
+    display: flex;
+    flex-direction: row;
 }
 .node {
     width: auto;
     height: auto;
-    margin: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
 }
 
-.nodeArray{
+
+.pathColumnOutline {
+    border: black;
+    border-style: dashed;
+    border-width: .5px;
+}
+.pathRowOutline{
+    border: black;
+    border-style: dashed;
+    border-width: .5px;
+}
+
+.nodeRow {
+    display: flex;
+    flex-direction: col;
+}
+
+.nodeBlock{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 30px;
+    height: 30px;
+    margin: 1px;
+    font-size: 5px;
+    background-color: white;
+    color: dodgerblue;
+
+    border: black;
+    border-style: solid;
+    border-width: 1px;
+}
+
+.pathArray{
     display: flex;
     flex-direction: row;
     align-items: center;
