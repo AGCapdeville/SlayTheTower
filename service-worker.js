@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/SlayTheTower/precache-manifest.cf6ed90d71e2ec9a44d48ea3cc8153dd.js"
+  "/SlayTheTower/precache-manifest.b6f8005018cafc5e450b164bbf60e9c9.js"
 );
 
 self.addEventListener('message', (event) => {
