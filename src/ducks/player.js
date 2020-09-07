@@ -19,6 +19,7 @@ export const discardHand = createAction('player/DISCARD_HAND');
 
 export const voidCard = createAction('player/VOID_CARD');
 export const shuffleDeck = createAction('player/SHUFFLE_DECK');
+export const resetDeck = createAction('player/RESET_DECK')
 
 // Hand actions
 export const drawHand = createAction('player/DRAW_HAND');
@@ -44,9 +45,15 @@ function shuffle(deck) {
  *  health,
  *  deck,
  *  health,
+ *  gold,
  * }
  */
 
+const reduceResetDeck = ({ hand, deck, discard, ...rest }) => {
+    const newDiscard = [...discard, ...hand ]
+    const newDeck = [...deck, ...newDiscard]
+    return { ...rest, hand: [], deck: newDeck, discard: [] }
+}
 
 const reduceDrawCard = ({ discard, deck, hand, ...rest }) => {
     if ( deck.length == 0 ){
@@ -110,6 +117,8 @@ export default handleActions({
     [updatePlayer]: (state, action) => ({ ...state, ...action.payload }),
     [setDeck]: (state, action) => ({...state, deck: action.payload }),
     
+    [resetDeck]: reduceResetDeck,
+
     [drawCard]: reduceDrawCard,
     [playCard]: reducePlayCard,
     

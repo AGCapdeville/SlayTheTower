@@ -3,9 +3,9 @@ import { useDispatch } from 'react-redux';
 import styles from "./encounter.module.scss";
 
 import { spawnFoe } from '../../../ducks/foe';
-import { drawHand, shuffleDeck, useCard, usePlayer } from '../../../ducks/player';
+import { usePlayer, updatePlayer } from '../../../ducks/player';
 
-import { setScreen } from '../../../ducks/screen';
+import { updateScreen } from '../../../ducks/screen';
 
 import Hand from '../../hand'
 import DrawZone from '../../draw-zone'
@@ -17,7 +17,7 @@ import TurnBttn from '../../turn-bttn'
 import { useFoe } from '../../../ducks/foe'
 
 import { updateClimbState } from '../../../ducks/climbState';
-
+import { updateMap } from '../../../ducks/map';
 
 
 const EncounterScreen = () => {
@@ -28,23 +28,23 @@ const EncounterScreen = () => {
     
 
     useEffect(() => {
-        dispatch(spawnFoe());
-        dispatch(shuffleDeck());
-        dispatch(drawHand());
-    }, []);
-
-    useEffect(() => {
         // This block of code only executes when foeHealth changes
         console.log("encounter foe hp:", foeHealth)
         if (foeHealth <= 0) {
-            dispatch(setScreen('End'))
+            dispatch(spawnFoe());
+            dispatch( updateScreen('Map') )
+            dispatch( updatePlayer({ energy: 3, armor:0 }) )
+            // dispatch( updateScreen('End') ) < - - - - - - When resolve: victory screen is working...
         }
     }, [foeHealth]);
 
     useEffect(() => {
         if (player.health <= 0) {
+            dispatch(spawnFoe());
             dispatch( updateClimbState({defeat:true}) )
-            dispatch( setScreen('End') )
+            dispatch( updatePlayer({ energy: 3, armor:0 }) )
+            // dispatch( updateScreen('End') ) < - - - - - - When resolve: death screen is working...
+            dispatch( updateScreen('Map') )
         }
     }, [player.health]);
 

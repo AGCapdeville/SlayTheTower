@@ -7,7 +7,7 @@ import { gameState } from '../../../game-data/game-state';
 import { updateClimbState } from '../../../ducks/climbState';
 import { updatePlayer } from '../../../ducks/player'
 import { heros } from '../../../game-data/heros-data'
-import { setScreen } from '../../../ducks/screen';
+import { updateScreen } from '../../../ducks/screen';
 
 // import { HeroDetail } from './hero-detail';
 
@@ -22,7 +22,7 @@ const HeroSelection = () => {
         console.log(heroType)
         dispatch(updatePlayer(heros[0]))
         dispatch(updateClimbState(gameState))
-        dispatch(setScreen('Encounter'))
+        dispatch(updateScreen('Encounter'))
         // will be changed to map screen.
     }
 

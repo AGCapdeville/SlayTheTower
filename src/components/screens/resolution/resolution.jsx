@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import styles from "./end.module.scss";
+import styles from "./resolution.module.scss";
 import { useClimbState } from '../../../ducks/climbState'
 
 
-import { setScreen } from '../../../ducks/screen';
+import { updateScreen } from '../../../ducks/screen';
 
 
 // need to import reward cards...
@@ -15,7 +15,7 @@ import { setScreen } from '../../../ducks/screen';
 // import { drawHand, shuffleDeck, useCard } from '../../ducks/player';
 
 
-const EndScreen = () => {
+const ResolutionScreen = () => {
 
     const dispatch = useDispatch();
     const climbState = useClimbState();
@@ -47,7 +47,7 @@ const EndScreen = () => {
             </div>
 
             <div className={styles.menuFooter}>
-                <div className={styles.menuOption} onClick={() => dispatch(setScreen('Title'))}>
+                <div className={styles.menuOption} onClick={() => dispatch(updateScreen('Title'))}>
                     {bttn}
                 </div>
             </div>
@@ -59,5 +59,5 @@ const EndScreen = () => {
 }
 
 
-export default EndScreen;
+export default ResolutionScreen;
 

@@ -3,12 +3,12 @@ import { useSelector } from "react-redux";
 import { createSelector } from "reselect";
 
 
-export const setScreen = createAction('screen/SET_SCREEN');
+export const updateScreen = createAction('screen/UPDATE_SCREEN');
 
 const initialSreenState = 'Title';
 
 export default handleActions({
-    [setScreen]: (state, action) => state = action.payload,
+    [updateScreen]: (state, action) => state = action.payload,
 }, initialSreenState);
 
 const selectScreen = createSelector(

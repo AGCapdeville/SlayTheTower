@@ -3,15 +3,15 @@ import {cards} from './card-data'
 export const heros = [
     {
         hero: 'sword',
-        // health: 55,
-        health: 10,
+        health: 55,
         maxHealth: 55,
         energy: 3,
         armor: 0,
         deck: [0,0,0,0,0,1,1,1,1,1,2].map(id => cards[id]),
         hand: [],
         discard: [],
-        void: []
+        void: [],
+        gold: 50
     },
 
     {
@@ -23,7 +23,8 @@ export const heros = [
         deck: [0,0,0,0,0,1,1,1,1,1,2].map(id => cards[id]),
         hand: [],
         discard: [],
-        void: []
+        void: [],
+        gold: 50
     }
 ];
 

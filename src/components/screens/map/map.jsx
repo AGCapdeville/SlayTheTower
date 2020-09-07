@@ -1,472 +1,236 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
+import _, { random, isEmpty } from 'lodash';
 import styles from "./map.module.scss";
-import { useClimbState } from '../../../ducks/climbState'
-import { setScreen } from '../../../ducks/screen';
 
 
-import PoissonDiskSampling from 'poisson-disk-sampling'
-import { random, head } from 'lodash';
-import { useState } from 'react';
+import { useMap, updateMap } from '../../../ducks/map';
+import { updateScreen } from '../../../ducks/screen';
 
-import { TiArrowUpOutline, TiChevronLeftOutline } from "react-icons/ti";
-import { paths } from "../../../game-data/path-data"
+// For Encounters:
+import { usePlayer, drawHand, shuffleDeck, resetDeck } from '../../../ducks/player';
+import { spawnFoe } from '../../../ducks/foe';
 
-import _ from 'lodash';
 
-const mapWidth = 7;
-const mapHeight = 7;
+function eventHandler(event, dispatcher){
+  console.log("EVENT:", event)
+  switch (event) {
+    case '👹':
+      dispatcher(updateScreen('Title'));
+    case '💢':
+      break;
+    case '🔥':
+      break;
+    case '❗':
+      break;
+    case '💰':
+      break;
+    case '⚔️':
+      console.log('engaging combat...')
 
-/* initates map : row x column, with obj=empty */
-function initMap(rows, columns) {
-  var array = new Array(rows);
-  
-  for (var index = 0; index < rows; index++) {
-    array[index] = new Array(columns);
+      dispatcher(spawnFoe());
+      dispatcher(resetDeck());
+      dispatcher(shuffleDeck());
+      dispatcher(drawHand());
+      // Load fight before screen update?
+      dispatcher(updateScreen('Encounter'));
+      break;
+    default:
+      break;
   }
-
-  for (var x = 0; x < rows; x++){
-    for (let y = 0; y < columns; y++) {
-      array[x][y] = paths.find( paths => paths.path === 'empty')
-    }
-  }
-  
-  return array
 }
+
 function rollDice(min, max) {
   min = Math.ceil(min);
   max = Math.floor(max);
   return Math.floor(Math.random() * (max - min)) + min; 
 }
 
+function genPathLength(){
+  let length = rollDice(1,4)
+  let onesOdds = rollDice(0,50)
 
+  if (onesOdds == 0 && length == 1){
+    return 1
+  }
+  if (onesOdds < 1 && length == 3){
+    return 4
+  }
+  return length
+}
 
-/* returns direction 'N:E:S:W' */
-function getHeading( directionX, directionY ){
-  if (directionX > 0){
-    return 'E'
-  }else if (directionX < 0){
-    return 'W'
-  }else if (directionY > 0){
-    return 'S'
+function genEvent( roll, fightOdds, elieteOdds, bonfireOdds, trialOdds, shopOdds){
+  if ( roll < fightOdds){
+    return {  fieldEvent: '⚔️' }
+  }else if ( roll < elieteOdds ){
+    return {  fieldEvent: '💢' }
+  }else if ( roll < bonfireOdds ){
+    return {  fieldEvent: '🔥' }
+  }else if ( roll < trialOdds ){
+    return {  fieldEvent: '❗' }
+  }else if ( roll < shopOdds){
+    return {  fieldEvent: '💰' }
   }else{
-    return 'N'
+    return {  fieldEvent: '⚔️' }
   }
 }
-/* flips direction */
-function flip( direction ){
-  switch (direction) {
-    case 'N':
-      return 'S'
-    case 'S':
-      return 'N'
-    case 'E':
-      return 'W'
-    case 'W':
-      return 'E'
-  }
-}
-/* returns right of passed direction */
-function getRightOfDirection( direction ){
-  switch (direction) {
-    case 'N':
-      return 'E'
-    case 'E':
-      return 'S'
-    case 'S':
-      return 'W'
-    case 'W':
-      return 'N'
+
+function genPath( pathLength, setEvent ){
+
+  if ( setEvent ){
+    
+    let events = []
+    for (let e = 0; e < pathLength; e++) {
+      let roll = rollDice(0,101);
+      events.push(genEvent(roll, 70, 85, 100, 0, 0))
     }
-}
-/* returns left of passed direction */
-function getLeftOfDirection( direction ){
-  switch (direction) {
-    case 'N':
-      return 'W'
-    case 'E':
-      return 'N'
-    case 'S':
-      return 'E'
-    case 'W':
-      return 'S'
-    default:
-      return ''
-  }
-}
 
+    return({
+      fieldEvent: setEvent,
+      fieldPaths: pathLength,
+      fieldPathEvents: events
+    })
 
+  }else{
 
-
-/* Checks if path exists & connects: returns true, else false */
-function checkPath( direction, map, x, y ){
-  switch (direction) {
-    case 'N':
-      if (map[x][y-1].path != 'empty'){
-        // north exists
-        if(map[x][y-1].exitPoint.find( e => e === 'S')){
-          // north connects
-          return true
-        }else{
-          return false
-        }
-      } else {
-        return false
-      }
-    case 'E':
-      if (map[x+1][y].path != 'empty'){
-        if (map[x+1][y].exitPoint.find( e => e === 'W')){
-          return true
-        } else {
-          return false
-        }
-      }else{
-        return false
-      }
-    case 'S':
-      if (map[x][y+1].path != 'empty'){
-        if (map[x][y+1].exitPoint.find( e => e === 'N')){
-          return true
-        } else {
-          return false
-        }
-      }else{
-        return false
-      }
-    case 'W':      
-      if (map[x-1][y].path !== 'empty'){
-        // west does exists...
-        if (map[x-1][y].exitPoint.find( e => e === 'E')){
-          // west connects
-          return true
-        }else{
-          return false
-        }
-      }else{
-        return false
-      }
-  }
-}
-/* Checks if path exists & does not connect: return true, else, false  */
-function checkPathVoid( direction, map, x, y ){
-  switch (direction) {
-    case 'N':
-      if (map[x][y-1].path != 'empty'){
-        if(map[x][y-1].exitPoint.find( e => e === 'S')){
-          return false
-        }else{
-          return true
-        }
-      } else {
-        return false
-      }
-    case 'E':
-      if (map[x+1][y].path != 'empty'){
-        if (map[x+1][y].exitPoint.find( e => e === 'W')){
-          return false
-        } else {
-          return true
-        }
-      }else{
-        return false
-      }
-    case 'S':
-      if (map[x][y+1].path != 'empty'){
-        if (map[x][y+1].exitPoint.find( e => e === 'N')){
-          return false
-        } else {
-          return true
-        }
-      }else{
-        return false
-      }
-    case 'W':
-      if (map[x-1][y].path != 'empty'){
-        if (map[x-1][y].exitPoint.find( e => e === 'E')){
-          return false
-        }else{
-          return true
-        }
-      }else{
-        return false
-      }
-  }
-}
-/* Checks path on right: if a path exists, return {true & update directions}, else, {false}  */
-function checkRightPath( map, x, y, directionX, directionY ){
-  let heading = getHeading( directionX, directionY )
-  switch (heading) {
-    case 'N':
-      if ( map[x+1][y].path == 'empty' ){
-        return {canTurn:true, updateX:1, updateY:0}
-      }else{
-        return {canTurn:false , directionX, directionY}
-      }
-    case 'E':
-      if ( map[x][y+1].path == 'empty' ){
-        return {canTurn:true, updateX:0, updateY:1}
-      }else{
-        return {canTurn:false, directionX, directionY}
-      }
-    case 'S':
-      if ( map[x-1][y].path == 'empty' ){
-        return {canTurn:true, updateX:-1, updateY:0}
-      }else{
-        return {canTurn:false, directionX, directionY}
-      }
-    case 'W':
-      if ( map[x][y-1].path == 'empty' ){
-        return {canTurn:true, updateX:0, updateY:-1}
-      }else{
-        return {canTurn:false, directionX, directionY}
-      }
-  }
-}
-
-
-/* returns required paths as: 'N:E:S:W' if true */
-function getRequiredPaths( north, east, south, west ){
-  let requiredPaths = []
-  if (north){
-    requiredPaths.push('N')
-  }
-  if (east){
-    requiredPaths.push('E')
-  }
-  if (south){
-    requiredPaths.push('S')
-  }
-  if (west){
-    requiredPaths.push('W')
-  }
-  return requiredPaths
-}
-/* returns void paths as: 'N:E:S:W' if true */
-function getVoidPaths( north, east, south, west ){
-  let voidPaths = []
-  if (north){
-    voidPaths.push('N')
-  }
-  if (east){
-    voidPaths.push('E')
-  }
-  if (south){
-    voidPaths.push('S')
-  }
-  if (west){
-    voidPaths.push('W')
-  }
-  return voidPaths
-}
-
-
-
-
-
-function genNewPath(map, currentX, currentY, directionX, directionY){
-  let path = {}
-  let newDirectionX = directionX
-  let newDirectionY = directionY
-
-  // move
-  let locationX = currentX + directionX
-  let locationY = currentY + directionY
-  // move done.
-
-  // check suroundings
-  // True: if exists & connects
-  let northPathRequired = checkPath('N', map, locationX, locationY)
-  let eastPathRequired = checkPath('E', map, locationX, locationY)
-  let southPathRequired = checkPath('S', map, locationX, locationY)
-  let westPathRequired = checkPath('W', map, locationX, locationY)
-
-  // True: if exists & does not connect
-  let northPathVoid = checkPathVoid('N', map, locationX, locationY)
-  let eastPathVoid = checkPathVoid('E', map, locationX, locationY)
-  let southPathVoid = checkPathVoid('S', map, locationX, locationY)
-  let westPathVoid = checkPathVoid('W', map, locationX, locationY)
-
-  // update direction if we can turn right 
-  let canTurnRight = checkRightPath( map, locationX, locationY, directionX, directionY)
-
-  if ( canTurnRight.canTurn ) {
-    console.log('! ! ! ! TURNING RIGHT ! ! ! !')
-    newDirectionX = canTurnRight.updateX
-    newDirectionY = canTurnRight.updateY
-  }
-  // check Done
-  
-  let heading = getHeading( directionX, directionY )
-  // create path based on checks
-  let dice = rollDice(0,9)
-
-  let requiredPaths = getRequiredPaths( northPathRequired, eastPathRequired, southPathRequired, westPathRequired )
-  let voidPaths = getVoidPaths( northPathVoid, eastPathVoid, southPathVoid, westPathVoid)
-
-  console.log('required paths:', requiredPaths)
-
-
-  if (requiredPaths.length == 0){
-    if (voidPaths.length == 1){ // 1 void, ( prev )
-      path = paths.find(paths => paths.path === 'corner')
-      path.exitPoint.push(heading)
-      path.exitPoint.push(getRightOfDirection(heading))
-    }else{ // 2 voids
-      path = paths.find(paths => paths.path === 'corner')
-      path.exitPoint.push(heading)
-      path.exitPoint.push(getLeftOfDirection(heading))
+    // generate paths
+    let events = []
+    for (let e = 0; e < pathLength; e++) {
+      let roll = rollDice(0,101);
+      events.push(genEvent(roll, 70, 90, 100))
     }
-  }else if (requiredPaths.length == 1){
-    if (voidPaths.length == 0){
-      path = paths.find(paths => paths.path === 'cross')
-    }else if (voidPaths.length == 1){
-      path = paths.find(paths => paths.path === 'hall')
-      path.exitPoint.push( getLeftOfDirection(voidPaths[0]) )
-      path.exitPoint.push( flip(getLeftOfDirection(voidPaths[0])) )
+
+    // generate field of said paths
+    let roll = rollDice(0,101);
+    return({
+      fieldEvent: genEvent(roll, 70, 80, 87, 95, 100).fieldEvent,
+      fieldPaths: pathLength,
+      fieldPathEvents: events
+    })
+
+  }
+}
+
+function fillPaths( numberOfPaths, setEvent) {
+  const paths = []
+
+  for (let p = 0; p < numberOfPaths; p++) {
+    // Gen a new number of paths per field choice
+    paths.push( genPath( genPathLength(), setEvent ))
+  }
+
+  return paths
+}
+
+function startingField(startingPaths){
+  let newField = {
+    fieldEvent: 'START',
+    fieldPaths: startingPaths,
+    fieldPathEvents: fillPaths(startingPaths, '⚔️'),
+    count: 0
+  }
+  return newField
+}
+
+function createField( fieldEvents, fieldCount ){
+  let pathLength = 0
+  let fieldBatch = []
+
+  if ( fieldCount === 7){
+    for (let i = 0; i < fieldEvents.length; i++) {
+      fieldBatch.push({
+        fieldEvent: fieldEvents[i].fieldEvent,
+        fieldPaths: 0,
+        fieldPathEvents: [{
+          fieldEvent: "👹"
+        }]
+      })
     }
-  }else {
-    // 2 required paths:
-    path = paths.find(paths => paths.path === 'fork')
-    path.exitPoint = []
-    path.exitPoint.push(requiredPaths[0])
-    path.exitPoint.push(requiredPaths[1])
-    // coin flip for tail of the fork
-    if (dice < 5){
-      path.exitPoint.push(heading)
-    }else{
-      path.exitPoint.push( getLeftOfDirection(heading) )
+  }else{
+    for (let i = 0; i < fieldEvents.length; i++) {
+      pathLength = genPathLength()
+      fieldBatch.push({
+        fieldEvent: fieldEvents[i].fieldEvent,
+        fieldPaths: pathLength,
+        fieldPathEvents: fillPaths(pathLength)
+      })
     }
   }
 
-  return { path, newDirectionX, newDirectionY }
+  return fieldBatch
 }
-
-
-
-function genMap(walkLength){
-  // Initialize map with 'empty'
-  var map = []
-  map = initMap(mapWidth, mapHeight, 'empty')
-
-  // middle of map (kind of)
-  let currentX = Math.floor(mapWidth/2);
-  let currentY = Math.floor(mapHeight/2);
-  
-  const startingPath = paths.find( paths => paths.path === 'cross');
-  map[currentX][currentY] = startingPath
-
-  let directionX = 0
-  let directionY = -1
-
-  for (let step = 0; step < walkLength; step++) {
-    console.log('\n\n\n\n -  -  -  -  -  -  -  -  -  -  -  -  - ')
-    console.log(' -  -  -  -  -  -  - START  -  -  -  - ')
-
-    let pathInfo = genNewPath(map, currentX, currentY, directionX, directionY);
-    console.log('= = = = = = = = = = = = = = =')
-    console.log('new path:', pathInfo.path)
-    // update positions X & Y
-    currentX += directionX
-    currentY += directionY
-
-    map[currentX][currentY] = new pathInfo.path
-
-    // update new direction
-    directionX = pathInfo.newDirectionX
-    directionY = pathInfo.newDirectionY
-
-  }
-  return map;
-}
-
-
-
-
-
 
 const MapScreen = () => {
+
   const dispatch = useDispatch();
+  const currentField = useMap();
+  const UsePlayer = usePlayer();
 
-  let header = 'MAP'
-  let bttn = 'BACK'
 
+  useEffect(() => {
+    if (currentField.count === 0){
+      dispatch(updateMap(startingField(3)))
+    }
+  }, []);
+  
 
-  console.log('=START=')
+  const onPathSelection = (field) => {
+    let newField = {}
 
-  const map = genMap(6);
+    // check if the next event is going to be floor boss:
+    let isBossNext = field.fieldPathEvents.find( fields => fields.fieldEvent === "👹" )
+    
+    if ( isBossNext ){
+      newField = {
+        fieldEvent: field.fieldEvent,
+        fieldPaths: 1,
+        fieldPathEvents: [{
+            fieldEvent: "👹",
+            fieldPaths: 0,
+          fieldPathEvents: []
+        }],
+        count: currentField.count + 1
+      }
+    }else{
+      newField = {
+        fieldEvent: field.fieldEvent,
+        fieldPaths: field.fieldPathEvents.length,
+        fieldPathEvents: createField(field.fieldPathEvents, currentField.count),
+        count: currentField.count + 1
+      }
+    }
+    // update map...
+    dispatch(updateMap(newField))
+    eventHandler(newField.fieldEvent, dispatch)
+  }
 
-  console.log('complete walked map:', map)
 
   return (
-  <div className={styles.gameScreen}>
-      <div className={styles.menuContainer}>
+    <div style={{display:'flex', flexDirection:'column', justifyContent: 'center', alignItems: 'center', width: '100vw', height: '100vh', color: 'white'}}>
+      
+      <div style={{display:'flex', width:'90vw',flexDirection:'row', backgroundColor: 'black', color:'white'}}>
+        <strong style={{color:'red', margin:'10px'}}> ❤️ {UsePlayer.health}/{UsePlayer.maxHealth}</strong>
+      </div>
 
-          <div className={styles.menuHeader}>
-              {header}
-          </div>
+      <div style={{display:'flex', flexDirection:'column', justifyContent: 'center', alignItems: 'center', backgroundColor: 'black', width:'90vw', height:'90vh'}}>
+        <h1> Field Event: {currentField.fieldEvent}</h1>
 
-          <div className={styles.pathRowContainer}>
-            {map.map( (xCord, index) => 
-              <div key={index} className={styles.pathColumnOutline}>
-                {xCord.map( (yCord, index) => 
-                  <div key={index} className={styles.pathRowOutline}>
-                      <div className={styles.nodeRow}> 
-                        <div className={styles.nodeBlock}></div> 
-                        <div className={styles.nodeBlock}> {yCord?.exitPoint?.find(d => d === 'N')} </div> 
-                        <div className={styles.nodeBlock}></div> 
-                      </div>
-                      <div className={styles.nodeRow}> 
-                        <div className={styles.nodeBlock}>
-                          {yCord?.exitPoint?.find(d => d === 'W')}
-                        </div> 
-                        
-                        <div className={styles.nodeBlock}> 
-                          {yCord?.path}
-                        </div> 
-                        
-                        <div className={styles.nodeBlock}>
-                          {yCord?.exitPoint?.find(d => d === 'E')}
-                        </div> 
-                      </div>
-                      <div className={styles.nodeRow}> 
-                        <div className={styles.nodeBlock}></div> 
-                        <div className={styles.nodeBlock}> {yCord?.exitPoint?.find(d => d === 'S')} </div> 
-                        <div className={styles.nodeBlock}></div> 
-                      </div>
+        <div style={{display:'flex', flexDirection:'row',}}>
+          {currentField.fieldPathEvents.map( (field, index) =>
+            <button key={index} className={styles.pathButton} onClick={() => onPathSelection(field)}>
+                <h2>{field.fieldEvent}</h2>
+                {field.fieldPathEvents.map( (e, index) => 
+                  <div key={index} style={{display:'flex', margin:'2px', opacity:'.5'}}>
+                    {e.fieldEvent}
                   </div>
-
                 )}
-              </div>
-            )}          
-          </div>
-
-
-          {/* <>
-
-          <TiArrowUpOutline />
-          </> */}
-
-
-          {/* <div className={styles.mapContainer}>
-            {mapPoints.map( (point, index) => 
-              <div key={index} className={styles.nodeArray}>
-                {point}
-              </div>
-            )}
-          </div> */}
-
-
-
-          <div className={styles.menuFooter}>
-              <div className={styles.menuOption} onClick={() => dispatch(setScreen('Title'))}>
-                  {bttn}
-              </div>
-          </div>
-
+            </button>
+          )}
+        </div>
 
       </div>
-  </div>
-  
+
+    </div>
   );
 
 }
