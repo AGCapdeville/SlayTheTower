@@ -16,7 +16,17 @@ function eventHandler(event, dispatcher){
   console.log("EVENT:", event)
   switch (event) {
     case '👹':
+      // for now... reset map after boss.
+      dispatcher(updateMap(startingField(3)));
+      dispatcher(updateScreen({count:0}));
+      
+
+      // add argument for boss spawn..
+      // dispatcher(spawnFoe());
+      // dispatcher(updateScreen('Encounter'));
+
       dispatcher(updateScreen('Title'));
+
     case '💢':
       break;
     case '🔥':

@@ -9,7 +9,7 @@ import { creeps } from '../game-data/creep-data';
 // export const setFoeMoves = createAction('foe/SET_FOE_MOVES');
 export const spawnFoe = createAction('foe/SPAWN_FOE');
 export const updateFoe = createAction('foe/UPDATE_FOE');
-
+export const spawnFloorBoss = createAction('foe/SPAWN_FLOOR_BOSS');
 const initialState = { };
 
 // name: 'Slime',
@@ -42,6 +42,7 @@ const initialState = { };
 
 export default handleActions({
     [spawnFoe]: (state) => ({ ...state, ...creeps[0] }),
+    [spawnFloorBoss]: (state, action) => ({...state, ...action.payload}),
     [updateFoe]: (state, action) => {
         return ({ ...state, ...action.payload })
     },
