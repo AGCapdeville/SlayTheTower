@@ -23,7 +23,7 @@ function eventHandler(event, dispatcher){
       break;
     case '❗':
       break;
-    case '💰':
+    case '🕋':
       break;
     case '⚔️':
       console.log('engaging combat...')
@@ -69,7 +69,7 @@ function genEvent( roll, fightOdds, elieteOdds, bonfireOdds, trialOdds, shopOdds
   }else if ( roll < trialOdds ){
     return {  fieldEvent: '❗' }
   }else if ( roll < shopOdds){
-    return {  fieldEvent: '💰' }
+    return {  fieldEvent: '🕋' }
   }else{
     return {  fieldEvent: '⚔️' }
   }
@@ -208,8 +208,9 @@ const MapScreen = () => {
   return (
     <div style={{display:'flex', flexDirection:'column', justifyContent: 'center', alignItems: 'center', width: '100vw', height: '100vh', color: 'white'}}>
       
-      <div style={{display:'flex', width:'90vw',flexDirection:'row', backgroundColor: 'black', color:'white'}}>
-        <strong style={{color:'red', margin:'10px'}}> ❤️ {UsePlayer.health}/{UsePlayer.maxHealth}</strong>
+      <div style={{display:'flex', width:'90vw', flexDirection:'row', backgroundColor: 'black', color:'white'}}>
+        <strong style={{color:'red', margin:'10px' }}> ❤️ {UsePlayer.health}/{UsePlayer.maxHealth}</strong>
+        <strong style={{color:'gold', margin:'10px'}}> 💰{UsePlayer.gold}</strong>
       </div>
 
       <div style={{display:'flex', flexDirection:'column', justifyContent: 'center', alignItems: 'center', backgroundColor: 'black', width:'90vw', height:'90vh'}}>
