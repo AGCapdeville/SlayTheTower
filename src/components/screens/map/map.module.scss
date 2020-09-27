@@ -1,4 +1,48 @@
 
+@import "../../../design-standards/constants.scss";
+
+.screenContainer{
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+    color: white;
+}
+
+.screen{
+    display: flex;
+    width: 90vw;
+    height: 90vh;
+    background-color: $mainBackgroundColor;
+    flex-direction: column;
+}
+
+.screenHeader{
+    display: flex;
+    width: 90vw;
+    flex-direction: row;
+}
+
+.screenBody{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 90vw;
+    height: 90vh;
+}
+
+.mapContainer{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+
 .pathButton{ 
     display: flex;
     flex-direction: column;
@@ -6,10 +50,33 @@
     margin: 10px;
     outline-style: solid;
     outline-color: white;
-    background-color: black;
+    background-color: $mainBackgroundColor;
     color: white;
 
     &:active{
         outline: none;
     }
+}
+
+.legendContainer{
+    display: flex;
+    flex-direction: column;
+    width: 15vw;
+    font-weight: bold;
+    outline: 2px;
+    outline-style: solid;
+    padding: 10px;
+    margin: 20px;
+}
+
+.legendTitle{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px;
+}
+
+.legendItem{
+    display: flex;
+    margin: 5px;
 }

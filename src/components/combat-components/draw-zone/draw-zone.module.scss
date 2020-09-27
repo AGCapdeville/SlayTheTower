@@ -1,0 +1,30 @@
+@import "../../../design-standards/constants.scss";
+
+
+.drawZone {
+    display: block;
+    padding: 5px;
+    background-color: black;
+    font-size: 12px;
+}
+
+.energy {
+    color: yellow;
+    text-align: center;
+}
+
+.deck {
+    color: white; 
+    text-align: center;
+}
+
+.devButton{
+    color: white; 
+    border: none;
+    background-color: darkslategrey;
+    transition-duration: 0.3s;
+}
+
+.devButton:hover{
+    background-color: black;
+}

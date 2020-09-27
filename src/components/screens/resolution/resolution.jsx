@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import styles from "./resolution.module.scss";
 import { useClimbState } from '../../../ducks/climbState'
 
+import { usePlayer, updatePlayer } from '../../../ducks/player';
 
 import { updateScreen } from '../../../ducks/screen';
 
@@ -20,14 +21,18 @@ const ResolutionScreen = () => {
     const dispatch = useDispatch();
     const climbState = useClimbState();
 
+    // console.log(player.gold)
+
     let header = ''
     let body = ''
     let bttn = ''
-
+        
     if ( !climbState.defeat ) {
         header = 'VICTORY'
-        body = 'You Won! Unfortunately there is no rewards yet... But they are on there way!'
+        body = `You found G: +` + climbState.loot + ` \n !!! Cards to come later...`
         bttn = 'CONTINUE'
+        dispatch(updatePlayer({gold:climbState.playerGold + climbState.loot}))
+
     } else {
         header = 'DEFEAT'
         body = 'You Lost!'
@@ -47,7 +52,7 @@ const ResolutionScreen = () => {
             </div>
 
             <div className={styles.menuFooter}>
-                <div className={styles.menuOption} onClick={() => dispatch(updateScreen('Title'))}>
+                <div className={styles.menuOption} onClick={() => dispatch(updateScreen('Map'))}>
                     {bttn}
                 </div>
             </div>

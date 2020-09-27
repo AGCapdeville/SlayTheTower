@@ -10,7 +10,7 @@ export const heros = [
         deck: [0,0,0,0,0,1,1,1,1,1,2].map(id => cards[id]),
         hand: [],
         discard: [],
-        void: [],
+        voidDeck: [],
         gold: 50
     },
 
@@ -23,7 +23,7 @@ export const heros = [
         deck: [0,0,0,0,0,1,1,1,1,1,2].map(id => cards[id]),
         hand: [],
         discard: [],
-        void: [],
+        voidDeck: [],
         gold: 50
     }
 ];

@@ -1,0 +1,30 @@
+@import "../../../design-standards/constants.scss";
+
+
+.discardZone {
+    display: block;
+    padding: 5px;
+    background-color: black;
+    font-size: 12px;
+
+}
+.void {
+    color: purple;
+    text-align: center;
+}
+
+.discard {
+    color: white;
+    text-align: center;
+}
+
+.devButton{
+    color: white; 
+    border: none;
+    background-color: darkslategrey;
+    transition-duration: 0.3s;
+}
+
+.devButton:hover{
+    background-color: black;
+}

@@ -1,0 +1,76 @@
+@import "../../../design-standards/constants.scss";
+
+.screenContainer{
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+    color: white;
+}
+
+
+.screen{
+    display: flex;
+    width: 90vw;
+    height: 90vh;
+    align-items: center;
+    justify-content: space-around;
+    flex-direction: row;
+    background-color: $mainBackgroundColor;
+}
+
+.trialTitle{
+    position: absolute;
+    font-size: 25px;
+    font-weight: bold;
+    left: 7vw;
+    top: 7vh;
+}
+
+.artContainer{
+    width: 55vh;
+    height: 55vh;
+
+    outline-width: 2px;
+    outline: snow;
+    outline-style: solid;
+    margin: 10px;
+}
+
+.trialInfoContainer{
+    display: flex;
+    flex-direction: column;
+    height: 89vh;
+
+    align-items: center;
+    justify-content: center;
+}
+
+.trialDescription{
+    width: 40vw;
+    height: 40vh;
+
+    outline-width: 2px;
+    outline: snow;
+    outline-style: solid;
+    margin: 5px;
+
+    padding: 10px;
+}
+
+.trialOptions{
+    display: flex;
+    width: 41vw;
+    height: auto;
+    margin: 2px;
+    background-color: #131313;
+    color: snow;
+    margin: 5px;
+}
+
+.trialOptionsContainer{
+    display: flex;
+    flex-direction: column;
+    margin: 5px;
+}

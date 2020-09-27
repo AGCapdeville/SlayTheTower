@@ -24,7 +24,12 @@ export const resetDeck = createAction('player/RESET_DECK')
 // Hand actions
 export const drawHand = createAction('player/DRAW_HAND');
 
-const initialState = {}
+const initialState = {
+    deck: [],
+    hand: [],
+    discard: [],
+    voidDeck: []
+}
 
 
 function shuffle(deck) {
@@ -38,21 +43,11 @@ function shuffle(deck) {
     return deck
 }
 
-/**
- * 
- * {
- *  name,
- *  health,
- *  deck,
- *  health,
- *  gold,
- * }
- */
-
-const reduceResetDeck = ({ hand, deck, discard, ...rest }) => {
-    const newDiscard = [...discard, ...hand ]
-    const newDeck = [...deck, ...newDiscard]
-    return { ...rest, hand: [], deck: newDeck, discard: [] }
+const reduceResetDeck = ({ hand, deck, discard, voidDeck, ...rest }) => {
+    discard = [...discard, ...voidDeck]
+    discard = [...discard, ...hand]
+    const newDeck = [...deck, ...discard]
+    return { ...rest, hand:[], deck:newDeck, voidDeck:[], discard:[] }
 }
 
 const reduceDrawCard = ({ discard, deck, hand, ...rest }) => {
@@ -141,8 +136,6 @@ const selectPlayer = createSelector(
 )
 
 export const usePlayer = () => useSelector(selectPlayer);
-
-
 
 // Async Actions
 export const applyCard = (cardIndex) => (dispatch, getState) => {

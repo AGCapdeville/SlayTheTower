@@ -26,5 +26,3 @@ const selectMap = createSelector(
 )
 
 export const useMap = () => useSelector(selectMap);
-
-

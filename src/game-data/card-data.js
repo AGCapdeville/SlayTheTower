@@ -40,6 +40,22 @@ export const cards = [
             power: [8]
         },
         description: "Heal 8 damage",
-        card_id: 2
+        card_id: 2,
+        cost: 100,
     },
+    {
+        name: 'Lunge From Above',
+        art: '<art url>',
+        type: 'attack',
+        energy: 1,
+        exhaust: true,
+        action: {
+            target: ['foe', 'hero'],
+            effect: ['damage', 'damage'],
+            power: [20, 5]
+        },
+        description: "Deal 20 damage, take 5",
+        card_id: 3,
+        cost: 75,
+    }
 ];

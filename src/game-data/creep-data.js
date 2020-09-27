@@ -9,6 +9,7 @@ export const creeps = [
         health: 5,
         total: 36,
         armor: 0,
+        gold: 10,
         telegraphing: [{ 
                 name: ['Spit'],
                 order: 0,

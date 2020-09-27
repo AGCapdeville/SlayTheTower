@@ -7,9 +7,10 @@ import styles from "./map.module.scss";
 import { useMap, updateMap } from '../../../ducks/map';
 import { updateScreen } from '../../../ducks/screen';
 
-// For Encounters:
+// For Combat:
 import { usePlayer, drawHand, shuffleDeck, resetDeck } from '../../../ducks/player';
 import { spawnFoe } from '../../../ducks/foe';
+import { setupShop } from '../../../ducks/shop';
 
 
 function eventHandler(event, dispatcher){
@@ -19,32 +20,41 @@ function eventHandler(event, dispatcher){
       // for now... reset map after boss.
       dispatcher(updateMap(startingField(3)));
       dispatcher(updateScreen({count:0}));
-      
 
       // add argument for boss spawn..
       // dispatcher(spawnFoe());
-      // dispatcher(updateScreen('Encounter'));
-
       dispatcher(updateScreen('Title'));
-
+      break;
     case '💢':
-      break;
-    case '🔥':
-      break;
-    case '❗':
-      break;
-    case '🕋':
-      break;
-    case '⚔️':
-      console.log('engaging combat...')
-
+      // TODO: make a elite fight ... so dispatch a elite...
       dispatcher(spawnFoe());
       dispatcher(resetDeck());
       dispatcher(shuffleDeck());
       dispatcher(drawHand());
       // Load fight before screen update?
-      dispatcher(updateScreen('Encounter'));
+      dispatcher(updateScreen('Combat'));
       break;
+    case '🔥':
+      // TODO: set up rest, training & mending 
+      dispatcher(updateScreen('Bonfire'));
+      break;
+    case '❗':
+      // TODO: set up a few trials for demo
+      dispatcher(updateScreen('Trial'));
+      break;
+    case '🕋':
+      dispatcher(setupShop());
+      dispatcher(updateScreen('Shop'));
+      break;
+    case '⚔️':
+      dispatcher(spawnFoe());
+      dispatcher(resetDeck());
+      dispatcher(shuffleDeck());
+      dispatcher(drawHand());
+      // Load fight before screen update?
+      dispatcher(updateScreen('Combat'));
+      break;
+
     default:
       break;
   }
@@ -216,31 +226,46 @@ const MapScreen = () => {
 
 
   return (
-    <div style={{display:'flex', flexDirection:'column', justifyContent: 'center', alignItems: 'center', width: '100vw', height: '100vh', color: 'white'}}>
-      
-      <div style={{display:'flex', width:'90vw', flexDirection:'row', backgroundColor: 'black', color:'white'}}>
-        <strong style={{color:'red', margin:'10px' }}> ❤️ {UsePlayer.health}/{UsePlayer.maxHealth}</strong>
-        <strong style={{color:'gold', margin:'10px'}}> 💰{UsePlayer.gold}</strong>
-      </div>
+    <div className={styles.screenContainer}>
+      <div className={styles.screen}>
+        
+        <div className={styles.screenHeader}>
+          <strong style={{color:'red', margin:'10px' }}> ❤️ {UsePlayer.health}/{UsePlayer.maxHealth}</strong>
+          <strong style={{color:'gold', margin:'10px'}}> 💰{UsePlayer.gold}</strong>
+        </div>
 
-      <div style={{display:'flex', flexDirection:'column', justifyContent: 'center', alignItems: 'center', backgroundColor: 'black', width:'90vw', height:'90vh'}}>
-        <h1> Field Event: {currentField.fieldEvent}</h1>
+        <div className={styles.screenBody}>
 
-        <div style={{display:'flex', flexDirection:'row',}}>
-          {currentField.fieldPathEvents.map( (field, index) =>
-            <button key={index} className={styles.pathButton} onClick={() => onPathSelection(field)}>
-                <h2>{field.fieldEvent}</h2>
-                {field.fieldPathEvents.map( (e, index) => 
-                  <div key={index} style={{display:'flex', margin:'2px', opacity:'.5'}}>
-                    {e.fieldEvent}
-                  </div>
-                )}
-            </button>
-          )}
+          <div className={styles.mapContainer}>
+            <h1> Field Event: {currentField.fieldEvent}</h1>
+
+            <div style={{display:'flex', flexDirection:'row',}}>
+              {currentField.fieldPathEvents.map( (field, index) =>
+                <button key={index} className={styles.pathButton} onClick={() => onPathSelection(field)}>
+                    <h2>{field.fieldEvent}</h2>
+                    {field.fieldPathEvents.map( (e, index) => 
+                      <div key={index} style={{display:'flex', margin:'2px', opacity:'.5'}}>
+                        {e.fieldEvent}
+                      </div>
+                    )}
+                </button>
+              )}
+            </div>
+          </div>
+
+          <div className={styles.legendContainer}>
+            <div className={styles.legendTitle}>LEGEND:</div>
+            <div className={styles.legendItem}> FIGHT : ⚔️</div>
+            <div className={styles.legendItem}> ELITE : 💢</div>
+            <div className={styles.legendItem}> BONFIRE : 🔥</div>
+            <div className={styles.legendItem}> TRIAL : ❗</div>
+            <div className={styles.legendItem}> SHOP : 🕋</div>
+            <div className={styles.legendItem}> BOSS : 👹</div>
+          </div>
+
         </div>
 
       </div>
-
     </div>
   );
 

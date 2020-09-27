@@ -5,7 +5,7 @@ import { createSelector } from "reselect";
 
 export const updateScreen = createAction('screen/UPDATE_SCREEN');
 
-const initialSreenState = 'Title';
+const initialSreenState = 'Title'; // <-- true start
 
 export default handleActions({
     [updateScreen]: (state, action) => state = action.payload,

@@ -14,7 +14,7 @@ const HeroScreen = ({ setCurrentScreen }) => {
             
             {/* SWORD HERO: NEED TO SET PLAYER TO SWORD */}
             <div className={heroStyle.menu}
-            onClick={() => setCurrentScreen('Encounter') } >
+            onClick={() => setCurrentScreen('Combat') } >
                 <div className={heroStyle.validOverlay} />
                 <img
                     className={heroStyle.sword} src="https://i.imgur.com/CpkKARv.png" 

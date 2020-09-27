@@ -22,7 +22,7 @@ const HeroSelection = () => {
         console.log(heroType)
         dispatch(updatePlayer(heros[0]))
         dispatch(updateClimbState(gameState))
-        dispatch(updateScreen('Encounter'))
+        dispatch(updateScreen('Map'))
         // will be changed to map screen.
     }
 
