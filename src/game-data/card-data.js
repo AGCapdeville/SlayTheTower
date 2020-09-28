@@ -1,6 +1,26 @@
+
+//  CARD LAYOUT:
+// {
+//     name: '',
+//     requiredHero: 'u',
+//     art: '<art url>',
+//     type: 'attack',
+//     energy: 1,
+//     exhaust: false,
+//     action: {
+//         target: ['foe'],
+//         effect: ['damage'],
+//         power: [5]
+//     },
+//     description: "5 Damage",
+//     card_id: 0
+// },
+
+
 export const cards = [
     {
-        name: 'Slash',
+        name: 'Take the Offensive',
+        requiredHero: 'a',
         art: '<art url>',
         type: 'attack',
         energy: 1,
@@ -10,12 +30,12 @@ export const cards = [
             effect: ['damage'],
             power: [5]
         },
-        description: "Deal 5 damage",
+        description: "5 Damage",
         card_id: 0
-        
     },
     {   
-        name: 'Guard',
+        name: 'Defensive Tactics',
+        requiredHero: 'a',
         art: '<art url>',
         type: 'defend',
         energy: 1,
@@ -25,11 +45,12 @@ export const cards = [
             effect: ['armor'],
             power: [5]
         },
-        description: "+5 Armor",
+        description: "+5 Defense",
         card_id: 1
     },
     {   
         name: 'Heal',
+        requiredHero: 'a',
         art: '<art url>',
         type: 'skill',
         energy: 2,
@@ -39,12 +60,13 @@ export const cards = [
             effect: ['heal'],
             power: [8]
         },
-        description: "Heal 8 damage",
+        description: "Heal 8 Damage",
         card_id: 2,
         cost: 100,
     },
     {
         name: 'Lunge From Above',
+        requiredHero: 'a',
         art: '<art url>',
         type: 'attack',
         energy: 1,
@@ -54,8 +76,9 @@ export const cards = [
             effect: ['damage', 'damage'],
             power: [20, 5]
         },
-        description: "Deal 20 damage, take 5",
+        description: "Deal 20 Damage, take 5 Damage",
         card_id: 3,
         cost: 75,
     }
 ];
+

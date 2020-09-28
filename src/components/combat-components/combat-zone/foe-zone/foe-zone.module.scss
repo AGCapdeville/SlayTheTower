@@ -1,4 +1,4 @@
-@import "../../../design-standards/constants.scss";
+@import "../../../../design-standards/constants.scss";
 
 
 .telegraph{
@@ -21,12 +21,11 @@
 // https://i.imgur.com/XxrREar.png
 
 .foeZone {
-    // height: 48vh;
-    // width: 100vw;
+    height: $combatZoneHeight;
+    width: 30vw;
     display: flex;
-    // flex-direction: column;
     align-items: center;
-    // justify-content: center;
+    justify-content: center;
 }
 
     

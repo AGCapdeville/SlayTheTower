@@ -14,24 +14,29 @@ $screenWidthDesktop: 75%;
 $screenHeight: 100%;
 $screenWidth: 100%;
 
+//  NOTE: playerStatusBar + combatZoneHeight + playerZoneHeight = 100vh
+// - - - Game Globals - - - 
+
+$playerStatusBar: 6vh;
+
 // - - - FOE ZONE : - - - -
 
-$foeZoneHeight: 48vh;
-$foeZoneWidth: 100vw;
+$combatZoneHeight: 54vh;
+$combatZoneWidth: 100vw;
 
 $FoeHeight: 25px;
 $FoeWidth: 15px;
 
 // - - - PLAYER ZONE : - - - -
 
-$playerZoneHeight: 58vh;
+$playerZoneHeight: 40vh;
 $playerZoneWidth: 100vw;
 
 $healthBarHeight: 5vh;
 $healthBarWidth: 80vw;
 
-$cardHeight: 20vh;// of 55%
-$cardWidth: 10vw;// of 80% width of screen
+// $cardHeight: 20vh;// of 55%
+// $cardWidth: 10vw;// of 80% width of screen
 
 $energyHeight: 8vh;
 $energyWidth: 8vw; 

@@ -6,28 +6,32 @@ const Card = (props) => {
     return(
         <div className = {styles.card}>
 
-            <div className = {styles.titleSection}>
+            <div className = {styles.cardFace}>
+                <div className = {styles.titleSection}>
+                    <div className = {styles.title}> 
+                        {props.cardData.name} 
+                    </div> 
 
-                <div className = {styles.title}> 
-                    {props.cardData.name} 
-                </div> 
+                    <div className = {styles.energy}>
+                        {props.cardData.energy}
+                    </div>
 
-                <div className = {styles.energy}>
-                    {props.cardData.energy}
+                    {!props.combat && 
+                        <div>
+                            G: {props.cardData.cost}
+                        </div> 
+                    }
+                </div>
+                
+                <div className={styles.cardArt}>
+                    {props.cardData.art}
                 </div>
 
-                {!props.combat && 
-                    <div>
-                        G: {props.cardData.cost}
-                    </div> 
-                }
-
+                <div className={styles.cardDescription}>
+                    {props.cardData.description}
+                </div>
             </div>
 
-            <br/>
-            {props.cardData.art}
-            <br/> <br/>
-            {props.cardData.description}
         </div>        
     )
 }

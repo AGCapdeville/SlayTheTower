@@ -1,14 +1,55 @@
 @import "../../../design-standards/constants.scss";
 
+.playerStatusContainer{
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    align-items: center;
+
+    width: 100vw;
+    height: $playerStatusBar;
+    
+    background-color: #424542;
+    
+    font-size: 12px;
+    font-weight: bold;
+}
+
+
+.playerHealth{
+    color: red;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.playerGold{
+    color: gold;
+    margin-left: 15px;
+    margin-right: 15px;
+}
+
+.playerDefense{
+    color: whitesmoke;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+
 
 .playerHealthBorder {
-    margin-top: 4px;
-    height: 4vh;
-    width: 80vw;
-    display: flex;
 
-    margin-bottom: 10px;
+    height: 4vh;
+    width: 50vw;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    margin-top: 1px;
+    margin-bottom: 1px;
+
     border-radius: 1px;
+
     box-shadow: 2px 2px #e7dfe7,
         -2px -2px #e7dfe7,
         2px -2px #e7dfe7,
@@ -17,14 +58,6 @@
         -1px 0 #7b757b,
         0 1px #424542;
 }
-
-// .playerHealthBar {
-    // height: 4vh;
-    // width: 80vw;
-    // background-color: darkgreen; // 100% health
-// }
-
-
 .playerHealthIndicator {
     height: 4vh;
     width: 80vw;

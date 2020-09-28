@@ -26,11 +26,12 @@ export const endTurn = () => (dispatch, getState) => {
     var zone = document.getElementById('playerZone');
     console.log("zone", zone)
 
-    zone.style.height = "58vh"
+    zone.style.height = "40vh"
     zone.style.width = "100vw"
     zone.style.backgroundColor = "black"
     zone.style.opacity = .75
     zone.style.position = "absolute"
+    zone.style.zIndex = 100
 
     var turnBttn = document.getElementById('turnBttn');
     

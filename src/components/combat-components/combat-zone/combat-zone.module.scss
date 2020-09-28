@@ -1,0 +1,32 @@
+@import "../../../design-standards/constants.scss";
+
+.combatZone{
+    width: 100vw;
+    height: $combatZoneHeight;
+    display: flex;
+    flex-direction: column;
+}
+
+.partyHealthZone{
+    display: flex;
+    justify-content: center;
+    align-self: center;
+}
+
+.heroVSMonster{
+    width: 100vw;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.heroZone{
+    width: 40vw;
+    height: auto;
+}
+
+.monsterZone{
+    width: 40vw;
+    height: auto;
+}

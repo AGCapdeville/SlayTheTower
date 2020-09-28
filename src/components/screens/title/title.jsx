@@ -13,7 +13,7 @@ const TitleScreen = () => {
 
     const dispatch = useDispatch();
   
-    // TODO: MOVE TO HERO WEAPON SELECTION SCREEN
+    // TODO: Move to New Game Screen
     dispatch(updatePlayer(heros[0]))
     dispatch(updateClimbState(gameState))
     

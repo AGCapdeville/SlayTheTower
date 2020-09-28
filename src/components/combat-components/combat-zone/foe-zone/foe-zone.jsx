@@ -1,5 +1,5 @@
 import React from 'react';
-import foe, { useFoe } from '../../../ducks/foe'
+import foe, { useFoe } from '../../../../ducks/foe'
 import styles from "./foe-zone.module.scss";
 import { useEffect } from 'react';
 

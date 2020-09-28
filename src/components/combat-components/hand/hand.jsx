@@ -1,6 +1,7 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import styles from './hand.module.scss'
+import cardStyle from '../../card/card.module.scss'
 import { usePlayer, applyCard } from '../../../ducks/player';
 
 import Card from '../../card';
@@ -12,13 +13,17 @@ const Cards = () =>{
     const onCardClick = (index) =>  dispatch(applyCard(index));
 
     return(
-        <div>
+        <div className={styles.handContainer}>
             {
                 player.hand.map( (cardData, index) =>
-                    <button key={index} onClick={ () => onCardClick(index) } className={styles.customButton}>
-                        <Card cardData={cardData} combat={true}/>
+                    <button key={index} className={cardStyle.cardButton} onClick={ () => onCardClick(index) }>
+                        <Card 
+                            cardData={cardData} 
+                            combat={true}
+                        />
                     </button>                
-                )}
+                )
+            }
         </div>
     );
 }

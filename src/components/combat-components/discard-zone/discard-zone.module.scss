@@ -2,20 +2,25 @@
 
 
 .discardZone {
-    display: block;
-    padding: 5px;
-    background-color: black;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 10px;
     font-size: 12px;
-
 }
+
 .void {
     color: purple;
     text-align: center;
+    background-color: black;
+    padding: 5px;
 }
 
 .discard {
     color: white;
     text-align: center;
+    background-color: black;
+    padding: 5px;
 }
 
 .devButton{

@@ -1,25 +1,26 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import styles from "./combat.module.scss";
+import styles from "./encounter.module.scss";
 
+import { spawnFoe } from '../../../ducks/foe';
 import { usePlayer, updatePlayer } from '../../../ducks/player';
-
-import CombatZone from '../../combat-components/combat-zone';
 
 import { updateScreen } from '../../../ducks/screen';
 
 import Hand from '../../combat-components/hand';
 import DrawZone from '../../combat-components/draw-zone';
 import DiscardZone from '../../combat-components/discard-zone';
+import PlayerHealth from '../../combat-components/player-status';
+import FoeZone from '../../combat-components/foe-zone';
+import TurnBttn from '../../combat-components/turn-bttn';
 
 import { useFoe } from '../../../ducks/foe';
 
 import { updateClimbState } from '../../../ducks/climbState';
+import { updateMap } from '../../../ducks/map';
 
-import PartyStatus from '../../combat-components/player-status';
 
-
-const CombatScreen = () => {
+const EncounterScreen = () => {
     const { gold: loot } = useFoe();
     const { health: foeHealth } = useFoe();
     const player = usePlayer();
@@ -28,9 +29,10 @@ const CombatScreen = () => {
     
     useEffect(() => {
         // This block of code only executes when foeHealth changes
+        console.log("encounter foe hp:", foeHealth)
         if (foeHealth <= 0) {
-            dispatch( updateClimbState({ loot: loot, playerGold: player.gold }) )
-            dispatch( updatePlayer({ energy: 3, defense:0 }) )
+            dispatch( updateClimbState({loot: loot, playerGold: player.gold}) )
+            dispatch( updatePlayer({ energy: 3, armor:0 }) )
             dispatch( updateScreen('Resolution') ) 
         }
     }, [foeHealth]);
@@ -38,30 +40,26 @@ const CombatScreen = () => {
     useEffect(() => {
         if (player.health <= 0) {
             dispatch( updateClimbState({defeat:true}) )
-            dispatch( updatePlayer({ energy: 3, defense:0 }) )
+            dispatch( updatePlayer({ energy: 3, armor:0}) )
             dispatch( updateScreen('Resolution') ) 
         }
     }, [player.health]);
 
     return (
     <div className={styles.game}>
-
-        <PartyStatus />
-
-        <div style={{zIndex: -1}}>
-            <CombatZone />
-        </div>
-
-        {/* make the combat messages toggle-able and keep message record... TODO! */}
+        {/* <button onClick={ () => dispatch( shuffleDeck() ) }> shuffle </button> */}
+        <PlayerHealth />
+        <FoeZone />
         <div id='combatZone' className={styles.combatZoneOverlay}>
             <div id='combatMsgs' className={styles.combatMsgs}> COMBAT MSGS </div>
         </div>
 
-        <div id='playerZone'></div>
-        <Hand />
         <div className={styles.playerZone}> 
+            <div id='playerZone'></div>
             <DrawZone />
+            <Hand />
             <DiscardZone />
+            <TurnBttn />
         </div>
             
     </div>
@@ -70,5 +68,5 @@ const CombatScreen = () => {
 }
 
 
-export default CombatScreen;
+export default EncounterScreen;
 
