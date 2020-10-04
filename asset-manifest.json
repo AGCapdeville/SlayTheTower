@@ -1,22 +1,22 @@
 {
   "files": {
     "main.css": "/SlayTheTower/static/css/main.e8b3013b.chunk.css",
-    "main.js": "/SlayTheTower/static/js/main.1c81e9c2.chunk.js",
-    "main.js.map": "/SlayTheTower/static/js/main.1c81e9c2.chunk.js.map",
+    "main.js": "/SlayTheTower/static/js/main.825e34a5.chunk.js",
+    "main.js.map": "/SlayTheTower/static/js/main.825e34a5.chunk.js.map",
     "runtime-main.js": "/SlayTheTower/static/js/runtime-main.e29efde5.js",
     "runtime-main.js.map": "/SlayTheTower/static/js/runtime-main.e29efde5.js.map",
-    "static/js/2.79f3b6bd.chunk.js": "/SlayTheTower/static/js/2.79f3b6bd.chunk.js",
-    "static/js/2.79f3b6bd.chunk.js.map": "/SlayTheTower/static/js/2.79f3b6bd.chunk.js.map",
+    "static/js/2.68b1612f.chunk.js": "/SlayTheTower/static/js/2.68b1612f.chunk.js",
+    "static/js/2.68b1612f.chunk.js.map": "/SlayTheTower/static/js/2.68b1612f.chunk.js.map",
     "index.html": "/SlayTheTower/index.html",
-    "precache-manifest.60e66a9acf392b7e8f109e3f847bc5e5.js": "/SlayTheTower/precache-manifest.60e66a9acf392b7e8f109e3f847bc5e5.js",
+    "precache-manifest.43846bd6724b71004659a3e1ea063226.js": "/SlayTheTower/precache-manifest.43846bd6724b71004659a3e1ea063226.js",
     "service-worker.js": "/SlayTheTower/service-worker.js",
     "static/css/main.e8b3013b.chunk.css.map": "/SlayTheTower/static/css/main.e8b3013b.chunk.css.map",
-    "static/js/2.79f3b6bd.chunk.js.LICENSE.txt": "/SlayTheTower/static/js/2.79f3b6bd.chunk.js.LICENSE.txt"
+    "static/js/2.68b1612f.chunk.js.LICENSE.txt": "/SlayTheTower/static/js/2.68b1612f.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.e29efde5.js",
-    "static/js/2.79f3b6bd.chunk.js",
+    "static/js/2.68b1612f.chunk.js",
     "static/css/main.e8b3013b.chunk.css",
-    "static/js/main.1c81e9c2.chunk.js"
+    "static/js/main.825e34a5.chunk.js"
   ]
 }
