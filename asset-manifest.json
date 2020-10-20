@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/SlayTheTower/static/css/main.45191712.chunk.css",
-    "main.js": "/SlayTheTower/static/js/main.12818146.chunk.js",
-    "main.js.map": "/SlayTheTower/static/js/main.12818146.chunk.js.map",
+    "main.js": "/SlayTheTower/static/js/main.35f5c949.chunk.js",
+    "main.js.map": "/SlayTheTower/static/js/main.35f5c949.chunk.js.map",
     "runtime-main.js": "/SlayTheTower/static/js/runtime-main.e29efde5.js",
     "runtime-main.js.map": "/SlayTheTower/static/js/runtime-main.e29efde5.js.map",
     "static/js/2.2aa03787.chunk.js": "/SlayTheTower/static/js/2.2aa03787.chunk.js",
     "static/js/2.2aa03787.chunk.js.map": "/SlayTheTower/static/js/2.2aa03787.chunk.js.map",
     "index.html": "/SlayTheTower/index.html",
-    "precache-manifest.158d7da6d353da72cc443df96b19a2b1.js": "/SlayTheTower/precache-manifest.158d7da6d353da72cc443df96b19a2b1.js",
+    "precache-manifest.8444a0974e5c50855a545435625f0a9a.js": "/SlayTheTower/precache-manifest.8444a0974e5c50855a545435625f0a9a.js",
     "service-worker.js": "/SlayTheTower/service-worker.js",
     "static/css/main.45191712.chunk.css.map": "/SlayTheTower/static/css/main.45191712.chunk.css.map",
     "static/js/2.2aa03787.chunk.js.LICENSE.txt": "/SlayTheTower/static/js/2.2aa03787.chunk.js.LICENSE.txt"
@@ -17,6 +17,6 @@
     "static/js/runtime-main.e29efde5.js",
     "static/js/2.2aa03787.chunk.js",
     "static/css/main.45191712.chunk.css",
-    "static/js/main.12818146.chunk.js"
+    "static/js/main.35f5c949.chunk.js"
   ]
 }
