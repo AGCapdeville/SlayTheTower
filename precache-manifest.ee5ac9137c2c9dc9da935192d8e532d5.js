@@ -1,10 +1,10 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "4e7494b226f34f6a6fff64c4ffb38cce",
+    "revision": "cbfd168ef8e2bc84dc2fdd3f3a120168",
     "url": "/SlayTheTower/index.html"
   },
   {
-    "revision": "fa697e4978e3d35a85f9",
+    "revision": "2dfce5b2e5512c5a746b",
     "url": "/SlayTheTower/static/css/main.45191712.chunk.css"
   },
   {
@@ -16,8 +16,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/SlayTheTower/static/js/2.2aa03787.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "fa697e4978e3d35a85f9",
-    "url": "/SlayTheTower/static/js/main.ca9aa70e.chunk.js"
+    "revision": "2dfce5b2e5512c5a746b",
+    "url": "/SlayTheTower/static/js/main.18c367a4.chunk.js"
   },
   {
     "revision": "38ea944e57d559baa53d",
