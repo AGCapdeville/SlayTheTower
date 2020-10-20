@@ -50,5 +50,11 @@ export const track_list = [
       artist: "Komuki",
       path: "https://files.freemusicarchive.org/storage-freemusicarchive-org/music/Music_for_Video/Komiku/Poupis_incredible_adventures_/Komiku_-_70_-_Ending.mp3"
     },
+    {
+      for: "HeroSelection",
+      name: "Night in a seashell",
+      artist: "Komuki",
+      path: "https://files.freemusicarchive.org/storage-freemusicarchive-org/music/Music_for_Video/Komiku/Poupis_incredible_adventures_/Komiku_-_70_-_Ending.mp3"
+    },
 
   ];

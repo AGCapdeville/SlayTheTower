@@ -32,7 +32,7 @@ const TitleScreen = () => {
                     <div className={titleStyle.title} >SLAY THE TOWER</div>
                     <div className={titleStyle.menu} onClick={() => 
                             {
-                                dispatch(updateGameState({screen:'Hero'}));
+                                dispatch(updateGameState({screen:'HeroSelection'}));
                                 dispatch(updateScreen('HeroSelection'));
                             }
                         }> NEW GAME </div>
