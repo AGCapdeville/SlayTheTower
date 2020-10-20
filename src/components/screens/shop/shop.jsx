@@ -2,9 +2,10 @@ import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import styles from "./shop.module.scss";
 
-import { useClimbState } from '../../../ducks/climbState'
+import { useGameState } from '../../../ducks/game_state'
 import { usePlayer, updatePlayer } from '../../../ducks/player';
 import { updateScreen } from '../../../ducks/screen';
+import { updateGameState } from '../../../ducks/game_state';
 
 // import cardData from '../../../game-data/card-data'
 
@@ -14,7 +15,7 @@ import { updateShop, setupShop, useShop } from '../../../ducks/shop';
 const ShopScreen = () => {
 
     const dispatch = useDispatch();
-    const climbState = useClimbState();
+    const gameState = useGameState();
     const shop = useShop();
     const player = usePlayer();
  
@@ -42,7 +43,12 @@ const ShopScreen = () => {
             <br />
 
             <div>
-                <button onClick={() => dispatch( updateScreen('Map') ) }>
+                <button onClick={() => 
+                        {
+                            dispatch( updateGameState({screen:'Map'}) );
+                            dispatch( updateScreen('Map') ) 
+                        }
+                    }>
                     RETURN TO MAP
                 </button>
             </div>

@@ -1,0 +1,70 @@
+@import "../../design-standards/constants.scss";
+
+.playButton{
+    background-color: black;
+}
+
+.pauseButton{
+    background-color: black;
+}
+
+// @media only screen and (max-width: 750px) {
+// }
+
+.player {
+    height: 95vh;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.details {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 25px;
+}
+
+.now-playing {
+    font-size: 1rem;
+}
+
+.track-name {
+    font-size: 3rem;
+}
+
+.track-artist {
+    font-size: 1.5rem;
+}
+
+.buttons {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.playpause-track,
+.prev-track,
+.next-track {
+    padding: 25px;
+    opacity: 0.8;
+
+    /* Smoothly transition the opacity */
+    transition: opacity .2s;
+}
+
+.playpause-track:hover,
+.prev-track:hover,
+.next-track:hover {
+    opacity: 1.0;   
+}
+
+
+i.fa-play-circle,
+i.fa-pause-circle,
+i.fa-step-forward,
+i.fa-step-backward {
+    cursor: pointer;
+}

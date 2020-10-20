@@ -4,17 +4,13 @@ import styles from './card.module.scss'
 
 const Card = (props) => {
     return(
-        <div className = {styles.card}>
+        <div>
 
             <div className = {styles.cardFace}>
                 <div className = {styles.titleSection}>
                     <div className = {styles.title}> 
                         {props.cardData.name} 
                     </div> 
-
-                    <div className = {styles.energy}>
-                        {props.cardData.energy}
-                    </div>
 
                     {!props.combat && 
                         <div>
@@ -30,6 +26,17 @@ const Card = (props) => {
                 <div className={styles.cardDescription}>
                     {props.cardData.description}
                 </div>
+
+                <div className = {styles.costRow}>
+                    <div className = {styles.energy}>
+                        {props.cardData.energy}
+                    </div>
+
+                    <div className = {styles.requiredHero}>
+                        {props.cardData.requiredHero}
+                    </div>
+                </div>
+                
             </div>
 
         </div>        

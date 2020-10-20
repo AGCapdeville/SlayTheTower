@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import styles from "./map.module.scss";
-import { useClimbState } from '../../../ducks/climbState'
+import { useGameState } from '../../../ducks/game_state'
 import { setScreen } from '../../../ducks/screen';
 
 
@@ -111,7 +111,6 @@ const genMap = () => {
 const MapScreen = () => {
 
     const dispatch = useDispatch();
-    // const climbState = useClimbState();
 
     let header = 'MAP'
     // let body = ''

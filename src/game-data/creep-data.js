@@ -6,9 +6,9 @@ export const creeps = [
         name: 'Slime',
         art: 'https://i.imgur.com/Sun4iBT.png?1',
         // health: 36, <- normal health
-        health: 5,
+        health: 15,
         total: 36,
-        armor: 0,
+        defense: 0,
         gold: 10,
         telegraphing: [{ 
                 name: ['Spit'],
@@ -36,7 +36,7 @@ export const creeps = [
                 name : ['Soften'],
                 order: 2,
                 target: ['self'],
-                effect: ['armor'],
+                effect: ['defense'],
                 power: [12]
             }
         ]
@@ -46,7 +46,7 @@ export const creeps = [
         art: 'https://i.imgur.com/yl0eGRj.png?4',
         health: 55,
         total: 55,
-        armor: 0,
+        defense: 0,
         telegraphing: [
             {
                 name: ['Lunging Strike'],
@@ -91,7 +91,7 @@ export const creeps = [
     //     art: 'https://i.imgur.com/yl0eGRj.png?4',
     //     health: 52,
     //     totalHealth: 52,
-    //     armor: 0,
+    //     defense: 0,
     //     telegraphing: ['damage 7'],
     //     moves: {
     //         'strike':{

@@ -16,7 +16,7 @@ const initialState = { };
 // art: 'https://i.imgur.com/Sun4iBT.png?1',
 // health: 10,
 // totalHealth: 10,
-// armor: 0,
+// defense: 0,
 // telegraphing: ['damage 5'],
 // moves: {
 //     'whip':{
@@ -34,7 +34,7 @@ const initialState = { };
 //     'soften':{
 //         priority: 1,
 //         target: ['self'],
-//         effect: ['armor'],
+//         effect: ['defense'],
 //         power: [12]
 //     }
 // }

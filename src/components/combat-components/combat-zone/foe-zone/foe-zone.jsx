@@ -19,53 +19,56 @@ function updateFoeHealthBar(foeHealth, foeMax){
     }
 }
 
-function updateFoeArmorBar(armor){
-    var x = document.getElementById("foeArmorBar")
+function updateFoeDefBar(defense){
+    var x = document.getElementById("foeDefenseBar")
     x.style.backgroundColor = "lightblue"
     x.style.opacity = ".75"
     x.style.position = "absolute"
 
-    if (armor == 0){
+    if (defense == 0){
         x.style.height = "2vh"
         x.style.width = "0vw"
     }
 
-    if (armor > 0){
+    if (defense > 0){
         // const dmg = ((foeHealth/foeMax)*20)
-        const newArmor = ((armor/100)*20)
-        x.style.width = newArmor + "vw"        
+        const newDefense = ((defense/100)*20)
+        x.style.width = newDefense + "vw"        
     }
 }
 
 function getTelegraph(foe){
-    try{
-        // debugger;
-        console.log("contents:", foe.telegraphing)
-        const answer = foe.telegraphing[0].effect + " "+ foe.telegraphing[0].power
-        return answer
-    }catch{
-        const answer = "..."
-        return answer
+    
+    const effect = foe.telegraphing[0].effect;
+    const power = foe.telegraphing[0].power;
+    
+    // console.log('effect:', effect);
+
+    if (effect[0] === "damage"){
+        return ('🔪 '+power);
+    }else if (effect[0] === "defense"){
+        return ('🛡️ '+power);
+    }else{
+        return '...';
     }
+
 }
 
 const FoeZone = () => {
 
     const { health: foeHealth } = useFoe();
     const { total: foeMax } = useFoe();
-    const { armor: foeArmor } = useFoe();
+    const { defense: foeDefense } = useFoe();
     const foe = useFoe();
-    // console.log("telegraph:", getTelegraph(foe))
     const telegraph = getTelegraph(foe)
-    
 
     useEffect(() => {
         updateFoeHealthBar(foeHealth, foeMax)
     }, [foeHealth]);
 
     useEffect(() => {
-        updateFoeArmorBar(foeArmor)
-    }, [foeArmor])
+        updateFoeDefBar(foeDefense)
+    }, [foeDefense])
     
     return(
         <div className={styles.foeZone}>
@@ -74,15 +77,14 @@ const FoeZone = () => {
 
                 <div className={styles.telegraph}> {telegraph} </div>
                 <div className={styles.foeTitle}> {foe.name} </div>
-                <img className = {styles.foeImg} src={foe.art} alt="foe img"/>
+                <img id={'foeBody'} className = {styles.foeImg} src={foe.art} alt="foe img"/>
 
                 <div className = {styles.foeHealthBorder}> 
                     <div className = {styles.foeHealthIndicator}> 
                         {foe.health} / {foe.total} 
                     </div>
-                    <div id="foeArmorBar"> </div>
+                    <div id="foeDefenseBar"> </div>
                     <div id="foeHealthBar"> </div>
-                    {/* className = {styles.foeHealthBar} */}
                 </div>
 
                 {/* {document.getElementById("foeHealthBar").style.width= "5"} */}

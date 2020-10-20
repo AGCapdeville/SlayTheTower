@@ -11,10 +11,12 @@ import { updateScreen } from '../../../ducks/screen';
 import Hand from '../../combat-components/hand';
 import DrawZone from '../../combat-components/draw-zone';
 import DiscardZone from '../../combat-components/discard-zone';
+import CombatLog from '../../combat-components/combat-log';
 
 import { useFoe } from '../../../ducks/foe';
+import { updateCombat } from '../../../ducks/combat';
 
-import { updateClimbState } from '../../../ducks/climbState';
+import { updateGameState } from '../../../ducks/game_state';
 
 import PartyStatus from '../../combat-components/player-status';
 
@@ -26,20 +28,45 @@ const CombatScreen = () => {
 
     const dispatch = useDispatch();
     
+    useEffect(()=>{
+        dispatch( updatePlayer({ energy: 3, defense:0 }) );
+    }, [])
+    
     useEffect(() => {
         // This block of code only executes when foeHealth changes
         if (foeHealth <= 0) {
-            dispatch( updateClimbState({ loot: loot, playerGold: player.gold }) )
-            dispatch( updatePlayer({ energy: 3, defense:0 }) )
-            dispatch( updateScreen('Resolution') ) 
+            dispatch( updateGameState({loot: loot, playerGold: player.gold }) )
+            
+            dispatch( updateCombat({
+                combatLog : 
+                    [{
+                        origin: 'player',
+                        description: 'Start of combat'
+                    }]
+            }))
+
+            setTimeout( function(){
+                dispatch(updateGameState({screen:'Resolution'}));
+                dispatch( updateScreen('Resolution') ) 
+            }, 1500);
         }
     }, [foeHealth]);
 
     useEffect(() => {
         if (player.health <= 0) {
-            dispatch( updateClimbState({defeat:true}) )
-            dispatch( updatePlayer({ energy: 3, defense:0 }) )
-            dispatch( updateScreen('Resolution') ) 
+            dispatch( updateGameState({defeat:true}) )
+            dispatch( updateCombat({
+                combatLog : 
+                    [{
+                        origin: 'player',
+                        description: 'Start of combat'
+                    }]
+            }))
+
+            setTimeout( function(){
+                dispatch(updateGameState({screen:'Resolution'}));
+                dispatch( updateScreen('Resolution') ) 
+            }, 1500);       
         }
     }, [player.health]);
 
@@ -48,17 +75,15 @@ const CombatScreen = () => {
 
         <PartyStatus />
 
-        <div style={{zIndex: -1}}>
-            <CombatZone />
-        </div>
+        <CombatZone />
 
-        {/* make the combat messages toggle-able and keep message record... TODO! */}
-        <div id='combatZone' className={styles.combatZoneOverlay}>
-            <div id='combatMsgs' className={styles.combatMsgs}> COMBAT MSGS </div>
-        </div>
+        <CombatLog />
 
-        <div id='playerZone'></div>
+        {/* this is the overlay for the players hand... */}
+        <div id='playerOverlay'></div>
+        
         <Hand />
+        
         <div className={styles.playerZone}> 
             <DrawZone />
             <DiscardZone />

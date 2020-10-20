@@ -3,18 +3,70 @@
 .herColumn{
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.offHero{
+    display: flex;
+    width: 55px;
+    height: 75px;
+
+    background-color: darkred;
+    outline: gray;
+    outline-style: solid;
+
+    margin-bottom: 30px;
+}
+
+.defHero{
+    display: flex;
+    width: 55px;
+    height: 75px;
+
+    background-color: darkgreen;
+    outline: gray;
+    outline-style: solid;
+
+    margin-bottom: 30px;
+}
+
+.utilHero{
+    display: flex;
+    width: 55px;
+    height: 75px;
+
+    background-color: dodgerblue;
+    outline: gray;
+    outline-style: solid;
+
+    margin-bottom: 30px;
 }
 
 .heroContainer{
     display: flex;
-    width: 35px;
-    height: 50px;
-    background-color: white;
+    justify-content: center;
+    width: 30vw;
+}
 
-    margin: 10px;
-    font-size: 12px;
+@media only screen and (max-width: 750px) {
 
-    outline: gray;
-    outline-style: solid;
+    .offHero{
+        width: 25px;
+        height: 45px;
+        margin-bottom: 20px;
+    }
+
+    .defHero{
+        width: 25px;
+        height: 45px;
+        margin-bottom: 20px;
+    }
+
+    .utilHero{
+        width: 25px;
+        height: 45px;
+        margin-bottom: 20px;
+    }
 
 }

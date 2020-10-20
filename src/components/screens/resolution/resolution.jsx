@@ -1,11 +1,12 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import styles from "./resolution.module.scss";
-import { useClimbState } from '../../../ducks/climbState'
+import { useGameState } from '../../../ducks/game_state'
 
 import { usePlayer, updatePlayer } from '../../../ducks/player';
 
 import { updateScreen } from '../../../ducks/screen';
+import { updateGameState } from '../../../ducks/game_state';
 
 
 // need to import reward cards...
@@ -19,7 +20,7 @@ import { updateScreen } from '../../../ducks/screen';
 const ResolutionScreen = () => {
 
     const dispatch = useDispatch();
-    const climbState = useClimbState();
+    const gameState = useGameState();
 
     // console.log(player.gold)
 
@@ -27,11 +28,11 @@ const ResolutionScreen = () => {
     let body = ''
     let bttn = ''
         
-    if ( !climbState.defeat ) {
+    if ( !gameState.defeat ) {
         header = 'VICTORY'
-        body = `You found G: +` + climbState.loot + ` \n !!! Cards to come later...`
+        body = `You found G: +` + gameState.loot + ` \n !!! Cards to come later...`
         bttn = 'CONTINUE'
-        dispatch(updatePlayer({gold:climbState.playerGold + climbState.loot}))
+        dispatch(updatePlayer({gold:gameState.playerGold + gameState.loot}))
 
     } else {
         header = 'DEFEAT'
@@ -52,7 +53,12 @@ const ResolutionScreen = () => {
             </div>
 
             <div className={styles.menuFooter}>
-                <div className={styles.menuOption} onClick={() => dispatch(updateScreen('Map'))}>
+                <div className={styles.menuOption} onClick={() => 
+                        {
+                            dispatch( updateGameState({screen:'Map'}) );
+                            dispatch( updateScreen('Map') );
+                        }
+                    }>
                     {bttn}
                 </div>
             </div>

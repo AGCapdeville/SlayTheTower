@@ -2,14 +2,25 @@ import { createAction, handleActions } from "redux-actions";
 import { useSelector } from "react-redux";
 import { createSelector } from "reselect";
 import { updateFoe } from './foe';
+
 import { updatePlayer, discardHand, drawCard } from './player';
 
-export const updateCombat = createAction('foe/UPDATE_COMBAT');
 
-const initialState = {};
+export const updateCombat = createAction('combat/UPDATE_COMBAT');
+export const logCombat = createAction('combat/LOG_COMBAT');
+export const resetCombatLog = createAction('combat/RESET_COMBAT_LOG');
+
+const initialState = {
+    combatLog : 
+        [{
+            origin: 'player',
+            description: 'Start of combat'
+        }]
+};
 
 export default handleActions({
-    [updateCombat]: (state, action) => ({ ...state.combat, ...action.payload }),
+    [updateCombat]: (state, action) => ({ ...state, ...action.payload }),
+    [logCombat]: (state, action) => ({ ...state.combatLog, combatLog: [...state.combatLog, action.payload] })
 }, initialState);
 
 
@@ -21,32 +32,82 @@ const selectCombat = createSelector(
 
 export const useCombat = () => useSelector(selectCombat);
 
+
+
+function strikeAnimation(bodyElement){
+
+    setTimeout( function(){
+        bodyElement.style.marginLeft = '15px';
+    }, 300)
+        
+    setTimeout( function(){
+        bodyElement.style.marginLeft = '10px';
+    }, 100)
+    
+    setTimeout( function(){
+        bodyElement.style.marginLeft = '0px';
+    }, 200)
+
+    setTimeout( function(){
+        bodyElement.style.marginLeft = '5px';
+    }, 240)
+}
+
+function damageFlash(bodyElement){
+
+    setTimeout( function(){
+        bodyElement.style.opacity = 1;
+    }, 300)
+        
+    setTimeout( function(){
+        bodyElement.style.opacity = .75;
+    }, 100)
+
+    setTimeout( function(){
+        bodyElement.style.opacity = .5;
+    }, 150)
+    
+    setTimeout( function(){
+        bodyElement.style.opacity = 0;
+    }, 200)
+
+    setTimeout( function(){
+        bodyElement.style.opacity = .75;
+    }, 240)
+
+    setTimeout( function(){
+        bodyElement.style.opacity = 0;
+    }, 280)
+    
+}
+
+
+
+
+
 export const endTurn = () => (dispatch, getState) => {
 
-    var zone = document.getElementById('playerZone');
-    console.log("zone", zone)
+    let playerOverlay = document.getElementById('playerOverlay');
 
-    zone.style.height = "40vh"
-    zone.style.width = "100vw"
-    zone.style.backgroundColor = "black"
-    zone.style.opacity = .75
-    zone.style.position = "absolute"
-    zone.style.zIndex = 100
+    let foeBody = document.getElementById('foeBody');
 
-    var turnBttn = document.getElementById('turnBttn');
-    
+    let offHero = document.getElementById('offHero');
+    let defHero = document.getElementById('defHero');
+    let utilHero = document.getElementById('utilHero');
 
-    var combatMsgs = document.getElementById('combatMsgs');
 
-    combatMsgs.innerHTML = "Foes Turn!"
-    setTimeout( function()
-    { 
-        combatMsgs.innerHTML = "Waiting."; 
+    playerOverlay.style.height = "40vh"
+    playerOverlay.style.width = "100vw"
+    playerOverlay.style.backgroundColor = "black"
+    playerOverlay.style.opacity = .75
+    playerOverlay.style.position = "absolute"
+    playerOverlay.style.zIndex = 100
+    playerOverlay.style.bottom = 0
+
+    setTimeout( function(){ 
         dispatch( discardHand() )
     }, 1000 );
-    setTimeout( function(){ combatMsgs.innerHTML = "Waiting.."; }, 1500 );
-    setTimeout( function(){ combatMsgs.innerHTML = "Waiting..."; }, 2000 );
-    
+
     const state = getState()
     const player = state.player
     const foe = state.foe
@@ -54,27 +115,49 @@ export const endTurn = () => (dispatch, getState) => {
     const telegraphing = foe.telegraphing
 
     if ( telegraphing[0].effect == "damage" ){
-        const dmg = telegraphing[0].power
-        const moveMsg = foe.name + " uses " + telegraphing[0].name + " dealing\n" + telegraphing[0].power + " dmg"
-        setTimeout( function(){ combatMsgs.innerHTML = moveMsg }, 3000);
 
-        const trample = player.armor - dmg
+        strikeAnimation(foeBody);
+
+        damageFlash(offHero);
+        damageFlash(defHero);
+        damageFlash(utilHero);
+        
+
+        const dmg = telegraphing[0].power
+        const moveMsg = foe.name + " used " + telegraphing[0].name + ", dealing\n" + telegraphing[0].power + " damage."
+
+        setTimeout( function(){
+            dispatch(logCombat( {origin:'monster', description:moveMsg} ), 1000)
+        }, 1000);
+
+        const trample = player.defense - dmg
         if ( trample <= 0 ){
-            const newArmor = 0
+            const newDefense = 0
             const newHealth = player.health + trample
-            setTimeout( function(){ dispatch( updatePlayer({ health: newHealth, armor: newArmor }) ) },4000);
+            setTimeout( function(){ dispatch( updatePlayer({ health: newHealth, defense: newDefense }) ) },1000);
             
         } else {
-            const newArmor = trample
-            setTimeout( function(){ dispatch( updatePlayer({ armor: newArmor }) ) },4000);    
+            const newDefense = trample
+            setTimeout( function(){ dispatch( updatePlayer({ defense: newDefense }) ) },1000);    
         }
-        //  if players health drops to 0, exit game... do that later
 
-    } else if (telegraphing[0].effect == 'armor') {
-        const newFoeArmor = telegraphing[0].power
-        const moveMsg = foe.name + " uses " + telegraphing[0].name + " gaining\n" + telegraphing[0].power + " armor"
-        setTimeout( function(){ combatMsgs.innerHTML = moveMsg }, 3000)
-        setTimeout( function(){ dispatch( updateFoe({ armor: newFoeArmor })) },4000);
+
+    } else if (telegraphing[0].effect == 'defense') {
+
+
+        const newDefense = telegraphing[0].power
+        const moveMsg = foe.name + " used " + telegraphing[0].name + ", gained\n +" + telegraphing[0].power + " defense."
+
+        setTimeout( function(){
+            //  combatMsgs.innerHTML = moveMsg 
+             dispatch(logCombat( {origin:'monster', description:moveMsg} ), 1000)
+        }, 1000)
+
+        setTimeout( function(){ 
+            dispatch( updateFoe({ defense: newDefense })) 
+        },1100);
+
+
     }
 
     // adding in a new foe effects...
@@ -92,8 +175,8 @@ export const endTurn = () => (dispatch, getState) => {
             }
         })
         
-        console.log ("new Telegraph",newTelegraph)
-        setTimeout( function(){ dispatch( updateFoe({ telegraphing: newTelegraph }) )}, 4500)
+        // console.log ("new Telegraph",newTelegraph)
+        setTimeout( function(){ dispatch( updateFoe({ telegraphing: newTelegraph }) )}, 1200)
    
     } else {
         const newPos = 0
@@ -102,48 +185,38 @@ export const endTurn = () => (dispatch, getState) => {
                 return obj
             }        
         })        
-        console.log ("new Telegraph",newTelegraph)
-        setTimeout( function(){ dispatch( updateFoe({ telegraphing: newTelegraph }) )}, 4500)
+        // console.log ("new Telegraph",newTelegraph)
+        setTimeout( function(){ dispatch( updateFoe({ telegraphing: newTelegraph }) )}, 1200)
     }
 
 
-    // notify player foe turn is over, and their turn now begins...
-    // with that we have to reset player armor & energy
-    // could handle everything from getState and updates here...
-
-    // TODO: await (dispatch)... create a function with Await(game action),(how-long). ( A Promise )
-    setTimeout( function(){ combatMsgs.innerHTML = "Foe's Turn Over" }, 5000);
-    setTimeout( function(){ combatMsgs.innerHTML = "Armor & Energy Reset" }, 6000);
-    setTimeout( function(){ dispatch( updatePlayer({ energy: 3, armor:0 }) )}, 6100);
-    setTimeout( function(){ combatMsgs.innerHTML = "Your Turn..." }, 7000);
+    setTimeout( function(){
+        dispatch( updatePlayer({ energy: 3, defense: 0 }) 
+    )}, 1200);
     
     setTimeout( function(){     
         dispatch( drawCard() )
-    }, 7000);
+    }, 1500);
 
     setTimeout( function(){
         dispatch( drawCard() )
-    }, 7300);
+    }, 2000);
 
     setTimeout( function(){
         dispatch( drawCard() )
-    }, 7600);
+    }, 2500);
 
     setTimeout( function(){
         dispatch( drawCard() )
-    }, 7900);
+    }, 3000);
 
     setTimeout( function(){
         dispatch( drawCard() )
-        zone.style.height = "0vh"
-        zone.style.width = "0vw"
-
-        // turnBttn.cursor = "allowed";
-        // turnBttn.backgroundColor = "darkslategrey"
-        // turnBttn.style.opacity = 1
-
-    }, 8200);
+        playerOverlay.style.height = "0vh"
+        playerOverlay.style.width = "0vw"
+    }, 3500);
 
 
 
 }
+

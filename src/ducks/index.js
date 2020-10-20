@@ -3,16 +3,18 @@ import player from './player';
 import foe from './foe';
 import screen from './screen';
 import combat from './combat';
-import climbState from './climbState';
+import game_state from './game_state';
 import map from './map';
 import shop from './shop';
+import music from './music';
 
 export default combineReducers({
     player,
     foe,
     screen,
     combat,
-    climbState,
+    game_state,
     map,
-    shop
+    shop,
+    music
 })

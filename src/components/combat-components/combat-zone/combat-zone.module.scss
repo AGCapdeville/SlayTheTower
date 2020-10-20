@@ -4,7 +4,8 @@
     width: 100vw;
     height: $combatZoneHeight;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    align-items: center;
 }
 
 .partyHealthZone{
@@ -13,20 +14,16 @@
     align-self: center;
 }
 
-.heroVSMonster{
-    width: 100vw;
+.heroContainer{
     display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    align-items: center;
-}
-
-.heroZone{
     width: 40vw;
     height: auto;
+    justify-content: center;
 }
 
-.monsterZone{
+.foeContainer{
+    display: flex;
     width: 40vw;
     height: auto;
+    justify-content: center;
 }

@@ -5,7 +5,8 @@
     align-items: flex-start;
     padding: 1px;
     border-width: 0px;
-    margin: 1px;
+    margin-left: 2px;
+    margin-right: 2px;
     background: #828282bd;
 
     font-size: 8px;
@@ -22,11 +23,12 @@
 
     font-size: 8px;
     font-family: $gameFont;
+
+    background-color: #424242;
 }
 
 .cardFace {    
     position: absolute;
-    // background: rgba(255, 0, 0, 0.15);
     height: 100px;
     width: 75px;
     
@@ -48,33 +50,54 @@
 
 .cardArt{
     width: 100%;
-    height: 50%;
+    height: 40%;
     margin: 0px;
     background-color: lightcoral;
 }
 
 .titleSection {
     display: flex;
-    align-items: center;
     justify-content: center;
-    justify-content: space-evenly;
-    flex-direction: row;
+    align-items: center;
+    height: 15%;
+    background-color: rgb(83, 83, 83);
+    font-size: 7px;
 }
 
 .title{
     display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%; 
     color: white; 
-    background-color: rgb(83, 83, 83);
+}
+
+.costRow{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 }
 
 .energy {
     display: flex;
     color: yellow;
-    background-color: black;
+    width: 50%;
+    justify-content: flex-start;
+}
+
+.requiredHero{
+    display: flex;
+    color: dodgerblue;
+    width: 50%;
+    justify-content: flex-end;
 }
 
 .cardDescription{
     display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     width: 100%;
     height: 40%;
     margin: 0px;

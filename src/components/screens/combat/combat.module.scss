@@ -8,6 +8,8 @@
     flex-direction: column;
     align-items: center;
     font-family: $gameFont;
+
+    background-color: white;
 }
 
 .playerZone {
@@ -22,6 +24,7 @@
     bottom: 0;
 
     background: linear-gradient(to bottom, #6c6eb2 0%,#181870 64%,#000028 100%);
+    
     box-shadow: 
     2px 2px #e7dfe7,
     -2px -2px #e7dfe7,
@@ -30,9 +33,9 @@
     0 -1px #9c9a9c,
     -1px 0 #7b757b,
     0 1px #424542;
+    
     overflow: auto;
 }
-
 
 .combatZoneOverlay {
     width: 100vw;
@@ -43,16 +46,6 @@
     position: absolute;
     align-items: flex-end;
     flex-direction: column;
-}
-
-.combatMsgs {
-    background-color: gray;
-    display: flex;
-    width: 20vw;
-    height: 10vh;
-    margin-right: 15px;
-    padding: 5px;
-    font-size: 9px;
 }
 
 

@@ -3,9 +3,12 @@ import { useSelector } from "react-redux";
 import { createSelector } from "reselect";
 import { updateFoe } from './foe';
 
+import { logCombat } from './combat';
+
+
 // TODO: clean up and organize
 
-// Alter Health, Energy & Armor Actions:
+// Alter Health, Energy & Defense Actions:
 export const updatePlayer = createAction('player/UPDATE_PLAYER');
 // export const newRound = createAction('player/NEW_ROUND');
 
@@ -23,6 +26,8 @@ export const resetDeck = createAction('player/RESET_DECK')
 
 // Hand actions
 export const drawHand = createAction('player/DRAW_HAND');
+
+
 
 const initialState = {
     deck: [],
@@ -125,7 +130,7 @@ export default handleActions({
 
 // notes:
 // might need to see if I can set initialStates later ???????
-// [newRound]: (state) => ({...state, energy: initialState.energy, armor: initialState.armor}),
+// [newRound]: (state) => ({...state, energy: initialState.energy, defense: initialState.defense}),
 // deck handle:
 
 
@@ -137,43 +142,247 @@ const selectPlayer = createSelector(
 
 export const usePlayer = () => useSelector(selectPlayer);
 
+
+/* requiredHero :
+// a - any hero standing
+// o - off needed
+// u - util needed
+// d - def needed
+// do - def & off needed
+// ud - util & def needed
+// ou - off & util needed
+// e - every hero needed
+*/
+function checkStanding(state, requiredHeros){
+
+    const offHeroStanding = (state.player.offenseHeroStatus === 'standing' ? true : false);
+    const defHeroStanding = (state.player.defenseHeroStatus === 'standing' ? true : false);
+    const utilHeroStanding = (state.player.utilityHeroStatus === 'standing' ? true : false);
+
+    console.log('standing heros: off:', offHeroStanding, ', def:', defHeroStanding, ', util:',utilHeroStanding);
+    console.log('req heros:',requiredHeros);
+
+    switch (requiredHeros) {
+        case 'a':
+            // console.log('')
+            return (offHeroStanding || defHeroStanding || utilHeroStanding);
+        case 'o':
+            return (offHeroStanding);
+        case 'u':
+            return (utilHeroStanding);
+        case 'd':
+            return (defHeroStanding);
+        case 'do':
+            return (defHeroStanding && offHeroStanding);
+        case 'du':
+            return (defHeroStanding && utilHeroStanding);
+        case 'ou':
+            return (offHeroStanding && utilHeroStanding);
+        case 'e':
+            return (offHeroStanding && defHeroStanding && utilHeroStanding);
+    }
+}
+
+
+// Animations START:
+
+function heroStrikeAnimation(heroElement, offBeat){
+
+    let time = 1;
+
+    if (offBeat){
+        time = Math.floor(Math.random() * 100); 
+    }
+
+    setTimeout( function(){
+        heroElement.style.marginLeft = '0px';
+    }, 300 + time)
+        
+    setTimeout( function(){
+        heroElement.style.marginLeft = '20px';
+    }, 100 + time)
+
+    setTimeout( function(){
+        heroElement.style.marginLeft = '40px';
+    }, 150 + time)
+    
+    setTimeout( function(){
+        heroElement.style.marginLeft = '65px';
+    }, 200 + time)
+
+    setTimeout( function(){
+        heroElement.style.marginLeft = '40px';
+    }, 240 + time)
+
+    setTimeout( function(){
+        heroElement.style.marginLeft = '10px';
+    }, 280 + time)
+
+}
+
+function damageFlash(bodyElement){
+
+    setTimeout( function(){
+        bodyElement.style.opacity = 1;
+    }, 300)
+        
+    setTimeout( function(){
+        bodyElement.style.opacity = .75;
+    }, 100)
+
+    setTimeout( function(){
+        bodyElement.style.opacity = .5;
+    }, 150)
+    
+    setTimeout( function(){
+        bodyElement.style.opacity = 0;
+    }, 200)
+
+    setTimeout( function(){
+        bodyElement.style.opacity = .75;
+    }, 240)
+
+    setTimeout( function(){
+        bodyElement.style.opacity = 0;
+    }, 280)
+    
+}
+
+// Animations END
+
+function moveHero(requiredHeros, offHeroBody, defHeroBody, utilHeroBody){
+
+    switch (requiredHeros) {
+        case 'a':
+            let choice = Math.floor(Math.random() * 3); 
+            if (choice === 1) {
+                heroStrikeAnimation(offHeroBody);
+            }else if( choice === 2){
+                heroStrikeAnimation(defHeroBody);
+            }else{
+                heroStrikeAnimation(utilHeroBody);
+            }
+            break;
+        case 'o':
+            heroStrikeAnimation(offHeroBody);
+            break;
+        case 'u':
+            heroStrikeAnimation(utilHeroBody);
+            break;
+        case 'd':
+            heroStrikeAnimation(defHeroBody);
+            break;
+        case 'do':
+            heroStrikeAnimation(offHeroBody);
+            heroStrikeAnimation(defHeroBody);
+            break;
+        case 'du':
+            heroStrikeAnimation(defHeroBody);
+            heroStrikeAnimation(utilHeroBody);
+            break;
+        case 'ou':
+            heroStrikeAnimation(offHeroBody);
+            heroStrikeAnimation(utilHeroBody);
+            break;
+        case 'e':
+            heroStrikeAnimation(offHeroBody);
+            heroStrikeAnimation(defHeroBody);
+            heroStrikeAnimation(utilHeroBody);
+            break;
+    }
+}
+
+
 // Async Actions
 export const applyCard = (cardIndex) => (dispatch, getState) => {
     const state = getState();
 
+    // delay:
+    // setTimeout( function(){     
+    //     dispatch( drawCard() )
+    // }, 7000);
 
     const card = state.player.hand[cardIndex]
     const energyCost = card.energy;
-    const foeArmor = state.foe.armor
+    const standing = checkStanding(state, card.requiredHero);
+        
+    const foeDefense = state.foe.defense
+
+    // This is how we parse players played cards in the game....
+    // What checks do we need to do? 
+    //  1. Player energy
+    //  2. Player has required party members for said card.
+    //
+    // If the above are okay, we then procced to parse the cards action:
+    //   1. Expend energy cost of card (if needed)
+    //   2. Play animation of party attacking/ defending/ skill
+    //   3. Subtract health from monster.
+    //   4. tbc....
+
+
+    // attempt animation...
+    let offHeroBody = document.getElementById('offHero');
+    let defHeroBody = document.getElementById('defHero');
+    let utilHeroBody = document.getElementById('utilHero');
+
+
 
     if (energyCost <= state.player.energy) {
-        const newEnergy = state.player.energy - energyCost
-        if (card.action.target=="foe"){
-            if (card.action.effect=="damage"){
-                const damage = card.action.power
-                const trample = foeArmor - damage
-                if (trample < 0) {
-                    const newFoeHealth = parseInt(state.foe.health) + parseInt(trample)
-                    dispatch(updateFoe({ health: newFoeHealth, armor: 0}))
-                }else{
-                    const newFoeArmor = trample
-                    dispatch(updateFoe({ armor: newFoeArmor }))
+        if (standing){
+        
+            moveHero(card.requiredHero, offHeroBody, defHeroBody, utilHeroBody);
+
+            const newEnergy = state.player.energy - energyCost
+
+
+            // TARGET: FOE
+            if (card.action.target=="foe"){    
+
+
+                // FOE DAMAGED
+                if (card.action.effect=="damage"){
+
+                    let foeBody = document.getElementById('foeBody');
+                    console.log('GET foeBody: ',foeBody);
+                    damageFlash(foeBody);
+
+                    const damage = card.action.power;
+                    const trample = foeDefense - damage;
+                    if (trample < 0) {
+                        const newFoeHealth = parseInt(state.foe.health) + parseInt(trample);
+                        dispatch(updateFoe({ health: newFoeHealth, defense: 0}));
+                        dispatch(logCombat({ origin: 'player', description: ('Player used: '+card.name+' dealing '+((-1)*(trample))+' damage.' ) }))
+                    }else{
+                        const newFoeDefense = trample;
+                        dispatch(updateFoe({ defense: newFoeDefense }));
+                        dispatch(logCombat({ origin: 'player', description: ('Player used: '+card.name+' dealing 0 damage.' ) }))
+                    }
+                    dispatch(updatePlayer({ energy: newEnergy }));
                 }
-                dispatch(updatePlayer({ energy: newEnergy }))
+
+
+
+            } else {
+                if (card.action.effect=="heal"){
+                    const heal = card.action.power
+                    const newPlayerHealth = parseInt(state.player.health) + parseInt(heal)
+                    dispatch(updatePlayer({ health: newPlayerHealth, energy: newEnergy }))
+                    dispatch(logCombat({ origin: 'player', description: ('Player used: '+card.name+' healing '+heal+' party health' ) }))
+
+                } else if (card.action.effect=="defense"){
+                    const defense = card.action.power
+                    const newPlayerDefense = parseInt(state.player.defense) + parseInt(defense)
+                    dispatch(updatePlayer({ defense: newPlayerDefense, energy: newEnergy}))
+                    dispatch(logCombat({ origin: 'player', description: ('Player used: '+card.name+' gaining '+defense+' party defense' ) }))
+                }
             }
-        } else {
-            if (card.action.effect=="heal"){
-                const heal = card.action.power
-                const newPlayerHealth = parseInt(state.player.health) + parseInt(heal)
-                dispatch(updatePlayer({ health: newPlayerHealth, energy: newEnergy }))
-            } else if (card.action.effect=="armor"){
-                const armor = card.action.power
-                const newPlayerArmor = parseInt(state.player.armor) + parseInt(armor)
-                dispatch(updatePlayer({ armor: newPlayerArmor, energy: newEnergy}))
-            }
+            dispatch(playIndexedCard(cardIndex))
+
+        }else{
+            console.log('! Required hero not standing !')
         }
-        dispatch(playIndexedCard(cardIndex))
     } else {
+        // replace with sound?
         console.log("! Not Enough Energy !")
     }
 

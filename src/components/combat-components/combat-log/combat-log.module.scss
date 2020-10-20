@@ -1,0 +1,52 @@
+@import "../../../design-standards/constants.scss";
+
+
+.combatLog {
+    display: flex;
+    width: 20vw;
+    height: 10vh;
+
+    opacity: .5;
+
+    position: absolute;
+    right: 10px;
+    top: 10%;
+
+    flex-direction: column;
+
+    padding: 5px;
+    font-size: 9px;
+    background-color: gray;
+    color: white;
+
+    &:hover{
+        width: 20vw;
+        height: 30vh;
+        opacity: 1;
+    }
+
+}
+
+.combatLogHeader{
+    height: auto;
+    padding: 4px;
+    background-color: gray;
+}
+
+.scrollableLog{
+    overflow-y: auto;  
+}
+
+.heroLog{
+    background-color: darkslategrey;
+    margin: 5px;    
+    padding: 5px;
+
+}
+
+.monsterLog{
+    background-color: lightcoral;
+    margin: 5px;
+    padding: 5px;
+
+}

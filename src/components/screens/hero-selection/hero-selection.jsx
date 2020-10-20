@@ -4,7 +4,7 @@ import styles from "./hero-selection.module.scss";
 
 
 import { gameState } from '../../../game-data/game-state';
-import { updateClimbState } from '../../../ducks/climbState';
+import { updateGameState } from '../../../ducks/game_state';
 import { updatePlayer } from '../../../ducks/player'
 import { heros } from '../../../game-data/heros-data'
 import { updateScreen } from '../../../ducks/screen';
@@ -21,7 +21,8 @@ const HeroSelection = () => {
     const onCardClick = (heroType) => {
         console.log(heroType)
         dispatch(updatePlayer(heros[0]))
-        dispatch(updateClimbState(gameState))
+        dispatch(updateGameState(gameState))
+        dispatch(updateGameState({screen:'Map'}));
         dispatch(updateScreen('Map'))
         // will be changed to map screen.
     }

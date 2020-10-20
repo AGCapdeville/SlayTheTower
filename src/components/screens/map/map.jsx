@@ -3,9 +3,12 @@ import { useDispatch } from 'react-redux';
 import _, { random, isEmpty } from 'lodash';
 import styles from "./map.module.scss";
 
+import { useMusic, load, loop, mute, setTrack} from '../../../ducks/music';
+import { track_list } from '../../../game-data/tracks';
 
 import { useMap, updateMap } from '../../../ducks/map';
 import { updateScreen } from '../../../ducks/screen';
+import { updateGameState } from '../../../ducks/game_state';
 
 // For Combat:
 import { usePlayer, drawHand, shuffleDeck, resetDeck } from '../../../ducks/player';
@@ -23,6 +26,7 @@ function eventHandler(event, dispatcher){
 
       // add argument for boss spawn..
       // dispatcher(spawnFoe());
+      dispatcher(updateGameState({screen:'Title'}));
       dispatcher(updateScreen('Title'));
       break;
     case '💢':
@@ -32,18 +36,22 @@ function eventHandler(event, dispatcher){
       dispatcher(shuffleDeck());
       dispatcher(drawHand());
       // Load fight before screen update?
+      dispatcher(updateGameState({screen:'Combat'}));
       dispatcher(updateScreen('Combat'));
       break;
     case '🔥':
       // TODO: set up rest, training & mending 
+      dispatcher(updateGameState({screen:'Bonfire'}));
       dispatcher(updateScreen('Bonfire'));
       break;
     case '❗':
       // TODO: set up a few trials for demo
+      dispatcher(updateGameState({screen:'Trial'}));
       dispatcher(updateScreen('Trial'));
       break;
     case '🕋':
       dispatcher(setupShop());
+      dispatcher(updateGameState({screen:'Shop'}));
       dispatcher(updateScreen('Shop'));
       break;
     case '⚔️':
@@ -52,6 +60,7 @@ function eventHandler(event, dispatcher){
       dispatcher(shuffleDeck());
       dispatcher(drawHand());
       // Load fight before screen update?
+      dispatcher(updateGameState({screen:'Combat'}));
       dispatcher(updateScreen('Combat'));
       break;
 

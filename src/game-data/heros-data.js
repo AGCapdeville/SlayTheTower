@@ -4,8 +4,17 @@ export const heros = [
 
     {
         utilityHero: 'staff',
+        utilityHeroStatus: 'standing',
+        utilityHeroAilgments: [],
+
         offenseHero: 'sword',
+        offenseHeroStatus: 'standing',
+        offenseHeroAilgments: [],
+
         defenseHero: 'shield',
+        defenseHeroStatus: 'standing',
+        defenseHeroAilgments: [],
+
         health: 55,
         maxHealth: 55,
         energy: 3,
@@ -17,6 +26,7 @@ export const heros = [
         gold: 50,
         items: []
     }
+    
 ];
 
 

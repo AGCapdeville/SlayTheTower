@@ -1,4 +1,6 @@
 import React from 'react';
+
+// Screens
 import Title from './components/screens/title';
 import Combat from './components/screens/combat';
 import Resolution from './components/screens/resolution';
@@ -8,7 +10,11 @@ import Shop from './components/screens/shop';
 import Bonfire from './components/screens/bonfire';
 import Trial from './components/screens/trial';
 
+import Music from './components/music';
+
 import { useScreen } from './ducks/screen';
+
+import { FullScreen, useFullScreenHandle } from "react-full-screen";
 
 const screens = {
   Title,
@@ -21,11 +27,29 @@ const screens = {
   Trial
 }
 
+
+
 const App = () => {
   const screen = useScreen();
   const Screen = screens[screen];
 
-  return <Screen />
+  const handle = useFullScreenHandle();
+  
+  return (
+    <>
+      <button onClick={handle.enter}>
+        Enter fullscreen
+      </button>
+
+      <Music />
+
+
+      <FullScreen handle={handle}>
+        <Screen />
+      </FullScreen>
+    </>
+  )
+
 }
 
 export default App

@@ -17,6 +17,18 @@
 // },
 
 
+// requiredHero :
+
+// a - any hero standing
+// o - off needed
+// u - util needed
+// d - def needed
+// do - def & off needed
+// ud - util & def needed
+// ou - off & util needed
+// e - every hero needed
+
+
 export const cards = [
     {
         name: 'Take the Offensive',
@@ -41,8 +53,8 @@ export const cards = [
         energy: 1,
         exhaust: false,
         action: {
-            target: ['hero'],
-            effect: ['armor'],
+            target: ['player'],
+            effect: ['defense'],
             power: [5]
         },
         description: "+5 Defense",
@@ -50,13 +62,13 @@ export const cards = [
     },
     {   
         name: 'Heal',
-        requiredHero: 'a',
+        requiredHero: 'u',
         art: '<art url>',
         type: 'skill',
         energy: 2,
         exhaust: true,
         action: {
-            target: ['hero'],
+            target: ['player'],
             effect: ['heal'],
             power: [8]
         },

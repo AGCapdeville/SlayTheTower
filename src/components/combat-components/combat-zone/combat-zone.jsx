@@ -9,10 +9,15 @@ const CombatZone = () => {
 
     return (
         <div className = {styles.combatZone}>
-            <div className = {styles.heroVSMonster}>
+
+            <div className = {styles.heroContainer}>
                 <HeroZone />
+            </div>
+
+            <div className = {styles.foeContainer}>
                 <FoeZone />
             </div>
+            
         </div>
     );
 }

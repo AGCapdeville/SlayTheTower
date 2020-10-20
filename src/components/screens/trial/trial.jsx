@@ -2,17 +2,23 @@ import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import styles from "./trial.module.scss";
 
-import { useClimbState } from '../../../ducks/climbState'
+import { updateGameState, useGameState } from '../../../ducks/game_state'
 import { usePlayer, updatePlayer } from '../../../ducks/player';
 import { updateScreen } from '../../../ducks/screen';
 
 import Card from '../../card'
 import { updateShop, setupShop, useShop } from '../../../ducks/shop';
 
+const updateGame = (dispatch, choice) =>{
+    console.log('choice:', choice);
+    dispatch(updateGameState({screen:'Map'}));
+    dispatch(updateScreen('Map'));
+}
+
 const TrialScreen = () => {
 
     const dispatch = useDispatch();
-    const climbState = useClimbState();
+    const game_state = useGameState();
     const player = usePlayer();
 
 
@@ -36,9 +42,9 @@ const TrialScreen = () => {
             </div>
 
             <div className={styles.trialOptionsContainer}>
-                <button className={styles.trialOptions} onClick={() => dispatch( updateScreen('Map') ) }>Attempt...</button>
-                <button className={styles.trialOptions} onClick={() => dispatch( updateScreen('Map') ) }>Run...</button>
-                <button className={styles.trialOptions} onClick={() => dispatch( updateScreen('Map') ) }>Bargin...</button>
+                <button className={styles.trialOptions} onClick={() => updateGame(dispatch, 'attempt')}>Attempt...</button>
+                <button className={styles.trialOptions} onClick={() => updateGame(dispatch, 'run')}>Run...</button>
+                <button className={styles.trialOptions} onClick={() => updateGame(dispatch, 'bargin')}>Bargin...</button>
             </div>
         </div>
 

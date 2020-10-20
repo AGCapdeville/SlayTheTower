@@ -11,6 +11,8 @@
     color: black;
 
     font-family: $gameFont;
+
+    height: 100vh;
 }
 
 .menu {
@@ -46,5 +48,4 @@
     align-items: center;
     height: 40vh;
     font-size: 30px;
-    // text-align: center;
 }

@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import styles from "./bonfire.module.scss";
 
-import { useClimbState } from '../../../ducks/climbState'
+import { updateGameState, useGameState } from '../../../ducks/game_state'
 import { usePlayer, updatePlayer } from '../../../ducks/player';
 import { updateScreen } from '../../../ducks/screen';
 
@@ -15,18 +15,24 @@ function handleOption(option, dispatch){
     switch (option) {
         case 'train':
             // let player know what happend with animation of sorts.
+            dispatch(updateGameState({screen:'Map'}));
             dispatch(updateScreen('Map'))
+            break;
         case 'rest':
+            dispatch(updateGameState({screen:'Map'}));
             dispatch(updateScreen('Map'))
+            break;
         case 'mend':
+            dispatch(updateGameState({screen:'Map'}));
             dispatch(updateScreen('Map'))
+            break;
     }
 }
 
 const BonfireScreen = () => {
 
     const dispatch = useDispatch();
-    const climbState = useClimbState();
+    const gameState = useGameState();
     const shop = useShop();
     const player = usePlayer();
 
@@ -48,11 +54,11 @@ const BonfireScreen = () => {
             </div>
         </div>
 
-        <div>
+        {/* <div>
             <button onClick={() => dispatch( updateScreen('Map') ) }>
                 RETURN TO MAP
             </button>
-        </div>
+        </div> */}
 
         </div>
     </div>
