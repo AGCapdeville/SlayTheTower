@@ -1,0 +1,347 @@
+.heroContainer {
+  width: 150px;
+  height: 100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 4;
+
+}
+
+.hood {
+  width: 21px;
+  height: 25px;
+  margin-left: 1px;
+  margin-top: 3px;
+  background-color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+
+  animation: idle 2.2s alternate;
+  animation-iteration-count: infinite;
+}
+.headContainer {
+  width: 32px;
+  height: 21px;
+  display: flex;
+  position: absolute;
+  justify-content: center;
+  z-index: 3;
+  margin-top: -19px;
+}
+.headMageHero {
+  width: 11px;
+  height: 10px;
+  background-color: dodgerblue;
+  margin-left: 3px;
+  margin-top: -3px;
+  position: absolute;
+  border-radius: 20px;
+
+  animation: idle 2s alternate;
+  animation-iteration-count: infinite;
+}
+.headSwordHero {
+  width: 0;
+  height: 0;
+  margin-top: 1px;
+  margin-left: 3px;
+  position: absolute;
+  border-radius: 20px;
+
+  border-left: 7.6px solid transparent;
+  border-right: 7.6px solid transparent;
+  border-top: 7px solid red;
+  border-bottom: 6.6px solid transparent;
+
+  animation: idle 2s alternate;
+  animation-iteration-count: infinite;
+}
+.headShieldHero {
+  width: 11px;
+  height: 5px;
+  background-color: lime;
+
+  margin-top: -5px;
+  margin-left: 3px;
+  position: absolute;
+  border-radius: 20px;
+
+  animation: idle 2s alternate;
+  animation-iteration-count: infinite;
+}
+
+.heroBody {
+  width: 32px;
+  height: 40px;
+  display: flex;
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+}
+.chest {
+  width: 34px;
+  height: 30px;
+  position: absolute;
+  background-color: black;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  z-index: 2;
+  animation: idle 2.2s;
+  animation-iteration-count: infinite;
+}
+.waist {
+  width: 30px;
+  height: 25px;
+  position: absolute;
+  background-color: darkgrey;
+  margin-top: 19px;
+  z-index: 1;
+}
+
+@keyframes idle {
+  0% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(0, 1.3px);
+  }
+  100% {
+    transform: translate(0, 0);
+  }
+}
+
+.heroContainer.heroMove {
+  animation: heroMove 0.95s ease;
+}
+@keyframes heroMove {
+  0% {
+    transform: translate(0, 0);
+  }
+  45% {
+    transform: translate(95px, 0);
+  }
+  60% {
+    transform: translate(155px, 0);
+  }
+  95% {
+    transform: translate(-1px, 0);
+  }
+  100% {
+    transform: translate(0, 0);
+  }
+}
+
+/* Mage Hero */
+.staff {
+  width: 4px;
+  height: 53px;
+  background-color: black;
+  border-style: solid;
+  border-width: 1px;
+  border-color: lightgrey;
+  z-index: 3;
+
+  justify-content: center;
+  margin-top: -11px;
+
+  animation: staffIdle 2.2s;
+  animation-iteration-count: infinite;
+}
+.staff.aniCast {
+  animation: staffSwing 1s ease;
+}
+
+@keyframes staffSwing {
+  0% {
+    transform: rotate(55deg) translate(0, -9px);
+  }
+  45% {
+    transform: translate(11px, -5px) rotate(25deg);
+  }
+  55% {
+    transform: translate(12px, -9px) rotate(75deg);
+  }
+  100% {
+    transform: rotate(55deg) translate(0, -9px);
+  }
+}
+.heroHandRight {
+  width: 6px;
+  height: 6px;
+  margin-top: 19px;
+  background-color: grey;
+  border-style: solid;
+  border-color: lightgrey;
+  border-width: 1px;
+  z-index: 3;
+  border-radius: 4px;
+  animation: idle 2.2s alternate;
+  animation-iteration-count: infinite;
+}
+.heroHandLeft {
+  width: 6px;
+  height: 6px;
+  margin-top: 9.5px;
+  background-color: grey;
+  border-style: solid;
+  border-color: lightgrey;
+  border-width: 1px;
+  z-index: 3;
+  border-radius: 4px;
+}
+@keyframes staffIdle {
+  0% {
+    transform: rotate(55deg) translate(0, -9px);
+  }
+  50% {
+    transform: rotate(60deg) translate(1px, -4px);
+  }
+  100% {
+    transform: rotate(55deg) translate(0, -9px);
+  }
+}
+
+/* Sword Hero */
+.swordContainer {
+  z-index: 4;
+}
+.grippedHands {
+  width: 6px;
+  height: 6px;
+  position: absolute;
+  background-color: grey;
+  border-style: solid;
+  border-color: lightgrey;
+  border-width: 1px;
+  z-index: 3;
+  border-radius: 4px;
+  animation: idle 3s;
+  animation-iteration-count: infinite;
+}
+.swordHilt {
+  width: 4px;
+  height: 24px;
+  background-color: slategrey;
+  z-index: 5;
+  margin-top: 5px;
+
+  display: flex;
+  align-items: center;
+
+  animation: swordIdle 2.5s;
+  animation-iteration-count: infinite;
+}
+.swordTip {
+  width: 0px;
+  height: 0px;
+  border-style: solid;
+  z-index: 3;
+
+  border-left: 0px solid transparent;
+  border-right: 15px solid transparent;
+  border-bottom: 60px solid slategrey;
+  border-top: 0 solid transparent;
+
+  opacity: 1;
+  margin-bottom: 71px;
+
+  possition: absolute;
+}
+.swordPattern {
+  width: 0px;
+  height: 0px;
+  border-style: solid;
+  z-index: 3;
+
+  border-left: 0px solid transparent;
+  border-right: 11px solid transparent;
+  border-bottom: 57px solid silver;
+  border-top: 1px solid transparent;
+
+  opacity: 1;
+  margin-bottom: 70px;
+  margin-left: 1px;
+  possition: absolute;
+}
+
+@keyframes swordIdle {
+  0% {
+    transform: rotate(70deg) translate(4px, -9px);
+  }
+  50% {
+    transform: rotate(60deg) translate(4px, -11px);
+  }
+  100% {
+    transform: rotate(70deg) translate(4px, -9px);
+  }
+}
+.swordHilt.aniSwing {
+  animation: swingSword 1s ease;
+}
+@keyframes swingSword {
+  0% {
+    transform: rotate(70deg) translate(4px, -9px);
+  }
+  55% {
+    transform: rotate(-35deg) translate(4px, -25px);
+  }
+  60% {
+    transform: rotate(95deg) translate(6px, -10px);
+  }
+  100% {
+    transform: rotate(70deg) translate(4px, -9px);
+  }
+}
+
+/* Guard Hero */
+.shield {
+  width: 0;
+  height: 0;
+  position: absolute;
+
+  border-top-right-radius: 15px;
+
+  border-left: 5px solid transparent;
+  border-right: 21px solid slategrey;
+  border-top: 29px solid transparent;
+  border-bottom: 19px solid transparent;
+
+  z-index: 4;
+
+  transform: translate(13px, -8px) rotate(-2deg);
+  animation: shieldIdle 2.5s;
+  animation-iteration-count: infinite;
+}
+@keyframes shieldIdle {
+  0% {
+    transform: rotate(-2deg) translate(13px, -8px);
+  }
+  50% {
+    transform: rotate(5deg) translate(11px, -7px);
+  }
+  100% {
+    transform: rotate(-2deg) translate(13px, -8px);
+  }
+}
+.shield.aniBash {
+  animation: shieldBash 1s ease;
+}
+@keyframes shieldBash {
+  0% {
+    transform: rotate(-2deg) translate(13px, -8px);
+  }
+  55% {
+    transform: rotate(-4deg) translate(13px, -11px);
+  }
+  60% {
+    transform: rotate(2deg) translate(13px, -15px) scale(1.5, 1.5);
+  }
+  100% {
+    transform: rotate(-2deg) translate(13px, -8px);
+  }
+}

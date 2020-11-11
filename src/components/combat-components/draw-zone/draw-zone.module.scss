@@ -2,20 +2,28 @@
 
 
 .drawZone {
-    display: block;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     padding: 5px;
     background-color: black;
     font-size: 12px;
+    margin-left: 3vw;
+
 }
 
 .energy {
     color: yellow;
     text-align: center;
+    margin: 10px;
 }
 
 .deck {
     color: white; 
     text-align: center;
+    margin: 10px;
+
 }
 
 .devButton{

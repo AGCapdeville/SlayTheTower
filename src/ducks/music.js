@@ -14,7 +14,7 @@ const initialState = {
     curr_track : document.createElement('audio'),
     is_playing : false,
     is_looping : false,
-    is_muted: false,
+    is_muted: true,
 }
 
 const reduceMuteTrack = ({ curr_track, is_muted, ...rest}) => {

@@ -37,6 +37,7 @@ const Cards = () =>{
     }
 
     if (isMobile()){
+        
         return(
             <div className={styles.handContainer}>
                 {

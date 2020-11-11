@@ -1,19 +1,18 @@
 import { createAction, handleActions } from "redux-actions";
 import { useSelector } from "react-redux";
 import { createSelector } from "reselect";
-import { creeps } from '../game-data/creep-data';
+import { monsters } from '../game-data/monster-data';
 
 // export const setFoeName = createAction('foe/SET_FOE_NAME');
 // export const setFoeImg = createAction('foe/SET_FOE_IMG');
 // export const setFoeTotalHealth = createAction('foe/SET_FOE_TOTAL_HEALTH');
 // export const setFoeMoves = createAction('foe/SET_FOE_MOVES');
-export const spawnFoe = createAction('foe/SPAWN_FOE');
-export const updateFoe = createAction('foe/UPDATE_FOE');
-export const spawnFloorBoss = createAction('foe/SPAWN_FLOOR_BOSS');
+export const spawnMonster = createAction('monster/SPAWN_MONSTER');
+export const updateMonster = createAction('monster/UPDATE_MONSTER');
+export const spawnFloorBoss = createAction('monster/SPAWN_FLOOR_BOSS');
 const initialState = { };
 
 // name: 'Slime',
-// art: 'https://i.imgur.com/Sun4iBT.png?1',
 // health: 10,
 // totalHealth: 10,
 // defense: 0,
@@ -41,19 +40,22 @@ const initialState = { };
 
 
 export default handleActions({
-    [spawnFoe]: (state) => ({ ...state, ...creeps[0] }),
+    [spawnMonster]: (state, action) => ({
+        ...state, 
+        ...monsters.find( m => action.payload === m.name),
+    }),
     [spawnFloorBoss]: (state, action) => ({...state, ...action.payload}),
-    [updateFoe]: (state, action) => {
+    [updateMonster]: (state, action) => {
         return ({ ...state, ...action.payload })
     },
 }, initialState);
 
 
 // how we grab data from the store
-const selectFoe = createSelector(
-    state => state.foe,
-    foe => foe   
+const selectMonster = createSelector(
+    state => state.monster,
+    monster => monster   
 )
 
-export const useFoe = () => useSelector(selectFoe);
+export const useMonster = () => useSelector(selectMonster);
 

@@ -16,6 +16,8 @@ import { useScreen } from './ducks/screen';
 
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
 
+import Transition from './components/transition';
+
 const screens = {
   Title,
   Combat,
@@ -43,8 +45,8 @@ const App = () => {
 
       <Music />
 
-
       <FullScreen handle={handle}>
+        <Transition />
         <Screen />
       </FullScreen>
     </>

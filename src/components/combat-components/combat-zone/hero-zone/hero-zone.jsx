@@ -1,32 +1,28 @@
 import React from 'react';
 import styles from "./hero-zone.module.scss";
 
+import Hero from "../../../hero";
+
 
 const HeroZone = () => {
 
     return(
         <div className={styles.heroColumn}>
 
-            <div className={styles.heroContainer}>
-                <div id={'offHero'} className={styles.offHero}>
-                    🔪
-                    <img id={'offHeroBody'} />
-                </div>
-            </div>
+            <Hero 
+                heroType={'mage'} 
+                status={'normal'}
+            />
 
-            <div className={styles.heroContainer}>
-                <div id={'defHero'} className={styles.defHero}>
-                    🛡️
-                    <img id={'defHeroBody'} />
-                </div>
-            </div>
+            <Hero 
+                heroType={'sword'} 
+                status={'normal'}
+            />
 
-            <div className={styles.heroContainer}>
-                <div id={'utilHero'} className={styles.utilHero}>
-                    🔮
-                    <img id={'utilHeroBody'} />
-                </div>
-            </div>
+            <Hero 
+                heroType={'shield'} 
+                status={'normal'}
+            />
 
         </div>
     );

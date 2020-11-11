@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 import player from './player';
-import foe from './foe';
+import monster from './monster';
 import screen from './screen';
 import combat from './combat';
 import game_state from './game_state';
@@ -10,7 +10,7 @@ import music from './music';
 
 export default combineReducers({
     player,
-    foe,
+    monster,
     screen,
     combat,
     game_state,

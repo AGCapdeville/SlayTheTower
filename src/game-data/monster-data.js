@@ -1,12 +1,8 @@
-
-
-
-export const creeps = [
+export const monsters = [
     {
         name: 'Slime',
-        art: 'https://i.imgur.com/Sun4iBT.png?1',
         // health: 36, <- normal health
-        health: 15,
+        health: 10,
         total: 36,
         defense: 0,
         gold: 10,
@@ -42,50 +38,44 @@ export const creeps = [
         ]
     },
     {
-        name: 'Living Armor',
-        art: 'https://i.imgur.com/yl0eGRj.png?4',
-        health: 55,
-        total: 55,
+        name: 'Fire',
+        // health: 36, <- normal health
+        health: 40,
+        total: 40,
         defense: 0,
-        telegraphing: [
-            {
-                name: ['Lunging Strike'],
+        gold: 30,
+        telegraphing: [{ 
+                name: ['Spit'],
                 order: 0,
                 target: ['hero'],
                 effect: ['damage'],
-                power: [30]
+                power: [8]
             }],
         moves: [
             {
-                name: ['Lunging Strike'],
+                name: ['Spit'],
                 order: 0,
                 target: ['hero'],
                 effect: ['damage'],
-                power: [30]
+                power: [8]
             },
             {
-                name: ['Defensive Mode'],
+                name: ['Whip'],
                 order: 1,
-                target: ['self'],
-                effect: ['wait'],
-                power: [0]
+                target: ['hero'],
+                effect: ['damage'],
+                power: [13]
             },
             {
-                name: ['Repair'],
+                name : ['Soften'],
                 order: 2,
                 target: ['self'],
-                effect: ['heal'],
-                power: [20]
-            },
-            {
-                name: ['Offensive Mode'],
-                order: 3,
-                target: ['self'],
-                effect: ['wait'],
-                power: [0]
-            },
+                effect: ['defense'],
+                power: [12]
+            }
         ]
     }
+
     // {
     //     name: 'Living Armor',
     //     art: 'https://i.imgur.com/yl0eGRj.png?4',

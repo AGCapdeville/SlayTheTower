@@ -1,7 +1,7 @@
 import { createAction, handleActions } from "redux-actions";
 import { useSelector } from "react-redux";
 import { createSelector } from "reselect";
-import { updateFoe } from './foe';
+import { updateMonster } from './monster';
 
 import { updatePlayer, discardHand, drawCard } from './player';
 
@@ -89,11 +89,11 @@ export const endTurn = () => (dispatch, getState) => {
 
     let playerOverlay = document.getElementById('playerOverlay');
 
-    let foeBody = document.getElementById('foeBody');
+    // let foeBody = document.getElementById('foeBody');
 
-    let offHero = document.getElementById('offHero');
-    let defHero = document.getElementById('defHero');
-    let utilHero = document.getElementById('utilHero');
+    // let offHero = document.getElementById('offHero');
+    // let defHero = document.getElementById('defHero');
+    // let utilHero = document.getElementById('utilHero');
 
 
     playerOverlay.style.height = "40vh"
@@ -103,28 +103,28 @@ export const endTurn = () => (dispatch, getState) => {
     playerOverlay.style.position = "absolute"
     playerOverlay.style.zIndex = 100
     playerOverlay.style.bottom = 0
-
+    
     setTimeout( function(){ 
         dispatch( discardHand() )
     }, 1000 );
 
     const state = getState()
     const player = state.player
-    const foe = state.foe
+    const monster = state.monster
 
-    const telegraphing = foe.telegraphing
+    const telegraphing = monster.telegraphing
 
     if ( telegraphing[0].effect == "damage" ){
 
-        strikeAnimation(foeBody);
+        // strikeAnimation(foeBody);
 
-        damageFlash(offHero);
-        damageFlash(defHero);
-        damageFlash(utilHero);
+        // damageFlash(offHero);
+        // damageFlash(defHero);
+        // damageFlash(utilHero);
         
 
         const dmg = telegraphing[0].power
-        const moveMsg = foe.name + " used " + telegraphing[0].name + ", dealing\n" + telegraphing[0].power + " damage."
+        const moveMsg = monster.name + " used " + telegraphing[0].name + ", dealing\n" + telegraphing[0].power + " damage."
 
         setTimeout( function(){
             dispatch(logCombat( {origin:'monster', description:moveMsg} ), 1000)
@@ -146,7 +146,7 @@ export const endTurn = () => (dispatch, getState) => {
 
 
         const newDefense = telegraphing[0].power
-        const moveMsg = foe.name + " used " + telegraphing[0].name + ", gained\n +" + telegraphing[0].power + " defense."
+        const moveMsg = monster.name + " used " + telegraphing[0].name + ", gained\n +" + telegraphing[0].power + " defense."
 
         setTimeout( function(){
             //  combatMsgs.innerHTML = moveMsg 
@@ -154,16 +154,16 @@ export const endTurn = () => (dispatch, getState) => {
         }, 1000)
 
         setTimeout( function(){ 
-            dispatch( updateFoe({ defense: newDefense })) 
+            dispatch( updateMonster({ defense: newDefense })) 
         },1100);
 
 
     }
 
-    // adding in a new foe effects...
+    // adding in a new monster effects...
     // if ( telegraphing[0].effect == ) 
 
-    const moves = foe.moves
+    const moves = monster.moves
     const lengthOfMoves = Object.keys(moves).length
     const position = telegraphing[0].order
 
@@ -176,7 +176,7 @@ export const endTurn = () => (dispatch, getState) => {
         })
         
         // console.log ("new Telegraph",newTelegraph)
-        setTimeout( function(){ dispatch( updateFoe({ telegraphing: newTelegraph }) )}, 1200)
+        setTimeout( function(){ dispatch( updateMonster({ telegraphing: newTelegraph }) )}, 1200)
    
     } else {
         const newPos = 0
@@ -186,7 +186,7 @@ export const endTurn = () => (dispatch, getState) => {
             }        
         })        
         // console.log ("new Telegraph",newTelegraph)
-        setTimeout( function(){ dispatch( updateFoe({ telegraphing: newTelegraph }) )}, 1200)
+        setTimeout( function(){ dispatch( updateMonster({ telegraphing: newTelegraph }) )}, 1200)
     }
 
 
@@ -215,7 +215,6 @@ export const endTurn = () => (dispatch, getState) => {
         playerOverlay.style.height = "0vh"
         playerOverlay.style.width = "0vw"
     }, 3500);
-
 
 
 }

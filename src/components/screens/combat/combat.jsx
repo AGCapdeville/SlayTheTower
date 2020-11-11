@@ -13,7 +13,7 @@ import DrawZone from '../../combat-components/draw-zone';
 import DiscardZone from '../../combat-components/discard-zone';
 import CombatLog from '../../combat-components/combat-log';
 
-import { useFoe } from '../../../ducks/foe';
+import { useMonster } from '../../../ducks/monster';
 import { updateCombat } from '../../../ducks/combat';
 
 import { updateGameState } from '../../../ducks/game_state';
@@ -22,8 +22,8 @@ import PartyStatus from '../../combat-components/player-status';
 
 
 const CombatScreen = () => {
-    const { gold: loot } = useFoe();
-    const { health: foeHealth } = useFoe();
+    const { gold: loot } = useMonster();
+    const { health: foeHealth } = useMonster();
     const player = usePlayer();
 
     const dispatch = useDispatch();
@@ -48,7 +48,7 @@ const CombatScreen = () => {
             setTimeout( function(){
                 dispatch(updateGameState({screen:'Resolution'}));
                 dispatch( updateScreen('Resolution') ) 
-            }, 1500);
+            }, 1000);
         }
     }, [foeHealth]);
 
@@ -66,7 +66,7 @@ const CombatScreen = () => {
             setTimeout( function(){
                 dispatch(updateGameState({screen:'Resolution'}));
                 dispatch( updateScreen('Resolution') ) 
-            }, 1500);       
+            }, 1000);       
         }
     }, [player.health]);
 

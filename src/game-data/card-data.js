@@ -72,7 +72,7 @@ export const cards = [
             effect: ['heal'],
             power: [8]
         },
-        description: "Heal 8 Damage",
+        description: "Heal +8",
         card_id: 2,
         cost: 100,
     },

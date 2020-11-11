@@ -1,7 +1,14 @@
 import React from 'react';
-import foe, { useFoe } from '../../../../ducks/foe'
+import monster, { useMonster } from '../../../../ducks/monster'
 import styles from "./foe-zone.module.scss";
 import { useEffect } from 'react';
+
+import Slime from '../../../monsters/slime';
+import Fire from '../../../monsters/fire';
+const monsterList = {
+    Slime,
+    Fire
+}
 
 function updateFoeHealthBar(foeHealth, foeMax){
     var x = document.getElementById("foeHealthBar")
@@ -37,10 +44,10 @@ function updateFoeDefBar(defense){
     }
 }
 
-function getTelegraph(foe){
+function getTelegraph(monster){
     
-    const effect = foe.telegraphing[0].effect;
-    const power = foe.telegraphing[0].power;
+    const effect = monster.telegraphing[0].effect;
+    const power = monster.telegraphing[0].power;
     
     // console.log('effect:', effect);
 
@@ -56,11 +63,14 @@ function getTelegraph(foe){
 
 const FoeZone = () => {
 
-    const { health: foeHealth } = useFoe();
-    const { total: foeMax } = useFoe();
-    const { defense: foeDefense } = useFoe();
-    const foe = useFoe();
-    const telegraph = getTelegraph(foe)
+    const { health: foeHealth } = useMonster();
+    const { total: foeMax } = useMonster();
+    const { defense: foeDefense } = useMonster();
+    const monster = useMonster();
+    console.log('foe.name:', monster.name);
+    const Monster = monsterList[monster.name];
+    const telegraph = getTelegraph(monster)
+
 
     useEffect(() => {
         updateFoeHealthBar(foeHealth, foeMax)
@@ -76,18 +86,19 @@ const FoeZone = () => {
             <div className = {styles.foe}>
 
                 <div className={styles.telegraph}> {telegraph} </div>
-                <div className={styles.foeTitle}> {foe.name} </div>
-                <img id={'foeBody'} className = {styles.foeImg} src={foe.art} alt="foe img"/>
+                <div className={styles.foeTitle}> {monster.name} </div>
+                
+                <div className={styles.monsterContainer}>
+                    <Monster/>
+                </div>
 
                 <div className = {styles.foeHealthBorder}> 
                     <div className = {styles.foeHealthIndicator}> 
-                        {foe.health} / {foe.total} 
+                        {monster.health} / {monster.total} 
                     </div>
                     <div id="foeDefenseBar"> </div>
                     <div id="foeHealthBar"> </div>
                 </div>
-
-                {/* {document.getElementById("foeHealthBar").style.width= "5"} */}
 
             </div>  
         </div>        

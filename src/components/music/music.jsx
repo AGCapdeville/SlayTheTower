@@ -22,6 +22,9 @@ function isMobile() {
 const playButton = (dispatch, screen) => {    
     const screenTrack = track_list.find(track => track.for === String(screen));
     dispatch(setTrack(screenTrack));
+
+    dispatch(mute());
+
     if(screen !== 'Resolution'){
         dispatch(loop(true));
     }else{
@@ -30,16 +33,42 @@ const playButton = (dispatch, screen) => {
     dispatch(load());
 
     let playButton = document.getElementById('musicPlayButton');
-    playButton.style.opacity = '.5';
+    playButton.style.opacity = '0';
     playButton.style.position = 'absolute';
     playButton.style.zIndex = '-1';
     playButton.disabled = 'disabled';
 
-    let musicToggle = document.getElementById('musicToggle');
-    musicToggle.style.opacity = '1';
+    let muteToggleButton = document.getElementById('musicToggle');
+    muteToggleButton.style.opacity = '1';
 }
 
 
+const muteToggleButton = (dispatch, is_muted, screen) => {
+    let musicToggle = document.getElementById('musicToggle');
+    dispatch(mute());
+
+    if (is_muted){
+        document.getElementById("musicToggle").innerHTML = "Sound: ON";
+        musicToggle.style.opacity = 1;
+        
+        const screenTrack = track_list.find(track => track.for === String(screen));
+        
+        if (screen !== 'Resolution'){
+            dispatch(loop(true));
+        }else{
+            dispatch(loop(false));
+        }
+
+        dispatch(setTrack(screenTrack));
+        dispatch(load());
+
+    }else{
+        document.getElementById("musicToggle").innerHTML = "Sound: OFF";
+        musicToggle.style.opacity = .5;
+
+    }
+    
+}
 
 
 const Music = () => {
@@ -48,56 +77,41 @@ const Music = () => {
     const dispatch = useDispatch();
     const screen = useScreen();
 
-    console.log('entry screen:', screen);
-    // let trackInfo = {name:'', artist:''};
-
     useEffect(() => {
-        console.log('Screen:', screen);
-        const screenTrack = track_list.find(track => track.for === String(screen));
-        console.log('attempting to load:',screenTrack);
-        if(screen !== 'Resolution'){
-            dispatch(loop(true));
-        }else{
-            dispatch(loop(false));
+        if (!music.is_muted){
+            console.log('Screen:', screen);
+            const screenTrack = track_list.find(track => track.for === String(screen));
+            console.log('attempting to load:',screenTrack);
+            if(screen !== 'Resolution'){
+                dispatch(loop(true));
+            }else{
+                dispatch(loop(false));
+            }
+            dispatch(setTrack(screenTrack));
+            dispatch(load());
         }
-        dispatch(setTrack(screenTrack));
-        dispatch(load());
     },[screen])
 
 
-    if (isMobile()){
-        return(
-            <>
+    return(
+        <>
             <div>
                 <button id="musicPlayButton" onClick={ () => playButton(dispatch, screen) }>
                     Allow Music
                 </button>
 
-                <button id="musicToggle" onClick={ () => dispatch(mute()) }> 
-                    TOGGLE SOUND 
+                <button id="musicToggle" style={{opacity:'0', zIndex:'-1'}} onClick={ () => muteToggleButton(dispatch, music.is_muted, screen) }> 
+                    Sound: ON
                 </button>
+                
                 <br/> 
                 {/* Artist: {trackInfo.artist} */}
                 
                 <audio id='audio'> </audio>
             </div>
         </>
-        )
-    }else{
-        return(
-            <>
-                <div>
-                <button onClick={ () => dispatch(mute()) }> 
-                    TOGGLE SOUND 
-                </button>
-                <br/> 
-                {/* Artist: {trackInfo.artist} */}
-                
-                <audio id='audio'> </audio>
-                </div>
-            </>
-        )
-    }
+    )
+    
     
 }
 

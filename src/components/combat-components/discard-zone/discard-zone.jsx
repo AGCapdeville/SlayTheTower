@@ -4,22 +4,30 @@ import styles from './discard-zone.module.scss'
 import { usePlayer, playCard, playIndexedCard } from '../../../ducks/player';
 import { useDispatch } from 'react-redux'
 
-import TurnBttn from '../turn-bttn';
+import { endTurn } from '../../../ducks/combat'
+
 
 const DiscardZone = () =>{
     const player = usePlayer();
     const dispatch = useDispatch();
+    
+    const onBttnClick = () =>  dispatch(endTurn());
+
     return(
         <div className = {styles.discardZone}>
+
             <div className={styles.void}> 
-                VOID: <div/> {player.voidDeck.length}
+                VOID: {player.voidDeck.length}
             </div>
-            <br/>
+
             <div className={styles.discard}>
-                DISCARD: <div/> {player.discard.length}
+                DISCARD: {player.discard.length}
             </div>
-            <br/>
-            <TurnBttn />
+
+            <button id="turnBttn" onClick={onBttnClick} className = {styles.devButton}>
+                [ END TURN ]
+            </button>
+        
         </div>
     );
 }

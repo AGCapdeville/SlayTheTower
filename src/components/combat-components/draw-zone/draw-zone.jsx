@@ -11,15 +11,14 @@ const DrawZone = () =>{
 
     return(
         <div className={styles.drawZone}>
+            
             <div className={styles.energy}>
-                ENERGY: 
-                <div/>
-                {player.energy}
+                ENERGY: {player.energy}
             </div>
+            
             <div className={styles.deck}>
-                DECK: <div/> {player.deck.length}
-                {/* <div/> */}
-                {/* <button className={styles.devButton} onClick={ () => dispatch( drawCard() ) }> DRAW </button> */}
+                DECK: {player.deck.length}
+            
             </div>
         </div>
     );

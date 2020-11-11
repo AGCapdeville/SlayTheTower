@@ -1,7 +1,7 @@
 import { createAction, handleActions } from "redux-actions";
 import { useSelector } from "react-redux";
 import { createSelector } from "reselect";
-import { updateFoe } from './foe';
+import { updateMonster } from './monster';
 
 import { logCombat } from './combat';
 
@@ -256,38 +256,38 @@ function moveHero(requiredHeros, offHeroBody, defHeroBody, utilHeroBody){
         case 'a':
             let choice = Math.floor(Math.random() * 3); 
             if (choice === 1) {
-                heroStrikeAnimation(offHeroBody);
+                // heroStrikeAnimation(offHeroBody);
             }else if( choice === 2){
-                heroStrikeAnimation(defHeroBody);
+                // heroStrikeAnimation(defHeroBody);
             }else{
-                heroStrikeAnimation(utilHeroBody);
+                // heroStrikeAnimation(utilHeroBody);
             }
             break;
         case 'o':
-            heroStrikeAnimation(offHeroBody);
+            // heroStrikeAnimation(offHeroBody);
             break;
         case 'u':
-            heroStrikeAnimation(utilHeroBody);
+            // heroStrikeAnimation(utilHeroBody);
             break;
         case 'd':
-            heroStrikeAnimation(defHeroBody);
+            // heroStrikeAnimation(defHeroBody);
             break;
         case 'do':
-            heroStrikeAnimation(offHeroBody);
-            heroStrikeAnimation(defHeroBody);
+            // heroStrikeAnimation(offHeroBody);
+            // heroStrikeAnimation(defHeroBody);
             break;
         case 'du':
-            heroStrikeAnimation(defHeroBody);
-            heroStrikeAnimation(utilHeroBody);
+            // heroStrikeAnimation(defHeroBody);
+            // heroStrikeAnimation(utilHeroBody);
             break;
         case 'ou':
-            heroStrikeAnimation(offHeroBody);
-            heroStrikeAnimation(utilHeroBody);
+            // heroStrikeAnimation(offHeroBody);
+            // heroStrikeAnimation(utilHeroBody);
             break;
         case 'e':
-            heroStrikeAnimation(offHeroBody);
-            heroStrikeAnimation(defHeroBody);
-            heroStrikeAnimation(utilHeroBody);
+            // heroStrikeAnimation(offHeroBody);
+            // heroStrikeAnimation(defHeroBody);
+            // heroStrikeAnimation(utilHeroBody);
             break;
     }
 }
@@ -306,7 +306,7 @@ export const applyCard = (cardIndex) => (dispatch, getState) => {
     const energyCost = card.energy;
     const standing = checkStanding(state, card.requiredHero);
         
-    const foeDefense = state.foe.defense
+    const foeDefense = state.monster.defense
 
     // This is how we parse players played cards in the game....
     // What checks do we need to do? 
@@ -342,19 +342,19 @@ export const applyCard = (cardIndex) => (dispatch, getState) => {
                 // FOE DAMAGED
                 if (card.action.effect=="damage"){
 
-                    let foeBody = document.getElementById('foeBody');
-                    console.log('GET foeBody: ',foeBody);
-                    damageFlash(foeBody);
+                    // let foeBody = document.getElementById('foeBody');
+                    // console.log('GET foeBody: ',foeBody);
+                    // damageFlash(foeBody);
 
                     const damage = card.action.power;
                     const trample = foeDefense - damage;
                     if (trample < 0) {
-                        const newFoeHealth = parseInt(state.foe.health) + parseInt(trample);
-                        dispatch(updateFoe({ health: newFoeHealth, defense: 0}));
+                        const newFoeHealth = parseInt(state.monster.health) + parseInt(trample);
+                        dispatch(updateMonster({ health: newFoeHealth, defense: 0}));
                         dispatch(logCombat({ origin: 'player', description: ('Player used: '+card.name+' dealing '+((-1)*(trample))+' damage.' ) }))
                     }else{
                         const newFoeDefense = trample;
-                        dispatch(updateFoe({ defense: newFoeDefense }));
+                        dispatch(updateMonster({ defense: newFoeDefense }));
                         dispatch(logCombat({ origin: 'player', description: ('Player used: '+card.name+' dealing 0 damage.' ) }))
                     }
                     dispatch(updatePlayer({ energy: newEnergy }));

@@ -5,7 +5,6 @@ import styles from './card.module.scss'
 const Card = (props) => {
     return(
         <div>
-
             <div className = {styles.cardFace}>
                 <div className = {styles.titleSection}>
                     <div className = {styles.title}> 
@@ -33,14 +32,46 @@ const Card = (props) => {
                     </div>
 
                     <div className = {styles.requiredHero}>
-                        {props.cardData.requiredHero}
+                        {requiredHeroIcon(props.cardData.requiredHero)}
                     </div>
                 </div>
-                
             </div>
-
         </div>        
     )
+}
+
+
+/* requiredHero :
+// a - any hero standing: white dot
+// o - off needed: red dot
+// u - util needed: blue dot
+// d - def needed: green dot
+// do - def & off needed: green & blue dot
+// ud - util & def needed: blue & etc...
+// ou - off & util needed: ...
+// e - every hero needed: red, blue & green
+*/
+function requiredHeroIcon(reqHeros){
+    switch (reqHeros) {
+        case 'a':
+            return( <div className={styles.whiteDot}/> )
+        case 'o':
+            return( <div className={styles.redDot}/> )
+        case 'u':
+            return( <div className={styles.blueDot}/> )
+        case 'd':
+            return( <div className={styles.greenDot}/> )
+        case 'do':
+            return( <div className={styles.whiteDot}/> )
+        case 'ud':
+            return( <div className={styles.whiteDot}/> )
+        case 'ou':
+            return( <div className={styles.whiteDot}/> )
+        case 'e':
+            return( <div className={styles.whiteDot}/> )
+        default:
+            return( <div className={styles.whiteDot}/> )
+    }
 }
 
 export default Card;

@@ -12,8 +12,8 @@ import { updateGameState } from '../../../ducks/game_state';
 
 // For Combat:
 import { usePlayer, drawHand, shuffleDeck, resetDeck } from '../../../ducks/player';
-import { spawnFoe } from '../../../ducks/foe';
-import { setupShop } from '../../../ducks/shop';
+import { spawnMonster } from '../../../ducks/monster';
+import { setupShop, updateShop } from '../../../ducks/shop';
 
 
 function eventHandler(event, dispatcher){
@@ -31,7 +31,7 @@ function eventHandler(event, dispatcher){
       break;
     case '💢':
       // TODO: make a elite fight ... so dispatch a elite...
-      dispatcher(spawnFoe());
+      dispatcher(spawnMonster('Fire'));
       dispatcher(resetDeck());
       dispatcher(shuffleDeck());
       dispatcher(drawHand());
@@ -50,12 +50,12 @@ function eventHandler(event, dispatcher){
       dispatcher(updateScreen('Trial'));
       break;
     case '🕋':
-      dispatcher(setupShop());
       dispatcher(updateGameState({screen:'Shop'}));
+      dispatcher(setupShop())
       dispatcher(updateScreen('Shop'));
       break;
     case '⚔️':
-      dispatcher(spawnFoe());
+      dispatcher(spawnMonster('Slime'));
       dispatcher(resetDeck());
       dispatcher(shuffleDeck());
       dispatcher(drawHand());

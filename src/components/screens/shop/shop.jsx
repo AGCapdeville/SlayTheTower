@@ -1,6 +1,9 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
+
 import styles from "./shop.module.scss";
+import cardStyle from '../../card/card.module.scss';
+
 
 import { useGameState } from '../../../ducks/game_state'
 import { usePlayer, updatePlayer } from '../../../ducks/player';
@@ -19,27 +22,37 @@ const ShopScreen = () => {
     const shop = useShop();
     const player = usePlayer();
  
-        
+
     return (
     <div className={styles.screenContainer}>
         <div className={styles.screen}>
 
             <h1>SHOP</h1>
+
             <br />
+
             <div>
                 G: {player.gold}
             </div>
+
             <br />
 
             <div style={{display: 'flex', flexDirection: 'column'}}>
+
                 <div style={{display: 'flex', flexDirection: 'row'}}>
+
                     {shop.shopCards.map( (cardData, index) => 
-                        <button key={index} className={styles.customButton}>
-                            <Card cardData={cardData} combat={false} />
+                        <button key={index} className={styles.cardButton}>
+                            <div className={cardStyle.card}>
+                                <Card cardData={cardData} combat={false} />
+                            </div>
                         </button>
                     )}
+                    
                 </div>
+
             </div>
+
             <br />
 
             <div>

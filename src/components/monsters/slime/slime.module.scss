@@ -1,0 +1,53 @@
+.monsterContainer{
+    width:100px;
+    height:100px;
+    // background-color: lightgrey;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+  
+.slime{
+    width:50px;
+    height:50px;
+    background-color: dodgerblue;
+    border-radius: 50%;
+    border-top-right-radius: 0;
+        
+    animation: slimeIdle 2.5s;
+    animation-iteration-count: infinite;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.rightEye{
+    width:8px;
+    height:8px;
+    background-color: white;
+    border-radius: 50%;
+    display: absolute;
+    transform: translate(-4px,-7px);
+    z-index:1;
+}
+.leftEye{
+    width:10px;
+    height:10px;
+    background-color: white;
+    border-radius: 50%;
+    display: absolute;
+    transform: translate(-3px,2px);
+    z-index:1;
+}
+
+
+@keyframes slimeIdle{
+    0%   { transform: scale(1,1)      translateY(0)     rotate(-45deg) skew(7deg,7deg); }
+    10%  { transform: scale(1.1,.9)   translateY(0)     rotate(-45deg) skew(7deg,7deg); }
+    30%  { transform: scale(.9,1.1)   translateY(-13px) rotate(-45deg) skew(2deg,2deg); }
+    50%  { transform: scale(1.05,.95) translateY(0)     rotate(-45deg) skew(7deg,7deg); }
+    57%  { transform: scale(1,1)      translateY(-4px)  rotate(-45deg) skew(5deg,5deg); }
+    64%  { transform: scale(1,1)      translateY(0)     rotate(-45deg) skew(7deg,7deg); }
+    100% { transform: scale(1,1)      translateY(0)     rotate(-45deg) skew(7deg,7deg); }
+}
+  
