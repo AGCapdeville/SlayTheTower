@@ -14,7 +14,7 @@ function updateFoeHealthBar(foeHealth, foeMax){
     var x = document.getElementById("foeHealthBar")
     x.style.backgroundColor = "red"
 
-    if (foeHealth == foeMax){
+    if (foeHealth === foeMax){
         x.style.height = "2vh"
         x.style.width = "20vw"
     }
@@ -32,7 +32,7 @@ function updateFoeDefBar(defense){
     x.style.opacity = ".75"
     x.style.position = "absolute"
 
-    if (defense == 0){
+    if (defense === 0){
         x.style.height = "2vh"
         x.style.width = "0vw"
     }
