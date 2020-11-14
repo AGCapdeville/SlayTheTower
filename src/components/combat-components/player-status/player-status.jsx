@@ -2,8 +2,6 @@ import React from 'react';
 import styles from './player-status.module.scss'
 
 import { usePlayer } from '../../../ducks/player';
-import { useEffect } from 'react';
-
 
 const PlayerStatus = () =>{
 
@@ -22,14 +20,6 @@ const PlayerStatus = () =>{
             <div className = {styles.playerHealth}>
                 ❤️ {player.health} / {player.maxHealth}
             </div>
-
-            {/* OLD DEFENSE BAR */}
-            {/* <div className = {styles.playerHealthBorder}>  */}
-                {/* <div className = {styles.playerHealthIndicator}> */}
-                {/* </div> */}
-                {/* <div id="playerHealthBar"> </div>  */}
-                {/* <div id="defenseBar"> </div> */}
-            {/* </div> */}
             
         </div>
     );

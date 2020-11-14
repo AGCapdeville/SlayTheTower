@@ -1,10 +1,9 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import _, { random, isEmpty } from 'lodash';
 import styles from "./map.module.scss";
 
-import { useMusic, load, loop, mute, setTrack} from '../../../ducks/music';
-import { track_list } from '../../../game-data/tracks';
+// import { useMusic, load, loop, mute, setTrack} from '../../../ducks/music';
+// import { track_list } from '../../../game-data/tracks';
 
 import { useMap, updateMap } from '../../../ducks/map';
 import { updateScreen } from '../../../ducks/screen';
@@ -13,7 +12,7 @@ import { updateGameState } from '../../../ducks/game_state';
 // For Combat:
 import { usePlayer, drawHand, shuffleDeck, resetDeck } from '../../../ducks/player';
 import { spawnMonster } from '../../../ducks/monster';
-import { setupShop, updateShop } from '../../../ducks/shop';
+import { setupShop } from '../../../ducks/shop';
 
 
 function eventHandler(event, dispatcher){

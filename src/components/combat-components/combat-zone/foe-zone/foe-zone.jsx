@@ -1,5 +1,5 @@
 import React from 'react';
-import monster, { useMonster } from '../../../../ducks/monster'
+import { useMonster } from '../../../../ducks/monster'
 import styles from "./foe-zone.module.scss";
 import { useEffect } from 'react';
 

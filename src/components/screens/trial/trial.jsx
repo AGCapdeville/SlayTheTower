@@ -1,13 +1,10 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useDispatch } from 'react-redux';
 import styles from "./trial.module.scss";
 
-import { updateGameState, useGameState } from '../../../ducks/game_state'
-import { usePlayer, updatePlayer } from '../../../ducks/player';
+import { updateGameState } from '../../../ducks/game_state'
+import { usePlayer } from '../../../ducks/player';
 import { updateScreen } from '../../../ducks/screen';
-
-import Card from '../../card'
-import { updateShop, setupShop, useShop } from '../../../ducks/shop';
 
 const updateGame = (dispatch, choice) =>{
     console.log('choice:', choice);
@@ -18,7 +15,7 @@ const updateGame = (dispatch, choice) =>{
 const TrialScreen = () => {
 
     const dispatch = useDispatch();
-    const game_state = useGameState();
+    // const game_state = useGameState();
     const player = usePlayer();
 
 

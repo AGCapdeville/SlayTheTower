@@ -5,12 +5,12 @@ import { updateMonster } from './monster';
 
 import { logCombat } from './combat';
 
-
-// TODO: clean up and organize
+// sounds clips
+import cardSuccess from '../sound_clips/play_card_zapsplat_foley.mp3';
+import cardError from '../sound_clips/error_sound.mp3';
 
 // Alter Health, Energy & Defense Actions:
 export const updatePlayer = createAction('player/UPDATE_PLAYER');
-// export const newRound = createAction('player/NEW_ROUND');
 
 // Deck Actions:
 export const setDeck = createAction('player/SET_DECK');
@@ -128,11 +128,6 @@ export default handleActions({
     [voidCard]: (state, action) => ({...state, hand: state.hand.slice(action.payload, 1), voidPile: [...state.void, state.hand.slice(action.payload, 1)]}),
 }, initialState);
 
-// notes:
-// might need to see if I can set initialStates later ???????
-// [newRound]: (state) => ({...state, energy: initialState.energy, defense: initialState.defense}),
-// deck handle:
-
 
 // how we grab data from the store
 const selectPlayer = createSelector(
@@ -183,43 +178,24 @@ function checkStanding(state, requiredHeros){
     }
 }
 
-
 // Animations START:
+function heroStrikeAnimation(heroElement){
 
-function heroStrikeAnimation(heroElement, offBeat){
+    let transitionTime = 500;
 
-    let time = 1;
+    heroElement.animate([
+        {transform: 'translate(0px,0px)'},
+        {transform: 'translate(95px, 0px)'},
+        {transform: 'translate(155px, 0px)'},
+        {transform: 'translate(-1px, 0px)'},
+        {transform: 'translate(0, 0px)'}
 
-    if (offBeat){
-        time = Math.floor(Math.random() * 100); 
-    }
-
-    setTimeout( function(){
-        heroElement.style.marginLeft = '0px';
-    }, 300 + time)
-        
-    setTimeout( function(){
-        heroElement.style.marginLeft = '20px';
-    }, 100 + time)
-
-    setTimeout( function(){
-        heroElement.style.marginLeft = '40px';
-    }, 150 + time)
-    
-    setTimeout( function(){
-        heroElement.style.marginLeft = '65px';
-    }, 200 + time)
-
-    setTimeout( function(){
-        heroElement.style.marginLeft = '40px';
-    }, 240 + time)
-
-    setTimeout( function(){
-        heroElement.style.marginLeft = '10px';
-    }, 280 + time)
+    ], {
+        duration: transitionTime,
+        iterations: 1
+    });
 
 }
-
 function damageFlash(bodyElement){
 
     setTimeout( function(){
@@ -249,102 +225,83 @@ function damageFlash(bodyElement){
 }
 
 // Animations END
-
-function moveHero(requiredHeros, offHeroBody, defHeroBody, utilHeroBody){
-
+function moveHero(requiredHeros, mageBody, shieldBody, swordBody){
     switch (requiredHeros) {
         case 'a':
             let choice = Math.floor(Math.random() * 3); 
             if (choice === 1) {
-                // heroStrikeAnimation(offHeroBody);
+                heroStrikeAnimation(swordBody);
             }else if( choice === 2){
-                // heroStrikeAnimation(defHeroBody);
+                heroStrikeAnimation(shieldBody);
             }else{
-                // heroStrikeAnimation(utilHeroBody);
+                heroStrikeAnimation(mageBody);
             }
             break;
         case 'o':
-            // heroStrikeAnimation(offHeroBody);
+            heroStrikeAnimation(swordBody);
             break;
         case 'u':
-            // heroStrikeAnimation(utilHeroBody);
+            heroStrikeAnimation(mageBody);
             break;
         case 'd':
-            // heroStrikeAnimation(defHeroBody);
+            heroStrikeAnimation(shieldBody);
             break;
         case 'do':
-            // heroStrikeAnimation(offHeroBody);
-            // heroStrikeAnimation(defHeroBody);
+            heroStrikeAnimation(swordBody);
+            heroStrikeAnimation(shieldBody);
             break;
         case 'du':
-            // heroStrikeAnimation(defHeroBody);
-            // heroStrikeAnimation(utilHeroBody);
+            heroStrikeAnimation(shieldBody);
+            heroStrikeAnimation(mageBody);
             break;
         case 'ou':
-            // heroStrikeAnimation(offHeroBody);
-            // heroStrikeAnimation(utilHeroBody);
+            heroStrikeAnimation(swordBody);
+            heroStrikeAnimation(mageBody);
             break;
         case 'e':
-            // heroStrikeAnimation(offHeroBody);
-            // heroStrikeAnimation(defHeroBody);
-            // heroStrikeAnimation(utilHeroBody);
+            heroStrikeAnimation(swordBody);
+            heroStrikeAnimation(shieldBody);
+            heroStrikeAnimation(mageBody);
             break;
     }
 }
 
-
 // Async Actions
 export const applyCard = (cardIndex) => (dispatch, getState) => {
     const state = getState();
+    const musicDriver = state.useMusic;
+    console.log(musicDriver);
 
-    // delay:
-    // setTimeout( function(){     
-    //     dispatch( drawCard() )
-    // }, 7000);
+    let cardSounds = document.createElement('audio');
+    // cardSounds.volume = musicDriver.volume;
 
     const card = state.player.hand[cardIndex]
     const energyCost = card.energy;
-    const standing = checkStanding(state, card.requiredHero);
-        
+    const standing = checkStanding(state, card.requiredHero);     
     const foeDefense = state.monster.defense
 
-    // This is how we parse players played cards in the game....
-    // What checks do we need to do? 
-    //  1. Player energy
-    //  2. Player has required party members for said card.
-    //
-    // If the above are okay, we then procced to parse the cards action:
-    //   1. Expend energy cost of card (if needed)
-    //   2. Play animation of party attacking/ defending/ skill
-    //   3. Subtract health from monster.
-    //   4. tbc....
-
-
     // attempt animation...
-    let offHeroBody = document.getElementById('offHero');
-    let defHeroBody = document.getElementById('defHero');
-    let utilHeroBody = document.getElementById('utilHero');
-
+    let mageBody = document.getElementById('mageBody');
+    let koMageBody = document.getElementById('koMageBody');
+    let shieldBody = document.getElementById('shieldBody');
+    let swordBody = document.getElementById('swordBody');
 
 
     if (energyCost <= state.player.energy) {
+        cardSounds.src = cardSuccess;
+        cardSounds.play();
+
         if (standing){
         
-            moveHero(card.requiredHero, offHeroBody, defHeroBody, utilHeroBody);
-
+            moveHero(card.requiredHero, mageBody, shieldBody, swordBody);
             const newEnergy = state.player.energy - energyCost
 
 
             // TARGET: FOE
             if (card.action.target=="foe"){    
 
-
                 // FOE DAMAGED
                 if (card.action.effect=="damage"){
-
-                    // let foeBody = document.getElementById('foeBody');
-                    // console.log('GET foeBody: ',foeBody);
-                    // damageFlash(foeBody);
 
                     const damage = card.action.power;
                     const trample = foeDefense - damage;
@@ -359,8 +316,6 @@ export const applyCard = (cardIndex) => (dispatch, getState) => {
                     }
                     dispatch(updatePlayer({ energy: newEnergy }));
                 }
-
-
 
             } else {
                 if (card.action.effect=="heal"){
@@ -382,8 +337,9 @@ export const applyCard = (cardIndex) => (dispatch, getState) => {
             console.log('! Required hero not standing !')
         }
     } else {
-        // replace with sound?
-        console.log("! Not Enough Energy !")
+        cardSounds.src = cardError;
+        cardSounds.play();
+
     }
 
 

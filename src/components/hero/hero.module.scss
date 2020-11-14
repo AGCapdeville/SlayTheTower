@@ -82,6 +82,17 @@
   z-index: 1;
   display: flex;
   justify-content: center;
+  position: absolute;
+}
+.koHeroBody{
+  width: 32px;
+  height: 40px;
+  display: flex;
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  opacity: 0;
 }
 .chest {
   width: 34px;
@@ -93,6 +104,15 @@
   z-index: 2;
   animation: idle 2.2s;
   animation-iteration-count: infinite;
+}
+.koChest{
+  width:34px;
+  height:30px;
+  position: absolute;
+  background-color: black;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  z-index: 2;
 }
 .waist {
   width: 30px;
@@ -155,7 +175,6 @@
 .staff.aniCast {
   animation: staffSwing 1s ease;
 }
-
 @keyframes staffSwing {
   0% {
     transform: rotate(55deg) translate(0, -9px);
@@ -170,6 +189,40 @@
     transform: rotate(55deg) translate(0, -9px);
   }
 }
+@keyframes staffIdle {
+  0% {
+    transform: rotate(55deg) translate(0, -9px);
+  }
+  50% {
+    transform: rotate(60deg) translate(1px, -4px);
+  }
+  100% {
+    transform: rotate(55deg) translate(0, -9px);
+  }
+}
+
+
+.koStaff{
+  width: 4px;
+  height: 53px;
+  background-color: black;
+  border-style: solid;
+  border-width: 1px;
+  border-color: lightgrey;
+  z-index: 3;
+  justify-content: center;
+  margin-top: -11px;
+  transform: rotate(90deg) translate(27px,-5px);
+}
+.koStaff.fall{
+  animation: staffFall 2s ease;
+}
+@keyframes staffFall {
+    0% {  transform: rotate(55deg) translate(0,-9px);}
+    100% { transform: rotate(90deg) translate(27px, -5px);}
+}
+
+
 .heroHandRight {
   width: 6px;
   height: 6px;
@@ -180,8 +233,6 @@
   border-width: 1px;
   z-index: 3;
   border-radius: 4px;
-  animation: idle 2.2s alternate;
-  animation-iteration-count: infinite;
 }
 .heroHandLeft {
   width: 6px;
@@ -193,17 +244,6 @@
   border-width: 1px;
   z-index: 3;
   border-radius: 4px;
-}
-@keyframes staffIdle {
-  0% {
-    transform: rotate(55deg) translate(0, -9px);
-  }
-  50% {
-    transform: rotate(60deg) translate(1px, -4px);
-  }
-  100% {
-    transform: rotate(55deg) translate(0, -9px);
-  }
 }
 
 /* Sword Hero */

@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './discard-zone.module.scss'
 
-import { usePlayer, playCard, playIndexedCard } from '../../../ducks/player';
+import { usePlayer } from '../../../ducks/player';
 import { useDispatch } from 'react-redux'
 
 import { endTurn } from '../../../ducks/combat'

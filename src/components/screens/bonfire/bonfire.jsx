@@ -1,15 +1,12 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useDispatch } from 'react-redux';
 import styles from "./bonfire.module.scss";
 
 import { updateGameState, useGameState } from '../../../ducks/game_state'
-import { usePlayer, updatePlayer } from '../../../ducks/player';
+import { usePlayer } from '../../../ducks/player';
 import { updateScreen } from '../../../ducks/screen';
 
-// import cardData from '../../../game-data/card-data'
-
-import Card from '../../card'
-import { updateShop, setupShop, useShop } from '../../../ducks/shop';
+// import { useShop } from '../../../ducks/shop';
 
 function handleOption(option, dispatch){
     switch (option) {
@@ -32,15 +29,14 @@ function handleOption(option, dispatch){
 const BonfireScreen = () => {
 
     const dispatch = useDispatch();
-    const gameState = useGameState();
-    const shop = useShop();
+    // const gameState = useGameState();
+    // const shop = useShop();
     const player = usePlayer();
 
 
     return (
     <div className={styles.screenContainer}>
         <div className={styles.screen}>
-
 
         <h1>🔥 Bonfire 🔥 </h1>
 
@@ -53,12 +49,6 @@ const BonfireScreen = () => {
                 <button className={styles.bonfireOption} onClick={() => handleOption('mend', dispatch)}>✨ MEND </button>
             </div>
         </div>
-
-        {/* <div>
-            <button onClick={() => dispatch( updateScreen('Map') ) }>
-                RETURN TO MAP
-            </button>
-        </div> */}
 
         </div>
     </div>

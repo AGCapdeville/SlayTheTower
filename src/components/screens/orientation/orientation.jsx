@@ -1,12 +1,6 @@
 import React from 'react';
-import { updateScreen } from '../../../ducks/screen';
-import { useDispatch } from 'react-redux';
 
-
-const OrientationScreen = () => {
-
-    const dispatch = useDispatch();
-      
+const OrientationScreen = () => { 
     return (
             <div >
 

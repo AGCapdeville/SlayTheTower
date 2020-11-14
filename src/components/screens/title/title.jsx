@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import titleStyle from "./title.module.scss";
 import { updateScreen } from '../../../ducks/screen';
 import { useDispatch } from 'react-redux';
@@ -10,17 +10,15 @@ import { updateGameState } from '../../../ducks/game_state';
 import { gameState } from '../../../game-data/game-state';
 
 // full screen......
-import { FullScreen, useFullScreenHandle } from "react-full-screen";
+import { useFullScreenHandle } from "react-full-screen";
 
 
 const TitleScreen = () => {
 
     const dispatch = useDispatch();
-  
     // TODO: Move to New Game Screen
     dispatch(updatePlayer(heros[0]))
     dispatch(updateGameState(gameState))
-
     // full screen....
     const handle = useFullScreenHandle();
 
