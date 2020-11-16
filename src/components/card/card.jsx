@@ -28,7 +28,7 @@ const Card = (props) => {
 
                 <div className = {styles.costRow}>
                     <div className = {styles.energy}>
-                        {props.cardData.energy}
+                        ⚡ {props.cardData.energy}
                     </div>
 
                     <div className = {styles.requiredHero}>
@@ -51,6 +51,7 @@ const Card = (props) => {
 // ou - off & util needed: ...
 // e - every hero needed: red, blue & green
 */
+
 function requiredHeroIcon(reqHeros){
     switch (reqHeros) {
         case 'a':

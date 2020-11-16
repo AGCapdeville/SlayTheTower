@@ -150,9 +150,9 @@ export const usePlayer = () => useSelector(selectPlayer);
 */
 function checkStanding(state, requiredHeros){
 
-    const offHeroStanding = (state.player.offenseHeroStatus === 'standing' ? true : false);
-    const defHeroStanding = (state.player.defenseHeroStatus === 'standing' ? true : false);
-    const utilHeroStanding = (state.player.utilityHeroStatus === 'standing' ? true : false);
+    const offHeroStanding = ((state.player.offenseHeroStatus === 'standing' && !state.player.offenseHeroAilgments.includes('blind') ) ? true : false);
+    const defHeroStanding = ((state.player.defenseHeroStatus === 'standing' && !state.player.defenseHeroAilgments.includes('blind') ) ? true : false);
+    const utilHeroStanding = ((state.player.utilityHeroStatus === 'standing' && !state.player.utilityHeroAilgments.includes('blind') ) ? true : false);
 
     console.log('standing heros: off:', offHeroStanding, ', def:', defHeroStanding, ', util:',utilHeroStanding);
     console.log('req heros:',requiredHeros);
@@ -180,9 +180,7 @@ function checkStanding(state, requiredHeros){
 
 // Animations START:
 function heroStrikeAnimation(heroElement){
-
     let transitionTime = 500;
-
     heroElement.animate([
         {transform: 'translate(0px,0px)'},
         {transform: 'translate(95px, 0px)'},
@@ -194,8 +192,8 @@ function heroStrikeAnimation(heroElement){
         duration: transitionTime,
         iterations: 1
     });
-
 }
+
 function damageFlash(bodyElement){
 
     setTimeout( function(){
@@ -222,6 +220,19 @@ function damageFlash(bodyElement){
         bodyElement.style.opacity = 0;
     }, 280)
     
+}
+
+function leftRightShake(element){
+    let transitionTime = 250;
+    element.animate([
+        {transform: 'translate(0px,0px)'},
+        {transform: 'translate(10px, 0px)'},
+        {transform: 'translate(-10px, 0px)'},
+        {transform: 'translate(0, 0px)'}
+    ], {
+        duration: transitionTime,
+        iterations: 1
+    });
 }
 
 // Animations END
@@ -269,22 +280,22 @@ function moveHero(requiredHeros, mageBody, shieldBody, swordBody){
 // Async Actions
 export const applyCard = (cardIndex) => (dispatch, getState) => {
     const state = getState();
-    const musicDriver = state.useMusic;
-    console.log(musicDriver);
-
-    let cardSounds = document.createElement('audio');
-    // cardSounds.volume = musicDriver.volume;
+    // const musicDriver = state.useMusic;
 
     const card = state.player.hand[cardIndex]
     const energyCost = card.energy;
     const standing = checkStanding(state, card.requiredHero);     
     const foeDefense = state.monster.defense
 
-    // attempt animation...
+    let cardSounds = document.createElement('audio');
+
     let mageBody = document.getElementById('mageBody');
     let koMageBody = document.getElementById('koMageBody');
     let shieldBody = document.getElementById('shieldBody');
     let swordBody = document.getElementById('swordBody');
+
+    let energyText = document.getElementById('heroEnergyText');
+
 
 
     if (energyCost <= state.player.energy) {
@@ -296,41 +307,96 @@ export const applyCard = (cardIndex) => (dispatch, getState) => {
             moveHero(card.requiredHero, mageBody, shieldBody, swordBody);
             const newEnergy = state.player.energy - energyCost
 
+            for (let i = 0; i < card.action.target.length; i++) {
 
-            // TARGET: FOE
-            if (card.action.target=="foe"){    
-
-                // FOE DAMAGED
-                if (card.action.effect=="damage"){
-
-                    const damage = card.action.power;
-                    const trample = foeDefense - damage;
-                    if (trample < 0) {
-                        const newFoeHealth = parseInt(state.monster.health) + parseInt(trample);
-                        dispatch(updateMonster({ health: newFoeHealth, defense: 0}));
-                        dispatch(logCombat({ origin: 'player', description: ('Player used: '+card.name+' dealing '+((-1)*(trample))+' damage.' ) }))
-                    }else{
-                        const newFoeDefense = trample;
-                        dispatch(updateMonster({ defense: newFoeDefense }));
-                        dispatch(logCombat({ origin: 'player', description: ('Player used: '+card.name+' dealing 0 damage.' ) }))
+                if (card.action.target[i] == "foe"){
+                    if (card.action.effect[i] == 'damage'){
+                        const trample = foeDefense - card.action.power[i];
+                        console.log('foe damage:', card.action.power[i])
+                        if (trample < 0) {
+                            const newFoeHealth = parseInt(state.monster.health) + parseInt(trample);
+                            dispatch(updateMonster({ health: newFoeHealth, defense: 0}));
+                            dispatch(logCombat({ origin: 'player', description: ('Player used: '+card.name+' dealing '+((-1)*(trample))+' damage.' ) }))
+                        }else{
+                            const newFoeDefense = trample;
+                            dispatch(updateMonster({ defense: newFoeDefense }));
+                            dispatch(logCombat({ origin: 'player', description: ('Player used: '+card.name+' dealing 0 damage.' ) }))
+                        }
+                        dispatch(updatePlayer({ energy: newEnergy }));
+                    }else if (card.action.effect[i] == 'blind'){
+                        state.monster.aligment.push('blind');
+                        state.monster.aligmentDuration.push(card.action.power);
+                        dispatch(updatePlayer({ energy: newEnergy }))
+                    }else if (card.action.effect[i] == 'defenseTotal'){
+                        const trample = foeDefense - state.player.defense;
+                        if (trample < 0) {
+                            const newFoeHealth = parseInt(state.monster.health) + parseInt(trample);
+                            dispatch(updateMonster({ health: newFoeHealth, defense: 0}));
+                            dispatch(logCombat({ origin: 'player', description: ('Player used: '+card.name+' dealing '+((-1)*(trample))+' damage.' ) }))
+                        }else{
+                            const newFoeDefense = trample;
+                            dispatch(updateMonster({ defense: newFoeDefense }));
+                            dispatch(logCombat({ origin: 'player', description: ('Player used: '+card.name+' dealing 0 damage.' ) }))
+                        }
                     }
-                    dispatch(updatePlayer({ energy: newEnergy }));
-                }
+                }else if (card.action.target[i] == "player"){
+                    if (card.action.effect[i]=="heal"){
+                        const newPlayerHealth = ( parseInt(state.player.health) + parseInt(card.action.power[i]) ) > parseInt(state.player.maxHealth) ? (parseInt(state.player.maxHealth)) : (parseInt(state.player.health) + parseInt(card.action.power[i]));
+                        dispatch(updatePlayer({ health: newPlayerHealth, energy: newEnergy }))
+                        dispatch(logCombat({ origin: 'player', description: ('Player used: '+card.name+' healing '+card.action.power[i]+' party health' ) }))
+    
+                    } else if (card.action.effect[i]=="defense"){
+                        const defense = card.action.power[i]
+                        const newPlayerDefense = parseInt(state.player.defense) + parseInt(defense)
+                        dispatch(updatePlayer({ defense: newPlayerDefense, energy: newEnergy}))
+                        dispatch(logCombat({ origin: 'player', description: ('Player used: '+card.name+' gaining '+defense+' party defense' ) }))
+                    } else if (card.action.effect[i]=='delayUtility'){
+                        state.player.utilityHeroAilgments.push('blind');
+                        state.player.utilityHeroAilgmentsDuration.push(card.action.power);
+                        dispatch(updatePlayer({ energy: newEnergy }))
+                    }
 
-            } else {
-                if (card.action.effect=="heal"){
-                    const heal = card.action.power
-                    const newPlayerHealth = parseInt(state.player.health) + parseInt(heal)
-                    dispatch(updatePlayer({ health: newPlayerHealth, energy: newEnergy }))
-                    dispatch(logCombat({ origin: 'player', description: ('Player used: '+card.name+' healing '+heal+' party health' ) }))
-
-                } else if (card.action.effect=="defense"){
-                    const defense = card.action.power
-                    const newPlayerDefense = parseInt(state.player.defense) + parseInt(defense)
-                    dispatch(updatePlayer({ defense: newPlayerDefense, energy: newEnergy}))
-                    dispatch(logCombat({ origin: 'player', description: ('Player used: '+card.name+' gaining '+defense+' party defense' ) }))
+                } else {
+                    //something strange?
+                    console.log('effects something other than player or foe, like drawing an aditional card etc');
                 }
             }
+
+            // TARGET: FOE
+            // if (card.action.target=="foe"){    
+
+            //     // FOE DAMAGED
+            //     if (card.action.effect=="damage"){
+
+            //         const damage = card.action.power;
+            //         const trample = foeDefense - damage;
+            //         if (trample < 0) {
+            //             const newFoeHealth = parseInt(state.monster.health) + parseInt(trample);
+            //             dispatch(updateMonster({ health: newFoeHealth, defense: 0}));
+            //             dispatch(logCombat({ origin: 'player', description: ('Player used: '+card.name+' dealing '+((-1)*(trample))+' damage.' ) }))
+            //         }else{
+            //             const newFoeDefense = trample;
+            //             dispatch(updateMonster({ defense: newFoeDefense }));
+            //             dispatch(logCombat({ origin: 'player', description: ('Player used: '+card.name+' dealing 0 damage.' ) }))
+            //         }
+            //         dispatch(updatePlayer({ energy: newEnergy }));
+            //     }
+
+
+            // } else {
+            //     if (card.action.effect=="heal"){
+            //         const heal = card.action.power
+            //         const newPlayerHealth = parseInt(state.player.health) + parseInt(heal)
+            //         dispatch(updatePlayer({ health: newPlayerHealth, energy: newEnergy }))
+            //         dispatch(logCombat({ origin: 'player', description: ('Player used: '+card.name+' healing '+heal+' party health' ) }))
+
+            //     } else if (card.action.effect=="defense"){
+            //         const defense = card.action.power
+            //         const newPlayerDefense = parseInt(state.player.defense) + parseInt(defense)
+            //         dispatch(updatePlayer({ defense: newPlayerDefense, energy: newEnergy}))
+            //         dispatch(logCombat({ origin: 'player', description: ('Player used: '+card.name+' gaining '+defense+' party defense' ) }))
+            //     }
+            // }
             dispatch(playIndexedCard(cardIndex))
 
         }else{
@@ -339,7 +405,7 @@ export const applyCard = (cardIndex) => (dispatch, getState) => {
     } else {
         cardSounds.src = cardError;
         cardSounds.play();
-
+        leftRightShake(energyText);
     }
 
 

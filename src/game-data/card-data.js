@@ -40,10 +40,9 @@ export const cards = [
         action: {
             target: ['foe'],
             effect: ['damage'],
-            power: [5]
+            power: [7]
         },
-        description: "5 Damage",
-        card_id: 0
+        description: "7 Damage",
     },
     {   
         name: 'Defensive Tactics',
@@ -55,17 +54,16 @@ export const cards = [
         action: {
             target: ['player'],
             effect: ['defense'],
-            power: [5]
+            power: [7]
         },
-        description: "+5 Defense",
-        card_id: 1
+        description: "+7 Defense",
     },
     {   
         name: 'Heal',
         requiredHero: 'u',
         art: '<art url>',
         type: 'skill',
-        energy: 2,
+        energy: 1,
         exhaust: true,
         action: {
             target: ['player'],
@@ -73,12 +71,11 @@ export const cards = [
             power: [8]
         },
         description: "Heal +8",
-        card_id: 2,
         cost: 100,
     },
     {
-        name: 'Lunge From Above',
-        requiredHero: 'a',
+        name: 'Trading Blows',
+        requiredHero: 'o',
         art: '<art url>',
         type: 'attack',
         energy: 1,
@@ -86,11 +83,55 @@ export const cards = [
         action: {
             target: ['foe', 'hero'],
             effect: ['damage', 'damage'],
-            power: [20, 5]
+            power: [20, 7]
         },
         description: "Deal 20 Damage, take 5 Damage",
-        card_id: 3,
-        cost: 75,
-    }
+        cost: 45,
+    },
+    {
+        name: 'Radiant Shield',
+        requiredHero: 'du',
+        art: '<art url>',
+        type: 'mix',
+        energy: 2,
+        exhaust: true,
+        action: {
+            target: ['player','player'],
+            effect: ['defense','heal'],
+            power: [10,5]
+        },
+        description: "+10 Defense, +5 health",
+        cost: 45,
+    },
+    {
+        name: 'Shield Bash',
+        requiredHero: 'd',
+        art: '<art url>',
+        type: 'defend',
+        energy: 1,
+        exhaust: false,
+        action: {
+            target: ['foe'],
+            effect: ['defenseTotal'],
+            power: [1]
+        },
+        description: "Deal damage equal to your armor",
+        cost: 45,
+    },
+    {
+        name: 'Blinding Ray',
+        requiredHero: 'u',
+        art: '<art url>',
+        type: 'utility',
+        energy: 2,
+        exhaust: false,
+        action: {
+            target: ['foe','player'],
+            effect: ['blind','delayUtility'],
+            power: [1,1]
+        },
+        description: "Blind enemy for 1 turns",
+        cost: 45,
+    },
 ];
 

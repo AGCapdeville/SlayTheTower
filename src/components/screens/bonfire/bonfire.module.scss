@@ -8,14 +8,22 @@
     justify-content: center;
     align-items: center;
     text-align: center;
+
+    flex-direction: column;
     
     font-weight: bold;
     font-size: 20px;
     color: white;
 
     background-color: #131313;
+    &:hover{
+        background-color: #303030;
+    }
 }
 
+.subtext{
+    font-size: small;
+}
 
 .screenContainer{
     display: flex;
@@ -26,7 +34,6 @@
     color: white;
 }
 
-
 .screen{
     display: flex;
     width: 90vw;
@@ -35,4 +42,9 @@
     justify-content: center;
     flex-direction: column;
     background-color: $mainBackgroundColor;
+}
+
+.heroLineUp{
+    display: flex;
+    flex-direction: row;
 }
