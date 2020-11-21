@@ -13,14 +13,14 @@ const initialState = {
 
 function rollDice(max) {
     return 1 + Math.floor(Math.random()*max)
-  }
+}
 
 const reduceSetUpShop = ({ shopCards, ...rest}) => {
 
     console.log("0 : roll D10:", rollDice(10))
     console.log("1 : roll D10:", rollDice(10))
     console.log("2 : roll D10:", rollDice(10))
-
+    //3 4 5 6
     let newShopCards = [...shopCards, cards[3], cards[3], cards[3] ]
     return { ...rest, shopCards: newShopCards}
 }

@@ -16,7 +16,7 @@ import CombatLog from '../../combat-components/combat-log';
 import { useMonster } from '../../../ducks/monster';
 import { updateCombat } from '../../../ducks/combat';
 
-import { updateGameState } from '../../../ducks/game_state';
+import { updateGameState, resolutionCards } from '../../../ducks/game_state';
 
 import PartyStatus from '../../combat-components/player-status';
 
@@ -35,8 +35,8 @@ const CombatScreen = () => {
     useEffect(() => {
         // This block of code only executes when foeHealth changes
         if (foeHealth <= 0) {
-            dispatch( updateGameState({loot: loot, playerGold: player.gold }) )
-            
+            dispatch( updateGameState({loot: loot, playerGold: player.gold }) )            
+            dispatch( resolutionCards() );
             dispatch( updateCombat({
                 combatLog : 
                     [{
@@ -55,6 +55,8 @@ const CombatScreen = () => {
     useEffect(() => {
         if (player.health <= 0) {
             dispatch( updateGameState({defeat:true}) )
+            dispatch( resolutionCards() );
+
             dispatch( updateCombat({
                 combatLog : 
                     [{

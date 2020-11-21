@@ -27,6 +27,8 @@ export const resetDeck = createAction('player/RESET_DECK')
 // Hand actions
 export const drawHand = createAction('player/DRAW_HAND');
 
+// deck altering
+export const addCard = createAction('player/ADD_CARD')
 
 
 const initialState = {
@@ -49,10 +51,8 @@ function shuffle(deck) {
 }
 
 const reduceResetDeck = ({ hand, deck, discard, voidDeck, ...rest }) => {
-    discard = [...discard, ...voidDeck]
-    discard = [...discard, ...hand]
-    const newDeck = [...deck, ...discard]
-    return { ...rest, hand:[], deck:newDeck, voidDeck:[], discard:[] }
+    const resetDeck = [...deck, ...discard, ...hand, ...voidDeck]
+    return { ...rest, hand:[], deck:resetDeck, voidDeck:[], discard:[] }
 }
 
 const reduceDrawCard = ({ discard, deck, hand, ...rest }) => {
@@ -85,7 +85,6 @@ const reducePlayCard = ({ discard, hand, ...rest }) => {
 
 const reducePlayIndexedCard = ({ discard, hand, ...rest } , {payload}) => {
     const emptyHand = hand.length < 1;
-    console.log(payload)
 
     if (!emptyHand){
         const grabCard = hand[payload]
@@ -110,6 +109,10 @@ const reduceDiscardHand = ({ discard, hand, ...rest }) => {
     }
 }
 
+const reduceAddCard = ({ deck, ...rest }, {payload}) => {
+    const newDeck = [...deck, payload]
+    return { ...rest, deck: newDeck }
+}
 
 export default handleActions({
     [drawHand]: (state) => ({...state, deck: state.deck.slice( 0, state.deck.length -5), hand: [...state.hand, ...state.deck.slice(-5)]}),
@@ -124,6 +127,8 @@ export default handleActions({
     
     [playIndexedCard]: reducePlayIndexedCard,
     [discardHand]: reduceDiscardHand,
+
+    [addCard]: reduceAddCard,
 
     [voidCard]: (state, action) => ({...state, hand: state.hand.slice(action.payload, 1), voidPile: [...state.void, state.hand.slice(action.payload, 1)]}),
 }, initialState);

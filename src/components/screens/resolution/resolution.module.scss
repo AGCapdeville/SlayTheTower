@@ -40,12 +40,29 @@
     width: auto;
     height: 70vh;
     display: flex;
-    margin-top: 5px;
-    margin-bottom: 5px;
     align-items: center;
     justify-content: center;
+    flex-direction: column;
+    margin-top: 5px;
+    margin-bottom: 5px;
     background-color: #424542;
+}
 
+.bodyText{
+    width: 100vw;
+    height: 5vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.rewardText{
+    width: 100vw;
+    height: 5vh;
+    margin-bottom: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .menuFooter {
@@ -77,4 +94,13 @@
                 0 -2px #9c9a9c,
                 -2px 0 #7b757b,
                 0 2px #424542;
+}
+
+
+.cardContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-content: center;
+    width: 100vw;
 }
