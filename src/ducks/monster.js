@@ -10,33 +10,9 @@ import { monsters } from '../game-data/monster-data';
 export const spawnMonster = createAction('monster/SPAWN_MONSTER');
 export const updateMonster = createAction('monster/UPDATE_MONSTER');
 export const spawnFloorBoss = createAction('monster/SPAWN_FLOOR_BOSS');
-const initialState = { };
 
-// name: 'Slime',
-// health: 10,
-// totalHealth: 10,
-// defense: 0,
-// telegraphing: ['damage 5'],
-// moves: {
-//     'whip':{
-//         priority: 0,
-//         target: ['hero'],
-//         effect: ['damage'],
-//         power: [5]
-//     },
-//     'spit':{
-//         priority: 1,
-//         target: ['hero'],
-//         effect: ['damage'],
-//         power: [8]
-//     },
-//     'soften':{
-//         priority: 1,
-//         target: ['self'],
-//         effect: ['defense'],
-//         power: [12]
-//     }
-// }
+
+const initialState = { };
 
 
 export default handleActions({
@@ -49,7 +25,7 @@ export default handleActions({
         return ({ ...state, ...action.payload })
     },
 }, initialState);
-
+ 
 
 // how we grab data from the store
 const selectMonster = createSelector(

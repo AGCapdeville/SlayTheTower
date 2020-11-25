@@ -8,33 +8,37 @@ export const monsters = [
         total: 36,
         defense: 0,
         gold: 10,
-        telegraphing: [{ 
+        telegraphing: { 
                 name: ['Spit'],
                 order: 0,
                 target: ['hero'],
                 effect: ['damage'],
+                moves: 1,
                 power: [8]
-            }],
+            },
         moves: [
             {
                 name: ['Spit'],
                 order: 0,
                 target: ['hero'],
                 effect: ['damage'],
+                moves: 1,
                 power: [8]
             },
             {
-                name: ['Whip'],
+                name: ['Whip','Whip'],
                 order: 1,
-                target: ['hero'],
-                effect: ['damage'],
-                power: [13]
+                target: ['hero','hero'],
+                effect: ['bleed','damage'],
+                moves: 2,
+                power: [2, 5]
             },
             {
                 name : ['Soften'],
                 order: 2,
                 target: ['self'],
                 effect: ['defense'],
+                moves: 1,
                 power: [12]
             }
         ]
@@ -44,38 +48,34 @@ export const monsters = [
         aligment: [],
         aligmentDuration: [],
         // health: 36, <- normal health
-        health: 40,
+        health: 10,
         total: 40,
         defense: 0,
         gold: 30,
-        telegraphing: [{ 
-                name: ['Spit'],
+        telegraphing: { 
+                name: ['Overwhelming Fire'],
                 order: 0,
                 target: ['hero'],
-                effect: ['damage'],
-                power: [8]
-            }],
+                effect: ['fatigue'],
+                moves: 1,
+                power: [3]
+            },
         moves: [
             {
-                name: ['Spit'],
-                order: 0,
-                target: ['hero'],
-                effect: ['damage'],
-                power: [8]
-            },
-            {
-                name: ['Whip'],
+                name: ['Burn'],
                 order: 1,
                 target: ['hero'],
                 effect: ['damage'],
-                power: [13]
+                moves: 1,
+                power: [15]
             },
             {
-                name : ['Soften'],
-                order: 2,
-                target: ['self'],
-                effect: ['defense'],
-                power: [12]
+                name: ['Searing Sight'],
+                order: 0,
+                target: ['hero'],
+                effect: ['stun'],
+                moves: 1,
+                power: [1]
             }
         ]
     }

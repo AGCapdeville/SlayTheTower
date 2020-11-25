@@ -8,8 +8,6 @@ const CombatLog = () => {
 
     const combat = useCombat();
 
-    console.log('combat:', combat)
-
     return(
         <div id='combatMsgs' className={styles.combatLog}>
             <div className={styles.combatLogHeader}>

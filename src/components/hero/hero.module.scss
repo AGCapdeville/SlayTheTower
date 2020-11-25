@@ -385,3 +385,34 @@
     transform: rotate(-2deg) translate(13px, -8px);
   }
 }
+.stunCounter{
+  position: absolute;
+  opacity: .85;
+  z-index: 100;
+  transform: translate(0px,-45px);
+}
+
+.stun{
+  width: 35px;
+  height: 10px;
+  background: yellow;
+  position: absolute;
+  z-index: 100;
+  opacity: .5;
+  animation: stunAnimation 2.5s;
+  animation-iteration-count: infinite;
+}
+
+@keyframes stunAnimation {
+  0%{
+    transform: translate(0px,-25px);
+    height: 0px;
+  }
+  50%{
+    height: 10px;
+  }
+  100%{
+    transform: translate(0px,45px);
+    height: 0px;
+  }
+}

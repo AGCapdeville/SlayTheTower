@@ -19,7 +19,6 @@ const HeroSelection = () => {
     const dispatch = useDispatch();
 
     const onCardClick = (heroType) => {
-        console.log(heroType)
         dispatch(updatePlayer(heros[0]))
         dispatch(updateGameState(gameState))
         dispatch(updateGameState({screen:'Map'}));

@@ -30,6 +30,12 @@ export const drawHand = createAction('player/DRAW_HAND');
 // deck altering
 export const addCard = createAction('player/ADD_CARD')
 
+// Ailgment
+export const removeAilgments = createAction('player/REMOVE_AILGMENTS');
+export const addAilgments = createAction('player/ADD_AILGMENTS')
+
+// Afflictions
+export const removeDeckAfflictions = createAction('player/REMOVE_DECK_AFFLICTIONS');
 
 const initialState = {
     deck: [],
@@ -50,9 +56,10 @@ function shuffle(deck) {
     return deck
 }
 
-const reduceResetDeck = ({ hand, deck, discard, voidDeck, ...rest }) => {
-    const resetDeck = [...deck, ...discard, ...hand, ...voidDeck]
-    return { ...rest, hand:[], deck:resetDeck, voidDeck:[], discard:[] }
+const reduceResetDeck = ({ deck, hand, discard, voidDeck, ...rest }) => {
+    let resetDeck = [...deck, ...hand, ...discard, ...voidDeck];
+    console.log('reset deck:', resetDeck);
+    return { ...rest, deck: resetDeck, hand:[], voidDeck:[], discard:[] }
 }
 
 const reduceDrawCard = ({ discard, deck, hand, ...rest }) => {
@@ -83,17 +90,14 @@ const reducePlayCard = ({ discard, hand, ...rest }) => {
     }
 }
 
-const reducePlayIndexedCard = ({ discard, hand, ...rest } , {payload}) => {
-    const emptyHand = hand.length < 1;
+const reducePlayIndexedCard = ({ voidDeck, discard, hand, ...rest } , {payload}) => {
+    const grabCard = hand[payload]
+    hand.splice(payload, 1)
 
-    if (!emptyHand){
-        const grabCard = hand[payload]
-        hand.splice(payload, 1)
-        const newHand = hand
-        const newDiscard = [...discard, grabCard]
-        return { ...rest, hand: newHand, discard: newDiscard}
+    if(grabCard.exhaust){
+        return { ...rest, voidDeck: [...voidDeck, grabCard], hand: hand, discard: discard}
     }else{
-        return { ...rest, hand, discard}
+        return { ...rest, voidDeck: voidDeck, hand: hand, discard: [...discard, grabCard]}
     }
 }
 
@@ -114,6 +118,41 @@ const reduceAddCard = ({ deck, ...rest }, {payload}) => {
     return { ...rest, deck: newDeck }
 }
 
+const reduceAddAilgments = ({offenseHeroAilgments, offenseHeroAilgmentsDuration, utilityHeroAilgments, utilityHeroAilgmentsDuration, defenseHeroAilgments, defenseHeroAilgmentsDuration, ...rest}, {payload}) => {
+
+    switch (payload.target) {
+        case 'mage':
+            utilityHeroAilgments = [...utilityHeroAilgments, payload.effect]
+            utilityHeroAilgmentsDuration = [...utilityHeroAilgmentsDuration, payload.duration]
+            break;
+        case 'sword':
+            offenseHeroAilgments = [...offenseHeroAilgments, payload.effect]
+            offenseHeroAilgmentsDuration = [...offenseHeroAilgmentsDuration, payload.duration]
+            break;
+        case 'shiled':
+            defenseHeroAilgments = [...defenseHeroAilgments, payload.effect]
+            defenseHeroAilgmentsDuration = [...defenseHeroAilgmentsDuration, payload.duration]
+            break;
+    }
+    return { ...rest, offenseHeroAilgments: offenseHeroAilgments, offenseHeroAilgmentsDuration: offenseHeroAilgmentsDuration, utilityHeroAilgments: utilityHeroAilgments, utilityHeroAilgmentsDuration: utilityHeroAilgmentsDuration, defenseHeroAilgments: defenseHeroAilgments, defenseHeroAilgmentsDuration: defenseHeroAilgmentsDuration }
+}
+
+const reduceRemoveAilgments = ({offenseHeroAilgments, offenseHeroAilgmentsDuration, utilityHeroAilgments, utilityHeroAilgmentsDuration, defenseHeroAilgments, defenseHeroAilgmentsDuration, ...rest}) => {
+    return { ...rest, offenseHeroAilgments: [], offenseHeroAilgmentsDuration: [], utilityHeroAilgments: [], utilityHeroAilgmentsDuration: [], defenseHeroAilgments: [], defenseHeroAilgmentsDuration: [] }
+}
+
+const reduceRemoveDeckAfflictions = ({ deck ,...rest}) => {
+    let newDeck = deck.filter( card => {
+        if ( !(card.type === 'affliction') ){
+            console.log('accept: ', card.name)
+            return card
+        }
+        console.log('reject: ',card.name)
+    })
+
+    return {...rest, deck : newDeck}
+}
+
 export default handleActions({
     [drawHand]: (state) => ({...state, deck: state.deck.slice( 0, state.deck.length -5), hand: [...state.hand, ...state.deck.slice(-5)]}),
     [shuffleDeck]: (state) => ({...state, deck: shuffle(state.deck)}),
@@ -121,6 +160,10 @@ export default handleActions({
     [setDeck]: (state, action) => ({...state, deck: action.payload }),
     
     [resetDeck]: reduceResetDeck,
+    [removeAilgments]: reduceRemoveAilgments,
+    [addAilgments]: reduceAddAilgments,
+
+    [removeDeckAfflictions]: reduceRemoveDeckAfflictions,
 
     [drawCard]: reduceDrawCard,
     [playCard]: reducePlayCard,
@@ -155,16 +198,12 @@ export const usePlayer = () => useSelector(selectPlayer);
 */
 function checkStanding(state, requiredHeros){
 
-    const offHeroStanding = ((state.player.offenseHeroStatus === 'standing' && !state.player.offenseHeroAilgments.includes('blind') ) ? true : false);
-    const defHeroStanding = ((state.player.defenseHeroStatus === 'standing' && !state.player.defenseHeroAilgments.includes('blind') ) ? true : false);
-    const utilHeroStanding = ((state.player.utilityHeroStatus === 'standing' && !state.player.utilityHeroAilgments.includes('blind') ) ? true : false);
-
-    console.log('standing heros: off:', offHeroStanding, ', def:', defHeroStanding, ', util:',utilHeroStanding);
-    console.log('req heros:',requiredHeros);
+    const offHeroStanding = ((state.player.offenseHeroStatus === 'standing' && !state.player.offenseHeroAilgments.includes('stun') ) ? true : false);
+    const defHeroStanding = ((state.player.defenseHeroStatus === 'standing' && !state.player.defenseHeroAilgments.includes('stun') ) ? true : false);
+    const utilHeroStanding = ((state.player.utilityHeroStatus === 'standing' && !state.player.utilityHeroAilgments.includes('stun') ) ? true : false);
 
     switch (requiredHeros) {
         case 'a':
-            // console.log('')
             return (offHeroStanding || defHeroStanding || utilHeroStanding);
         case 'o':
             return (offHeroStanding);
@@ -225,6 +264,64 @@ function damageFlash(bodyElement){
         bodyElement.style.opacity = 0;
     }, 280)
     
+}
+
+function shakeHero(state, requiredHero, mage, koMage, sword, shield){
+
+    const offHeroStanding = ((state.player.offenseHeroStatus === 'standing' && !state.player.offenseHeroAilgments.includes('stun') ) ? true : false);
+    const defHeroStanding = ((state.player.defenseHeroStatus === 'standing' && !state.player.defenseHeroAilgments.includes('stun') ) ? true : false);
+    const utilHeroStanding = ((state.player.utilityHeroStatus === 'standing' && !state.player.utilityHeroAilgments.includes('stun') ) ? true : false);
+
+    switch (requiredHero) {
+        case 'o':
+            leftRightShake(sword);
+            break;
+        case 'u':
+            leftRightShake(mage);
+            leftRightShake(koMage);
+            break;
+        case 'd':
+            leftRightShake(shield);
+            break;
+        case 'do':
+            if (!defHeroStanding){
+                leftRightShake(shield);
+            }
+            if (!offHeroStanding){
+                leftRightShake(sword);
+            }
+            break;
+        case 'du':
+            if (!defHeroStanding){
+                leftRightShake(shield);
+            }
+            if (!utilHeroStanding){
+                leftRightShake(mage);
+                leftRightShake(koMage)
+            }
+            break;
+        case 'ou':
+            if (!offHeroStanding){
+                leftRightShake(sword);
+            }
+            if (!utilHeroStanding){
+                leftRightShake(mage);
+                leftRightShake(koMage)
+            }
+            break;
+        case 'e':
+            if (!offHeroStanding){
+                leftRightShake(sword);
+            }
+            if (!defHeroStanding){
+                leftRightShake(shield);
+            }
+            if (!utilHeroStanding){
+                leftRightShake(mage);
+                leftRightShake(koMage)
+            }
+            break;
+    }
 }
 
 function leftRightShake(element){
@@ -289,7 +386,9 @@ export const applyCard = (cardIndex) => (dispatch, getState) => {
 
     const card = state.player.hand[cardIndex]
     const energyCost = card.energy;
-    const standing = checkStanding(state, card.requiredHero);     
+
+    const requiredHero = card.requiredHero;
+    const standing = checkStanding(state, requiredHero);     
     const foeDefense = state.monster.defense
 
     let cardSounds = document.createElement('audio');
@@ -301,9 +400,10 @@ export const applyCard = (cardIndex) => (dispatch, getState) => {
 
     let energyText = document.getElementById('heroEnergyText');
 
+    let aCursedCard = card.type === 'curse' ? true : false;
 
 
-    if (energyCost <= state.player.energy) {
+    if (energyCost <= state.player.energy && !aCursedCard) {
         cardSounds.src = cardSuccess;
         cardSounds.play();
 
@@ -317,7 +417,6 @@ export const applyCard = (cardIndex) => (dispatch, getState) => {
                 if (card.action.target[i] == "foe"){
                     if (card.action.effect[i] == 'damage'){
                         const trample = foeDefense - card.action.power[i];
-                        console.log('foe damage:', card.action.power[i])
                         if (trample < 0) {
                             const newFoeHealth = parseInt(state.monster.health) + parseInt(trample);
                             dispatch(updateMonster({ health: newFoeHealth, defense: 0}));
@@ -328,9 +427,9 @@ export const applyCard = (cardIndex) => (dispatch, getState) => {
                             dispatch(logCombat({ origin: 'player', description: ('Player used: '+card.name+' dealing 0 damage.' ) }))
                         }
                         dispatch(updatePlayer({ energy: newEnergy }));
-                    }else if (card.action.effect[i] == 'blind'){
-                        state.monster.aligment.push('blind');
-                        state.monster.aligmentDuration.push(card.action.power);
+                    }else if (card.action.effect[i] == 'stun'){
+                        state.monster.aligment.push('stun');
+                        state.monster.aligmentDuration.push(card.action.power[i]);
                         dispatch(updatePlayer({ energy: newEnergy }))
                     }else if (card.action.effect[i] == 'defenseTotal'){
                         const trample = foeDefense - state.player.defense;
@@ -350,62 +449,41 @@ export const applyCard = (cardIndex) => (dispatch, getState) => {
                         dispatch(updatePlayer({ health: newPlayerHealth, energy: newEnergy }))
                         dispatch(logCombat({ origin: 'player', description: ('Player used: '+card.name+' healing '+card.action.power[i]+' party health' ) }))
     
-                    } else if (card.action.effect[i]=="defense"){
+                    } else if (card.action.effect[i] == "defense"){
                         const defense = card.action.power[i]
                         const newPlayerDefense = parseInt(state.player.defense) + parseInt(defense)
                         dispatch(updatePlayer({ defense: newPlayerDefense, energy: newEnergy}))
                         dispatch(logCombat({ origin: 'player', description: ('Player used: '+card.name+' gaining '+defense+' party defense' ) }))
-                    } else if (card.action.effect[i]=='delayUtility'){
-                        state.player.utilityHeroAilgments.push('blind');
-                        state.player.utilityHeroAilgmentsDuration.push(card.action.power);
+                    } else if (card.action.effect[i] == 'delayUtility'){
+                        state.player.utilityHeroAilgments.push('stun');
+                        state.player.utilityHeroAilgmentsDuration.push(card.action.power[i]);
+                        dispatch(updatePlayer({ energy: newEnergy }))
+                    } else if (card.action.effect[i] == 'delayDefense'){
+                        state.player.defenseHeroAilgments.push('stun');
+                        state.player.defenseHeroAilgmentsDuration.push(card.action.power[i]);
+                        dispatch(updatePlayer({ energy: newEnergy }))
+                    } else if (card.action.effect[i] == 'delayOffense'){
+                        state.player.offenseHeroAilgments.push('stun');
+                        state.player.offenseHeroAilgmentsDuration.push(card.action.power[i]);
+                        dispatch(updatePlayer({ energy: newEnergy }))
+                    } else if (card.action.effect[i] == 'damage'){
+                        dispatch(updatePlayer({ health: state.player.health - card.action.power[i] }));
                         dispatch(updatePlayer({ energy: newEnergy }))
                     }
 
-                } else {
-                    //something strange?
-                    console.log('effects something other than player or foe, like drawing an aditional card etc');
+                } else if (card.action.target[i] == "affliction"){
+                    dispatch(updatePlayer({ energy: newEnergy }))
+                } else{
+                    // something
                 }
             }
 
-            // TARGET: FOE
-            // if (card.action.target=="foe"){    
-
-            //     // FOE DAMAGED
-            //     if (card.action.effect=="damage"){
-
-            //         const damage = card.action.power;
-            //         const trample = foeDefense - damage;
-            //         if (trample < 0) {
-            //             const newFoeHealth = parseInt(state.monster.health) + parseInt(trample);
-            //             dispatch(updateMonster({ health: newFoeHealth, defense: 0}));
-            //             dispatch(logCombat({ origin: 'player', description: ('Player used: '+card.name+' dealing '+((-1)*(trample))+' damage.' ) }))
-            //         }else{
-            //             const newFoeDefense = trample;
-            //             dispatch(updateMonster({ defense: newFoeDefense }));
-            //             dispatch(logCombat({ origin: 'player', description: ('Player used: '+card.name+' dealing 0 damage.' ) }))
-            //         }
-            //         dispatch(updatePlayer({ energy: newEnergy }));
-            //     }
-
-
-            // } else {
-            //     if (card.action.effect=="heal"){
-            //         const heal = card.action.power
-            //         const newPlayerHealth = parseInt(state.player.health) + parseInt(heal)
-            //         dispatch(updatePlayer({ health: newPlayerHealth, energy: newEnergy }))
-            //         dispatch(logCombat({ origin: 'player', description: ('Player used: '+card.name+' healing '+heal+' party health' ) }))
-
-            //     } else if (card.action.effect=="defense"){
-            //         const defense = card.action.power
-            //         const newPlayerDefense = parseInt(state.player.defense) + parseInt(defense)
-            //         dispatch(updatePlayer({ defense: newPlayerDefense, energy: newEnergy}))
-            //         dispatch(logCombat({ origin: 'player', description: ('Player used: '+card.name+' gaining '+defense+' party defense' ) }))
-            //     }
-            // }
             dispatch(playIndexedCard(cardIndex))
 
         }else{
-            console.log('! Required hero not standing !')
+            cardSounds.src = cardError;
+            cardSounds.play();
+            shakeHero(state, requiredHero, mageBody, koMageBody, swordBody, shieldBody )
         }
     } else {
         cardSounds.src = cardError;

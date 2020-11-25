@@ -34,7 +34,6 @@ const reduceLoadTrack = ({ curr_track, track, is_looping, curr_volume, ...rest})
     curr_track.load();
     curr_track.autoplay = true; 
     curr_track.loop = is_looping;
-    console.log('volume:', curr_volume);
     curr_track.volume = curr_volume;
     return { ...rest, curr_track: curr_track, track: track, is_looping: is_looping, curr_volume: curr_volume }
 }

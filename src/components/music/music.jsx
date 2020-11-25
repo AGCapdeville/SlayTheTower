@@ -63,9 +63,7 @@ const Music = () => {
 
     useEffect(() => {
         if (!music.is_muted){
-            console.log('Screen:', screen);
             const screenTrack = track_list.find(track => track.for === String(screen));
-            console.log('attempting to load:',screenTrack);
             if(screen !== 'Resolution'){
                 dispatch(loop(true));
             }else{

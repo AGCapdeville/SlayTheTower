@@ -16,7 +16,6 @@ import { setupShop } from '../../../ducks/shop';
 
 
 function eventHandler(event, dispatcher){
-  console.log("EVENT:", event)
   switch (event) {
     case '👹':
       // for now... reset map after boss.

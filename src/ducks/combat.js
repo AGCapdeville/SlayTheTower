@@ -3,8 +3,8 @@ import { useSelector } from "react-redux";
 import { createSelector } from "reselect";
 import { updateMonster } from './monster';
 
-import { updatePlayer, discardHand, drawCard } from './player';
-
+import { updatePlayer, discardHand, drawCard, addCard, addAilgments } from './player';
+import {afflictionCards} from '../game-data/affliction-card-data';
 
 export const updateCombat = createAction('combat/UPDATE_COMBAT');
 export const logCombat = createAction('combat/LOG_COMBAT');
@@ -83,14 +83,12 @@ function damageFlash(bodyElement){
 
 function reduceAligments(player){
 
-    console.log('reducing aligment durration!')
-
     for (let index = 0; index < player.offenseHeroAilgments.length; index++) {
-        if ( parseInt(player.offenseHeroAilgmentsDuration[index]) - 1 === 0 ){
+        if ( parseInt(player.offenseHeroAilgmentsDuration[index]) - 1 === 1 ){
             // last turn with given ailgment.
             player.offenseHeroAilgmentsDuration[index] -= 1;
 
-        }else if ( parseInt(player.offenseHeroAilgmentsDuration[index]) - 1 < 0 ){
+        }else if ( parseInt(player.offenseHeroAilgmentsDuration[index]) - 1 <= 0 ){
             // aligment is removed.
             player.offenseHeroAilgments.splice(index,1);
             player.offenseHeroAilgmentsDuration.splice(index,1);
@@ -98,12 +96,11 @@ function reduceAligments(player){
     }
 
     for (let index = 0; index < player.utilityHeroAilgments.length; index++) {
-        console.log( 'aligment:', player.utilityHeroAilgments[index], 'lasting:', parseInt(player.utilityHeroAilgmentsDuration[index]) )
-        if ( parseInt(player.utilityHeroAilgmentsDuration[index]) - 1 === 0 ){
+        if ( parseInt(player.utilityHeroAilgmentsDuration[index]) - 1 === 1 ){
             // last turn with given ailgment.
             player.utilityHeroAilgmentsDuration[index] -= 1;
 
-        }else if ( parseInt(player.utilityHeroAilgmentsDuration[index]) - 1 < 0 ){
+        }else if ( parseInt(player.utilityHeroAilgmentsDuration[index]) - 1 <= 0 ){
             // aligment is removed.
             player.utilityHeroAilgments.splice(index,1);
             player.utilityHeroAilgmentsDuration.splice(index,1);
@@ -112,11 +109,11 @@ function reduceAligments(player){
     }
 
     for (let index = 0; index < player.defenseHeroAilgments.length; index++) {
-        if ( parseInt(player.defenseHeroAilgmentsDuration[index]) - 1 === 0 ){
+        if ( parseInt(player.defenseHeroAilgmentsDuration[index]) - 1 === 1 ){
             // last turn with given ailgment.
             player.defenseHeroAilgmentsDuration[index] -= 1;
 
-        }else if ( parseInt(player.defenseHeroAilgmentsDuration[index]) - 1 < 0 ){
+        }else if ( parseInt(player.defenseHeroAilgmentsDuration[index]) - 1 <= 0 ){
             // aligment is removed.
             player.defenseHeroAilgments.splice(index,1);
             player.defenseHeroAilgmentsDuration.splice(index,1);
@@ -126,11 +123,13 @@ function reduceAligments(player){
 
 function reduceMonsterAligments(monster){
     for (let index = 0; index < monster.aligment.length; index++) {
-        if ( parseInt(monster.aligmentDuration[index]) - 1 === 0 ){
+        
+
+        if ( parseInt(monster.aligmentDuration[index]) - 1 === 1 ){
             // last turn with given ailgment. Maybe...
             monster.aligmentDuration[index] -= 1;
 
-        }else if ( parseInt(monster.utilityHeroAilgmentsDuration[index]) - 1 < 0 ){
+        }else if ( parseInt(monster.aligmentDuration[index]) - 1 <= 0 ){
             // aligment is removed.
             monster.aligmentDuration.splice(index,1);
             monster.aligment.splice(index,1);
@@ -138,10 +137,13 @@ function reduceMonsterAligments(monster){
     }
 }
 
+function getRandomRange(min, max) {
+    return Math.floor(Math.random() * (max - min) + min);
+}
+
 export const endTurn = () => (dispatch, getState) => {
 
     let playerOverlay = document.getElementById('playerOverlay');
-
 
     playerOverlay.style.height = "40vh"
     playerOverlay.style.width = "100vw"
@@ -161,78 +163,112 @@ export const endTurn = () => (dispatch, getState) => {
 
     const telegraphing = monster.telegraphing
 
-    reduceMonsterAligments(monster);
+    console.log('telegraph:', telegraphing)
 
-    if ( !monster.aligment.includes('blind') ){
+    if ( !monster.aligment.includes('stun') ){
 
-        if ( telegraphing[0].effect == "damage" ){
-
-
-            const dmg = telegraphing[0].power
-            const moveMsg = monster.name + " used " + telegraphing[0].name + ", dealing\n" + telegraphing[0].power + " damage."
-
-            setTimeout( function(){
-                dispatch(logCombat( {origin:'monster', description:moveMsg} ), 1000)
-            }, 1000);
-
-            const trample = player.defense - dmg
-            if ( trample <= 0 ){
-                const newDefense = 0
-                const newHealth = player.health + trample
-                setTimeout( function(){ dispatch( updatePlayer({ health: newHealth, defense: newDefense }) ) },1000);
+        for (let m = 0; m < telegraphing.moves; m++) {
                 
-            } else {
-                const newDefense = trample
-                setTimeout( function(){ dispatch( updatePlayer({ defense: newDefense }) ) },1000);    
+            if ( telegraphing.effect[m] == "damage" ){
+
+                const dmg = telegraphing.power[m]
+                const moveMsg = monster.name + " used " + telegraphing.name[m] + ", dealing\n" + telegraphing.power[m] + " damage."
+
+                setTimeout( function(){
+                    dispatch(logCombat( {origin:'monster', description:moveMsg} ), 1000)
+                }, 1000);
+
+                const trample = player.defense - dmg
+                if ( trample <= 0 ){
+                    const newDefense = 0
+                    const newHealth = player.health + trample
+                    setTimeout( function(){ dispatch( updatePlayer({ health: newHealth, defense: newDefense }) ) },1000);
+                    
+                } else {
+                    const newDefense = trample
+                    setTimeout( function(){ dispatch( updatePlayer({ defense: newDefense }) ) },1000);    
+                }
+
+
+            } else if (telegraphing.effect[m] == 'defense') {
+
+
+                const newDefense = telegraphing.power[m]
+                const moveMsg = monster.name + " used " + telegraphing.name[m] + ", gained\n +" + telegraphing.power[m] + " defense."
+
+                setTimeout( function(){
+                    //  combatMsgs.innerHTML = moveMsg 
+                    dispatch(logCombat( {origin:'monster', description:moveMsg} ), 1000)
+                }, 1000)
+
+                setTimeout( function(){ 
+                    dispatch( updateMonster({ defense: newDefense })) 
+                },1100);
+            } else if (telegraphing.effect[m] == 'fatigue') {
+
+                const moveMsg = monster.name + " used " + telegraphing.name[m] + ", adding " + telegraphing.power[m] + " fatigue cards to the partys deck."
+
+                setTimeout( function(){
+                    dispatch(logCombat( {origin:'monster', description:moveMsg} ), 1000)
+                }, 1000);
+
+                for (let each = 0; each < telegraphing.power[m]; each++) {
+                    dispatch( addCard(afflictionCards.find( affliction => affliction.name === 'Fatigue')) )
+                }
+
+            } else if (telegraphing.effect[m] == 'bleed') {
+                const moveMsg = monster.name + " used " + telegraphing.name[m] + ", adding " + telegraphing.power[m] + " bleed cards to the partys deck."
+
+                setTimeout( function(){
+                    dispatch(logCombat( {origin:'monster', description:moveMsg} ), 1000)
+                }, 1000);
+
+                console.log('bleed move! :', afflictionCards.find( a => a.name ==='bleed'))
+
+                for (let each = 0; each < telegraphing.power[m]; each++) {
+                    dispatch( addCard(afflictionCards.find( affliction => affliction.name === 'Bleed')) )
+                }
+
+            }else if (telegraphing.effect[m] == 'stun') {
+
+                let heroList = ['mage', 'sword', 'shield']
+                let target = getRandomRange(0,heroList.length)
+                let targetHero = heroList[target]
+
+                dispatch( addAilgments({
+                        target : targetHero,
+                        effect :'stun',
+                        durration : telegraphing.power[m]
+                    })
+                )
+                const moveMsg = monster.name + " used " + telegraphing.name[m] + ", stunning " + targetHero + " hero, for " + telegraphing.power[m] + " turns."
+                setTimeout( function(){
+                    dispatch(logCombat( {origin:'monster', description:moveMsg} ), 1000)
+                }, 1000);
+
+            }else{
+                //default...
             }
-
-
-        } else if (telegraphing[0].effect == 'defense') {
-
-
-            const newDefense = telegraphing[0].power
-            const moveMsg = monster.name + " used " + telegraphing[0].name + ", gained\n +" + telegraphing[0].power + " defense."
-
-            setTimeout( function(){
-                //  combatMsgs.innerHTML = moveMsg 
-                dispatch(logCombat( {origin:'monster', description:moveMsg} ), 1000)
-            }, 1000)
-
-            setTimeout( function(){ 
-                dispatch( updateMonster({ defense: newDefense })) 
-            },1100);
-
 
         }
     }
 
-    const moves = monster.moves
-    const lengthOfMoves = Object.keys(moves).length
-    const position = telegraphing[0].order
 
-    if ( position + 1 < lengthOfMoves ) {
-        const newPos = position+1
-        const newTelegraph = moves.filter(obj => {
-            if (obj.order === newPos){
-                return obj
-            }
-        })
-        
-        // console.log ("new Telegraph",newTelegraph)
-        setTimeout( function(){ dispatch( updateMonster({ telegraphing: newTelegraph }) )}, 1200)
-   
-    } else {
-        const newPos = 0
-        const newTelegraph = moves.filter(obj => {
-            if (obj.order == newPos){
-                return obj
-            }        
-        })        
-        // console.log ("new Telegraph",newTelegraph)
-        setTimeout( function(){ dispatch( updateMonster({ telegraphing: newTelegraph }) )}, 1200)
-    }
+    const moves = monster.moves;
+    const lengthOfMoves = Object.keys(moves).length;
+    let randomMove = getRandomRange(0, lengthOfMoves);
+
+    const newTelegraph = moves.find(obj => {
+        if (obj.order === randomMove){
+            return obj
+        }
+    })
+    console.log('newTelegraph: whattttttttt', newTelegraph[0])
+    setTimeout( function(){ dispatch( updateMonster({ telegraphing: newTelegraph }) )}, 1200)
+
 
     reduceAligments(state.player);
+    reduceMonsterAligments(monster);
 
 
     setTimeout( function(){

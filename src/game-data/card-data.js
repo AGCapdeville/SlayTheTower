@@ -54,9 +54,9 @@ export const cards = [
         action: {
             target: ['player'],
             effect: ['defense'],
-            power: [7]
+            power: [5]
         },
-        description: "+7 Defense",
+        description: "+5 Defense",
     },
     {   
         name: 'Heal',
@@ -70,7 +70,7 @@ export const cards = [
             effect: ['heal'],
             power: [8]
         },
-        description: "Heal +8",
+        description: "Heal +8 \nVOID",
         cost: 100,
     },
     {
@@ -85,8 +85,8 @@ export const cards = [
             effect: ['damage', 'damage'],
             power: [20, 7]
         },
-        description: "Deal 20 Damage, take 5 Damage",
-        cost: 45,
+        description: "Deal 20 Damage, take 5 Damage \nVOID",
+        cost: 55,
     },
     {
         name: 'Radiant Shield',
@@ -100,8 +100,8 @@ export const cards = [
             effect: ['defense','heal'],
             power: [10,5]
         },
-        description: "+10 Defense, +5 health",
-        cost: 45,
+        description: "+10 Defense, +5 health \nVOID",
+        cost: 65,
     },
     {
         name: 'Shield Bash',
@@ -116,7 +116,7 @@ export const cards = [
             power: [1]
         },
         description: "Deal damage equal to your armor",
-        cost: 45,
+        cost: 70,
     },
     {
         name: 'Blinding Ray',
@@ -124,14 +124,14 @@ export const cards = [
         art: '<art url>',
         type: 'utility',
         energy: 2,
-        exhaust: false,
+        exhaust: true,
         action: {
             target: ['foe','player'],
-            effect: ['blind','delayUtility'],
-            power: [1,1]
+            effect: ['stun','delayUtility'],
+            power: [1,2]
         },
-        description: "Blind enemy for 1 turns",
-        cost: 45,
+        description: "Stun enemy & hero until the end of the next turn. \nVOID",
+        cost: 50,
     },
 ];
 

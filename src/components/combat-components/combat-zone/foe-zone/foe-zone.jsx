@@ -46,17 +46,21 @@ function updateFoeDefBar(defense){
 
 function getTelegraph(monster){
     
-    const effect = monster.telegraphing[0].effect;
-    const power = monster.telegraphing[0].power;
-    
-    // console.log('effect:', effect);
+    console.log(monster)
 
-    if (effect[0] === "damage"){
+    const effect = monster.telegraphing.effect[0];
+    console.log("effect:",effect)
+    const power = monster.telegraphing.power[0];
+    console.log("power:",power)
+
+    if (effect === "damage"){
         return ('🔪 '+power);
-    }else if (effect[0] === "defense"){
+    }else if (effect === "defense"){
         return ('🛡️ '+power);
-    }else{
-        return '...';
+    }else if (effect === "fatigue" || effect === "bleed" || effect === "stun"){
+        return '💢';
+    }else {
+        return '💭';
     }
 
 }
@@ -67,7 +71,6 @@ const FoeZone = () => {
     const { total: foeMax } = useMonster();
     const { defense: foeDefense } = useMonster();
     const monster = useMonster();
-    console.log('foe.name:', monster.name);
     const Monster = monsterList[monster.name];
     const telegraph = getTelegraph(monster)
 

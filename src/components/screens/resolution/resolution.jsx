@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import styles from "./resolution.module.scss";
 import { useGameState, updateGameState } from '../../../ducks/game_state'
 
-import { resetDeck, updatePlayer, addCard, shuffleDeck } from '../../../ducks/player';
+import { resetDeck, updatePlayer, addCard, shuffleDeck, removeAilgments, removeDeckAfflictions } from '../../../ducks/player';
 
 import { updateScreen } from '../../../ducks/screen';
 
@@ -106,26 +106,33 @@ function startingField(startingPaths){
 
 
 const ResolutionScreen = () => {
-
     
     const dispatch = useDispatch();
-    const gameState = useGameState();
-    
-    dispatch(resetDeck);
-    dispatch(shuffleDeck);
-
-    console.log('entered resolution screeen')
+    const gameState = useGameState();   
     
     let header = ''
     let body = ''
     let bttn = ''
+
+    dispatch(resetDeck());    
+    dispatch(shuffleDeck());
+    dispatch(removeAilgments());
+    dispatch(removeDeckAfflictions()); 
     
     const onCardClick = (card) =>  {
-        console.log(card);
-        dispatch(addCard(card));   
+
+        dispatch( addCard(card) );   
+        dispatch( updateGameState({resolutionCards:[]}) );
         dispatch( updateGameState({screen:'Map'}) );
         dispatch( updateScreen('Map') );
     };
+
+    const onSkip = () => {
+
+        dispatch( updateGameState({resolutionCards:[]}) );
+        dispatch( updateGameState({screen:'Map'}) );
+        dispatch( updateScreen('Map') );
+    }
         
     if ( !gameState.defeat ) {
         header = 'VICTORY'
@@ -163,12 +170,7 @@ const ResolutionScreen = () => {
 
         
                     <div className={styles.menuFooter}>
-                        <div className={styles.menuOption} onClick={() => 
-                                {
-                                    dispatch( updateGameState({screen:'Map'}) );
-                                    dispatch( updateScreen('Map') );
-                                }
-                            }>
+                        <div className={styles.menuOption} onClick={() => onSkip() }>
                             {bttn}
                         </div>
                     </div>

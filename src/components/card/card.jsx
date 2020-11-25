@@ -12,7 +12,7 @@ const Card = (props) => {
                     </div> 
 
                     {!props.combat && 
-                        <div>
+                        <div className={styles.cost}>
                             G: {props.cardData.cost}
                         </div> 
                     }

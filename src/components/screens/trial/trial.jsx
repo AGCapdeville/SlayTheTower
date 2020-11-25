@@ -7,7 +7,6 @@ import { usePlayer } from '../../../ducks/player';
 import { updateScreen } from '../../../ducks/screen';
 
 const updateGame = (dispatch, choice) =>{
-    console.log('choice:', choice);
     dispatch(updateGameState({screen:'Map'}));
     dispatch(updateScreen('Map'));
 }

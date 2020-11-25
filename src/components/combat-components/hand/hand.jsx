@@ -26,19 +26,6 @@ const Cards = () =>{
         dispatch(applyCard(index))
     };
 
-
-    const config = {
-        onSwipedUp: () => console.log('swiped up! :'),
-        preventDefaultTouchmoveEvent: true,
-        trackMouse: true
-    };
-    
-    const swipeCard = ( index, event ) => {
-        if (event.dir === 'Up'){
-            onCardClick(index)
-        }
-    }
-
     return(
         <div className={styles.handContainer}>
             {

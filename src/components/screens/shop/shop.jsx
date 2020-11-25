@@ -6,14 +6,35 @@ import cardStyle from '../../card/card.module.scss';
 
 
 import { useGameState } from '../../../ducks/game_state'
-import { usePlayer, updatePlayer } from '../../../ducks/player';
+import { usePlayer, updatePlayer, addCard } from '../../../ducks/player';
 import { updateScreen } from '../../../ducks/screen';
 import { updateGameState } from '../../../ducks/game_state';
 
 // import cardData from '../../../game-data/card-data'
 
 import Card from '../../card'
-import { updateShop, setupShop, useShop } from '../../../ducks/shop';
+import { useShop, boughtCard } from '../../../ducks/shop';
+import coindSound from '../../../sound_clips/coins_purchase.mp3'
+import bearGrunt from '../../../sound_clips/bearGrunt.mp3'
+function buyCard(card, index, dispatcher, player, sound){
+    if ( player.gold - card.cost >= 0){
+        // coin sound
+        sound.src = coindSound;
+        sound.volume = .3;
+        sound.play();
+        
+        dispatcher(addCard(card));
+        dispatcher(boughtCard(index));
+        dispatcher(updatePlayer({gold: player.gold - card.cost}))
+    }else{
+        // error sound
+        sound.src = bearGrunt;
+        sound.volume = .3;
+        sound.play();
+    }
+}
+
+
 
 const ShopScreen = () => {
 
@@ -22,6 +43,7 @@ const ShopScreen = () => {
     const shop = useShop();
     const player = usePlayer();
  
+    let sounds = document.createElement('audio');
 
     return (
     <div className={styles.screenContainer}>
@@ -31,7 +53,13 @@ const ShopScreen = () => {
 
             <br />
 
-            <div>
+
+            <img style={{width:'150px'}} src="https://i.imgur.com/4Jbrggw.png"></img>
+
+            
+            <br />
+            
+            <div style={{color:'gold'}}>
                 G: {player.gold}
             </div>
 
@@ -41,10 +69,10 @@ const ShopScreen = () => {
 
                 <div style={{display: 'flex', flexDirection: 'row'}}>
 
-                    {shop.shopCards.map( (cardData, index) => 
-                        <button key={index} className={styles.cardButton}>
+                    {shop.shopCards.map( (card, index) => 
+                        <button key={index} className={styles.cardButton} onClick={() => {buyCard(card, index, dispatch, player, sounds)}}>
                             <div className={cardStyle.card}>
-                                <Card cardData={cardData} combat={false} />
+                                <Card cardData={card} combat={false} />
                             </div>
                         </button>
                     )}

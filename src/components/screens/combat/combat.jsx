@@ -44,11 +44,10 @@ const CombatScreen = () => {
                         description: 'Start of combat'
                     }]
             }))
+ 
+            dispatch(updateGameState({screen:'Resolution'}));
+            dispatch( updateScreen('Resolution') ) 
 
-            setTimeout( function(){
-                dispatch(updateGameState({screen:'Resolution'}));
-                dispatch( updateScreen('Resolution') ) 
-            }, 1000);
         }
     }, [foeHealth]);
 
@@ -65,10 +64,8 @@ const CombatScreen = () => {
                     }]
             }))
 
-            setTimeout( function(){
-                dispatch(updateGameState({screen:'Resolution'}));
-                dispatch( updateScreen('Resolution') ) 
-            }, 1000);       
+            dispatch(updateGameState({screen:'Resolution'}));
+            dispatch( updateScreen('Resolution') ) 
         }
     }, [player.health]);
 

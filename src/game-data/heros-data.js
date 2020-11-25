@@ -22,13 +22,12 @@ export const heros = [
         maxHealth: 55,
         energy: 3,
         defense: 0,
-        deck: [0,0,0,0,0,1,1,1,1,2].map(id => cards[id]),
-        // deck: [0,0,0,1,1,2,2,5,6,6].map(id => cards[id]),
+        deck: [0,0,0,0,1,1,1,1,1,2].map(id => cards[id]),
 
         hand: [],
         discard: [],
         voidDeck: [],
-        gold: 50,
+        gold: 20,
         items: []
     }
     

@@ -25,14 +25,11 @@ function handleOption(option, dispatch, player){
 
     switch (option) {
         case 'train':
-            console.log('train button pressed')
             dispatch(updateGameState({screen:'Map'}));
             dispatch(updateScreen('Map'))
             break;
 
         case 'rest':
-            console.log('rest button pressed')
-
             let healthPoints = document.getElementById('healthPointsBonfire');
 
             let twentyFivePercent = player.health * 0.25
@@ -59,7 +56,6 @@ function handleOption(option, dispatch, player){
 
             break;
         case 'resurect':
-            console.log('resurect button pressed')
             dispatch(updateGameState({screen:'Map'}));
             dispatch(updateScreen('Map'))
             break;

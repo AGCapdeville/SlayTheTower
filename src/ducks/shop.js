@@ -3,32 +3,36 @@ import { useSelector } from "react-redux";
 import { createSelector } from "reselect";
 
 import {cards} from "../game-data/card-data"
+import { rest } from "lodash";
 
 export const updateShop = createAction('shop/UPDATE_SHOP');
 export const setupShop = createAction('shop/SETUP_SHOP');
+export const boughtCard = createAction('shop/BOUGHT_CARD');
 
 const initialState = {
     shopCards: []
 }
 
-function rollDice(max) {
-    return 1 + Math.floor(Math.random()*max)
+function rollDice(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min)) + min; 
 }
 
 const reduceSetUpShop = ({ shopCards, ...rest}) => {
-
-    console.log("0 : roll D10:", rollDice(10))
-    console.log("1 : roll D10:", rollDice(10))
-    console.log("2 : roll D10:", rollDice(10))
-    //3 4 5 6
-    let newShopCards = [...shopCards, cards[3], cards[3], cards[3] ]
+    let newShopCards = [...shopCards, cards[rollDice(3,7)], cards[rollDice(3,7)], cards[rollDice(3,7)] ]
     return { ...rest, shopCards: newShopCards}
 }
 
+const reduceBoughtCard = ({shopCards}, {payload}) => {
+    shopCards.splice(payload, 1)
+    return {...rest, shopCards: shopCards}
+}
 
 export default handleActions({
-    [updateShop]: (state, action) => ({ ...state, ...action.payload }),
-    [setupShop]: reduceSetUpShop
+    [updateShop]: (state, action) => ({ ...state, ...action.payload }), 
+    [setupShop]: reduceSetUpShop,
+    [boughtCard]: reduceBoughtCard,
 }, initialState);
 
 
