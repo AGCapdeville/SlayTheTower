@@ -35,40 +35,47 @@
 }
 
 
-
-.playerHealthBorder {
-
-    height: 4vh;
-    width: 50vw;
-
+.healthBarContainer{
     display: flex;
+    flex-direction: row;
     justify-content: center;
     align-items: center;
+}
+.healthEmoji{
+    font-size: 15px;
+    margin: 5px;
+}
 
-    margin-top: 1px;
-    margin-bottom: 1px;
+.healthBorder {
+    margin-top: 4px;
+    height: 2vh;
+    width: 20vw;
+    display: flex;
 
     border-radius: 1px;
-
-    box-shadow: 2px 2px #e7dfe7,
-        -2px -2px #e7dfe7,
-        2px -2px #e7dfe7,
-        -2px 2px #e7dfe7,
+    box-shadow: 
+        1px 1px #e7dfe7,
+        -1px -1px #e7dfe7,
+        1px -1px #e7dfe7,
+        -1px 1px #e7dfe7,
         0 -1px #9c9a9c,
         -1px 0 #7b757b,
         0 1px #424542;
 }
-.playerHealthIndicator {
-    height: 4vh;
-    width: 80vw;
-    font-size: 11px;
-    
-    position: absolute;
+.healthBar {
+    height: 2vh;
+    width: 20vw;
+    background-color: darkred; // 100% health
+}
 
+.healthIndicator {
+    height: 2vh;
+    width: 20vw;
+    font-size: 10px;
+    position: absolute;
     display: flex;
     align-items: center;
     justify-content: center;
-
     color: white;
     text-shadow:
     -1px -1px 0 #000,  

@@ -37,7 +37,7 @@ function eventHandler(event, dispatcher){
       break;
     case '💢':
       // TODO: make a elite fight ... so dispatch a elite...
-      if ( rollDice(0,2) > 1 ){
+      if ( rollDice(0,2) > 0 ){
         dispatcher(spawnMonster('Fire'));
       }else{
         dispatcher(spawnMonster('Stone'));

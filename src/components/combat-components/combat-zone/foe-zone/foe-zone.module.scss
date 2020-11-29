@@ -61,7 +61,7 @@
 .foeHealthBar {
     height: 2vh;
     width: 20vw;
-    background-color: darkred; // 100% health
+    background-color: darkred;     
 }
 
 .foeHealthIndicator {
@@ -72,6 +72,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    margin-left: -3vw;
     color: white;
     text-shadow:
     -1px -1px 0 #000,  
@@ -80,6 +81,10 @@
       1px 1px 0 #000;
 }
 
+.stunCounter{
+    opacity: .85;
+    z-index: 100;
+}
 
 .monsterContainer{
     width: 100%;
@@ -87,11 +92,28 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
+}
+
+.healthBarContainer{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+.healthEmoji{
+    font-size: 15px;
+    margin: 5px;
 }
 .defenseEmoji{
-    font-size: 20px;
+    font-size: 15px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    color: snow;
 }
 .defense{
-    font-size: 15px;
+    font-size: 12px;
     margin: 5px;
 }

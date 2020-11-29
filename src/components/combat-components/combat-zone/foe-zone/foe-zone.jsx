@@ -31,29 +31,25 @@ function updateFoeHealthBar(foeHealth, foeMax){
     }
 
     if (foeHealth < foeMax){
-        const dmg = ((foeHealth/foeMax)*20)
-        const newBar = Math.ceil(foeHealth - dmg)
-        x.style.width = newBar + "vw"        
+        const percentOfHealth = ( (foeHealth/foeMax)*100 )
+        const newBar = ((percentOfHealth/100)*20)
+        x.style.width = newBar + "vw"
     }
 }
 
-function updateFoeDefBar(defense){
-    var x = document.getElementById("foeDefenseBar")
-    x.style.backgroundColor = "lightblue"
-    x.style.opacity = ".75"
-    x.style.position = "absolute"
+// function updateFoeDefBar(defense){
+//     var x = document.getElementById("foeDefenseBar")
+//     x.style.backgroundColor = "lightblue"
+//     x.style.opacity = "1"
+//     // x.style.position = "absolute"
 
-    if (defense === 0){
-        x.style.height = "2vh"
-        x.style.width = "0vw"
-    }
-
-    if (defense > 0){
-        // const dmg = ((foeHealth/foeMax)*20)
-        const newDefense = ((defense/100)*20)
-        x.style.width = newDefense + "vw"        
-    }
-}
+//     if (defense === 0){
+//         x.style.height = "2vh"
+//         x.style.width = "0vw"
+//     }else{
+//         x.style.width = ((defense/100)*20)+"vw"
+//     }
+// }
 
 function getTelegraph(monster){
     
@@ -80,7 +76,7 @@ const FoeZone = () => {
 
     const { health: foeHealth } = useMonster();
     const { total: foeMax } = useMonster();
-    const { defense: foeDefense } = useMonster();
+    // const { defense: foeDefense } = useMonster();
     const monster = useMonster();
     const Monster = monsterList[monster.name];
     const telegraph = getTelegraph(monster)
@@ -103,21 +99,30 @@ const FoeZone = () => {
                 <div className={styles.foeTitle}> {monster.name} </div>
                 
                 <div id='monsterOuterContainer' className={styles.monsterContainer}>
+                    {
+                        monster.aligment.includes('stun') ?
+                        <div className={styles.stunCounter}> ⚡ {monster.aligmentDuration[monster.aligment.indexOf("stun")]} </div> : <div className={styles.stunCounter}> </div>
+                    }
                     <Monster/>
                 </div>
 
-                <div className = {styles.foeHealthBorder}> 
-                    <div className = {styles.foeHealthIndicator}> 
-                        {monster.health} / {monster.total} 
+                <div className={styles.healthBarContainer}>
+
+                    <div className = {styles.defenseEmoji}>🛡 
+                        <div className = {styles.defense}> 
+                            {monster.defense} 
+                        </div>
                     </div>
-                    <div id="foeHealthBar"> </div>
+
+                    <div className={styles.healthEmoji}>❤️</div>
+                    <div className = {styles.foeHealthBorder}>
+                        <div className = {styles.foeHealthIndicator}> 
+                            {monster.health} / {monster.total} 
+                        </div>
+                        <div id="foeHealthBar"> </div>
+                    </div>
                 </div>
 
-                <div className = {styles.defenseEmoji}> 🛡 
-                    <div className = {styles.defense}> 
-                        {monster.defense} 
-                    </div>
-                </div>
 
             </div>  
         </div>        

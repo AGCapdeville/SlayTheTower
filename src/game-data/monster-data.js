@@ -111,7 +111,7 @@ export const monsters = [
                 name: ['Overwhelming Fire'],
                 target: ['hero'],
                 effect: ['fatigue'],
-                power: [3]
+                power: [4]
             },
         nMoves: 2,
         moves: [
@@ -122,10 +122,10 @@ export const monsters = [
                 power: [15]
             },
             {
-                name: ['Searing Sight'],
-                target: ['hero'],
-                effect: ['stun'],
-                power: [1]
+                name: ['Searing Sight','Burning Eyes'],
+                target: ['hero','hero'],
+                effect: ['stun','damage'],
+                power: [2,5]
             }
         ]
     },{
