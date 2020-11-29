@@ -14,22 +14,35 @@ import { usePlayer, drawHand, shuffleDeck, resetDeck } from '../../../ducks/play
 import { spawnMonster } from '../../../ducks/monster';
 import { setupShop } from '../../../ducks/shop';
 
+import menuSound from '../../../sound_clips/path_game_sound.mp3'
+
 
 function eventHandler(event, dispatcher){
   switch (event) {
     case '👹':
       // for now... reset map after boss.
+      dispatcher(spawnMonster('Eye'));
+
+      dispatcher(resetDeck());
+      dispatcher(shuffleDeck());
+      dispatcher(drawHand());
+
+      dispatcher( updateGameState({floorComplete: true}) );
       dispatcher(updateMap(startingField(3)));
       dispatcher(updateScreen({count:0}));
 
-      // add argument for boss spawn..
-      // dispatcher(spawnFoe());
-      dispatcher(updateGameState({screen:'Title'}));
-      dispatcher(updateScreen('Title'));
+      dispatcher(updateGameState({screen:'Combat'}));
+      dispatcher(updateScreen('Combat'));
+
       break;
     case '💢':
       // TODO: make a elite fight ... so dispatch a elite...
-      dispatcher(spawnMonster('Fire'));
+      if ( rollDice(0,2) > 1 ){
+        dispatcher(spawnMonster('Fire'));
+      }else{
+        dispatcher(spawnMonster('Stone'));
+      }
+
       dispatcher(resetDeck());
       dispatcher(shuffleDeck());
       dispatcher(drawHand());
@@ -53,7 +66,18 @@ function eventHandler(event, dispatcher){
       dispatcher(updateScreen('Shop'));
       break;
     case '⚔️':
-      dispatcher(spawnMonster('Slime'));
+      let diceRoll = rollDice(0,3)
+      switch (diceRoll) {
+        case 0:
+          dispatcher(spawnMonster('Slime'));
+          break;
+        case 1:
+          dispatcher(spawnMonster('Nul'));
+          break;
+        case 2:
+          dispatcher(spawnMonster('Enforcer'));
+          break;
+      }
       dispatcher(resetDeck());
       dispatcher(shuffleDeck());
       dispatcher(drawHand());
@@ -232,6 +256,14 @@ const MapScreen = () => {
   }
 
 
+  function playMenuSound(){
+    let sounds = document.createElement('audio');
+    sounds.src = menuSound;
+    sounds.volume = 0.1;
+    sounds.play();
+  }
+
+
   return (
     <div className={styles.screenContainer}>
       <div className={styles.screen}>
@@ -244,11 +276,11 @@ const MapScreen = () => {
         <div className={styles.screenBody}>
 
           <div className={styles.mapContainer}>
-            <h1> Field Event: {currentField.fieldEvent}</h1>
+            <h1>Choose a path:</h1>
 
             <div style={{display:'flex', flexDirection:'row',}}>
               {currentField.fieldPathEvents.map( (field, index) =>
-                <button key={index} className={styles.pathButton} onClick={() => onPathSelection(field)}>
+                <button key={index} onMouseEnter={()=>playMenuSound()}  className={styles.pathButton} onClick={() => onPathSelection(field)}>
                     <h2>{field.fieldEvent}</h2>
                     {field.fieldPathEvents.map( (e, index) => 
                       <div key={index} style={{display:'flex', margin:'2px', opacity:'.5'}}>

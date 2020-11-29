@@ -1,0 +1,103 @@
+.bossContainer{
+  width: 300px;
+  height: 300px;
+  background-color: lightgrey;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.eye{
+  width:149px;
+  height:149px;
+  border-radius: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: black; 
+  animation: eyeIdle 5.5s;
+  animation-iteration-count: infinite;
+  
+}
+
+@keyframes eyeIdle{
+  0%{
+    transform: rotate(0deg) translate(0px, 0px);
+  }
+  70%{
+    transform: rotate(0deg) translate(0px, 20px);
+  }
+  100%{
+    transform: rotate(0deg) translate(0px, 0px);
+  }
+}
+
+.ring{
+  width: 148px;
+  height: 148px;
+  background-color: none;
+  border-radius: 15%;
+  border-color: black;
+  border-style: dotted;
+  
+  animation: spin 7s;
+  animation-iteration-count: infinite;
+}
+
+@keyframes spin{
+  0%   {   border-width: 30px; }
+  50%  {   border-width: 50px; }
+  100% {   border-width: 30px; }
+}
+
+.eye{
+  width: 47px;
+  height: 47px;  
+  background-color: white;
+  border-top-right-radius: 50%;
+  border-bottom-left-radius: 50%;
+  animation: eyeIdle 5.5s;
+  animation-iteration-count: infinite;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@keyframes eyeIdle{
+  0%{
+    transform: translate(-120px, 0px) rotate(45deg) ;
+  }
+  70%{
+    transform: translate(-120px, 20px) rotate(45deg) ;
+  }
+  100%{
+    transform: translate(-120px, 0px) rotate(45deg) ;
+  }
+}
+
+.eyeM{
+  width: 30px;
+  height: 30px;  
+  background-color: black;
+  border-radius: 50%;
+  animation: eyeM 3s;
+  animation-iteration-count: infinite;
+}
+
+@keyframes eyeM{
+  0%{
+    transform: rotate(-180deg) translateY(-5px)  ;
+  }
+  30%{
+    transform: rotate(-180eg) translateY(-9px)  ;
+  }
+  50%{
+    transform: rotate(180deg) translateY(-5px)  ;
+  }
+  70%{
+    transform: rotate(-180deg) translateY(-8px)  ;
+  }
+  100%{
+    transform: rotate(-180deg) translateY(-5px)  ;
+  }
+}

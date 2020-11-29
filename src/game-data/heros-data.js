@@ -18,7 +18,7 @@ export const heros = [
         defenseHeroAilgments: [],
         defenseHeroAilgmentsDuration: [],
 
-        health: 5,
+        health: 55,
         maxHealth: 55,
         energy: 3,
         defense: 0,

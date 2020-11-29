@@ -60,7 +60,7 @@ const ShopScreen = () => {
             <br />
             
             <div style={{color:'gold'}}>
-                G: {player.gold}
+                💰 {player.gold}
             </div>
 
             <br />

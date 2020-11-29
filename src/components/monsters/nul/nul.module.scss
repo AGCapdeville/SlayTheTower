@@ -1,0 +1,44 @@
+.monsterContainer {
+  width: 100px;
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.nul{
+  width:50px;
+  height:50px;
+  background-color: black;
+  border-bottom-left-radius: 50%;
+    
+  animation: nulIdle 2.5s;
+  animation-iteration-count: infinite;
+  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@keyframes nulIdle{
+  0%   { transform: scale(1,1)      translateY(0)   rotate(45deg); }
+  50%  { transform: scale(1.05,.95) translateY(5px) rotate(45deg); }
+  100% { transform: scale(1,1)      translateY(0) rotate(45deg);}
+}
+
+.midEye{
+  width:10px;
+  height:10px;
+  background-color: white;
+  border-top-right-radius: 50%;
+  border-bottom-left-radius: 50%;
+  animation: midEye 2.5s;
+  animation-iteration-count: infinite;
+}
+
+@keyframes midEye{
+  0%   { transform: scale(1,1)      translate(-35px,0px)   rotate(45deg); }
+  50%  { transform: scale(1.05,.95) translate(-35px,5px) rotate(45deg); }
+  100% { transform: scale(1,1)      translate(-35px,0px) rotate(45deg);}
+}

@@ -11,7 +11,8 @@ const initialState = {
     defeat: false,
     floor: 0,
     playerScore: 0,
-    resolutionCards: []
+    resolutionCards: [],
+    floorComplete: false
 }
 
 function getRandomRange(min, max) {

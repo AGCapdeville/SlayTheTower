@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import styles from "./bonfire.module.scss";
 
 import { updateGameState, useGameState } from '../../../ducks/game_state'
-import { updatePlayer, usePlayer } from '../../../ducks/player';
+import { updatePlayer, usePlayer, removeCurses } from '../../../ducks/player';
 import { updateScreen } from '../../../ducks/screen';
 import Hero from "../../hero";
 
@@ -24,7 +24,8 @@ function handleOption(option, dispatch, player){
     trainB.style.zIndex = -1;
 
     switch (option) {
-        case 'train':
+        case 'cleanse':
+            dispatch(removeCurses());
             dispatch(updateGameState({screen:'Map'}));
             dispatch(updateScreen('Map'))
             break;
@@ -55,7 +56,8 @@ function handleOption(option, dispatch, player){
             }, 1000);
 
             break;
-        case 'resurect':
+        case 'resurrect':
+            dispatch(updatePlayer( {utilityHeroStatus: 'standing', defenseHeroStatus: 'standing', offenseHeroStatus: 'standing'}))
             dispatch(updateGameState({screen:'Map'}));
             dispatch(updateScreen('Map'))
             break;
@@ -103,18 +105,18 @@ const BonfireScreen = () => {
         <div style={{display: 'flex', flexDirection: 'column'}}>
             <div style={{display: 'flex', flexDirection: 'row'}}>
 
-                <button id="trainButton" onMouseEnter={()=>playMenuSound()} className={styles.bonfireOption} onClick={() => handleOption('train', dispatch, player)} >
-                    🗻 TRAIN 
-                    <div className={styles.subtext}>Upgrade a heros card...</div>
+                <button id="trainButton" onMouseEnter={()=>playMenuSound()} className={styles.bonfireOption} onClick={() => handleOption('cleanse', dispatch, player)} >
+                    🕯️ Cleanse
+                    <div className={styles.subtext}>Remove all curses from deck...</div>
                 </button>
 
                 <button id="restButton" onMouseEnter={()=>playMenuSound()} className={styles.bonfireOption} onClick={() => handleOption('rest', dispatch, player)}>
-                    🔥 REST 
+                    🔥 Rest
                     <div className={styles.subtext}>Heal 25% of parties health points...</div>
                 </button>
 
-                <button id="resurectButton"  onMouseEnter={()=>playMenuSound()} className={styles.bonfireOption} onClick={() => handleOption('resurect', dispatch, player)}>
-                    ✨ Resurect
+                <button id="resurectButton"  onMouseEnter={()=>playMenuSound()} className={styles.bonfireOption} onClick={() => handleOption('resurrect', dispatch, player)}>
+                    ✨ Resurrect 
                     <div className={styles.subtext}>Resurect all dead heros...</div>
                 </button>
 

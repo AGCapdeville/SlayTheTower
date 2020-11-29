@@ -4,10 +4,21 @@ import styles from "./foe-zone.module.scss";
 import { useEffect } from 'react';
 
 import Slime from '../../../monsters/slime';
+import Enforcer from '../../../monsters/enforcer';
+import Stone from '../../../monsters/stone';
+
+import Nul from '../../../monsters/nul';
 import Fire from '../../../monsters/fire';
+
+import Eye from '../../../monsters/eye';
+
 const monsterList = {
     Slime,
-    Fire
+    Enforcer,
+    Nul,
+    Fire,
+    Stone,
+    Eye
 }
 
 function updateFoeHealthBar(foeHealth, foeMax){
@@ -48,20 +59,20 @@ function getTelegraph(monster){
     
     console.log(monster)
 
-    const effect = monster.telegraphing.effect[0];
-    console.log("effect:",effect)
-    const power = monster.telegraphing.power[0];
-    console.log("power:",power)
+    // const effect = monster.telegraphing.effect[0];
+    // console.log("effect:",effect)
+    // const power = monster.telegraphing.power[0];
+    // console.log("power:",power)
 
-    if (effect === "damage"){
-        return ('🔪 '+power);
-    }else if (effect === "defense"){
-        return ('🛡️ '+power);
-    }else if (effect === "fatigue" || effect === "bleed" || effect === "stun"){
-        return '💢';
-    }else {
-        return '💭';
-    }
+    // if (effect === "damage"){
+    //     return ('🔪 '+power);
+    // }else if (effect === "defense"){
+    //     return ('🛡️ '+power);
+    // }else if (effect === "fatigue" || effect === "bleed" || effect === "stun"){
+    //     return '💢';
+    // }else {
+    //     return '💭';
+    // }
 
 }
 
@@ -79,9 +90,9 @@ const FoeZone = () => {
         updateFoeHealthBar(foeHealth, foeMax)
     }, [foeHealth]);
 
-    useEffect(() => {
-        updateFoeDefBar(foeDefense)
-    }, [foeDefense])
+    // useEffect(() => {
+    //     updateFoeDefBar(foeDefense)
+    // }, [foeDefense])
     
     return(
         <div className={styles.foeZone}>
@@ -91,7 +102,7 @@ const FoeZone = () => {
                 <div className={styles.telegraph}> {telegraph} </div>
                 <div className={styles.foeTitle}> {monster.name} </div>
                 
-                <div className={styles.monsterContainer}>
+                <div id='monsterOuterContainer' className={styles.monsterContainer}>
                     <Monster/>
                 </div>
 
@@ -99,8 +110,13 @@ const FoeZone = () => {
                     <div className = {styles.foeHealthIndicator}> 
                         {monster.health} / {monster.total} 
                     </div>
-                    <div id="foeDefenseBar"> </div>
                     <div id="foeHealthBar"> </div>
+                </div>
+
+                <div className = {styles.defenseEmoji}> 🛡 
+                    <div className = {styles.defense}> 
+                        {monster.defense} 
+                    </div>
                 </div>
 
             </div>  

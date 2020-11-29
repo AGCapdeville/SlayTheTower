@@ -133,8 +133,39 @@ const ResolutionScreen = () => {
         dispatch( updateGameState({screen:'Map'}) );
         dispatch( updateScreen('Map') );
     }
+
+    const gameComplete = () => {
+        dispatch( updateGameState({resolutionCards:[]}) );
+        dispatch( updateGameState({screen:'Title'}) );
+        dispatch( updateScreen('Title') );
+    }
+
+    if ( gameState.floorComplete ) {
+        return (
+            <div className={styles.gameScreen}>
+                <div className={styles.menuContainer}>
         
-    if ( !gameState.defeat ) {
+                    <div className={styles.menuHeader}>
+                        Game Complete
+                    </div>
+        
+                    <div className={styles.menuBody}>
+                        <div className={styles.bodyText}>
+                            Thanks for playing!
+                        </div>
+
+                    </div>
+
+                    <div className={styles.menuFooter}>
+                        <div className={styles.menuOption} onClick={() => gameComplete() }>
+                            Return To Title Screen
+                        </div>
+                    </div>
+        
+                </div>
+            </div>
+        );
+    } else if ( !gameState.defeat ) {
         header = 'VICTORY'
         body = `You found G: +` + gameState.loot + `\n`
         bttn = 'Skip'

@@ -32,7 +32,10 @@ export const addCard = createAction('player/ADD_CARD')
 
 // Ailgment
 export const removeAilgments = createAction('player/REMOVE_AILGMENTS');
-export const addAilgments = createAction('player/ADD_AILGMENTS')
+export const addAilgments = createAction('player/ADD_AILGMENTS');
+
+// Curses
+export const removeCurses = createAction('player/REMOVE_CURSES');
 
 // Afflictions
 export const removeDeckAfflictions = createAction('player/REMOVE_DECK_AFFLICTIONS');
@@ -120,19 +123,42 @@ const reduceAddCard = ({ deck, ...rest }, {payload}) => {
 
 const reduceAddAilgments = ({offenseHeroAilgments, offenseHeroAilgmentsDuration, utilityHeroAilgments, utilityHeroAilgmentsDuration, defenseHeroAilgments, defenseHeroAilgmentsDuration, ...rest}, {payload}) => {
 
+    console.log("Ailgments Payload:",payload)
+
+    let indexOfStun = -1;
+
     switch (payload.target) {
+
         case 'mage':
-            utilityHeroAilgments = [...utilityHeroAilgments, payload.effect]
-            utilityHeroAilgmentsDuration = [...utilityHeroAilgmentsDuration, payload.duration]
+            indexOfStun = utilityHeroAilgments.findIndex( aligment => aligment == "stun" )
+            if ( indexOfStun != -1 ){
+                utilityHeroAilgmentsDuration[indexOfStun] =  utilityHeroAilgmentsDuration[indexOfStun] + payload.duration;
+            }else{
+                utilityHeroAilgments = [...utilityHeroAilgments, payload.effect]
+                utilityHeroAilgmentsDuration = [...utilityHeroAilgmentsDuration, payload.duration]
+            }
             break;
         case 'sword':
-            offenseHeroAilgments = [...offenseHeroAilgments, payload.effect]
-            offenseHeroAilgmentsDuration = [...offenseHeroAilgmentsDuration, payload.duration]
+            indexOfStun = offenseHeroAilgments.findIndex( aligment => aligment == "stun" );
+            if ( indexOfStun != -1 ){
+                offenseHeroAilgmentsDuration[indexOfStun] =  offenseHeroAilgmentsDuration[indexOfStun] + payload.duration;
+            }else{
+                offenseHeroAilgments = [...offenseHeroAilgments, payload.effect]
+                offenseHeroAilgmentsDuration = [...offenseHeroAilgmentsDuration, payload.duration]
+            }
             break;
-        case 'shiled':
-            defenseHeroAilgments = [...defenseHeroAilgments, payload.effect]
-            defenseHeroAilgmentsDuration = [...defenseHeroAilgmentsDuration, payload.duration]
+        case 'shield':
+            indexOfStun = defenseHeroAilgments.findIndex( aligment => aligment == "stun" )
+            if ( indexOfStun != -1 ){
+                defenseHeroAilgmentsDuration[indexOfStun] =  defenseHeroAilgmentsDuration[indexOfStun] + payload.duration;
+            }else{
+                defenseHeroAilgments = [...defenseHeroAilgments, payload.effect]
+                defenseHeroAilgmentsDuration = [...defenseHeroAilgmentsDuration, payload.duration]
+            }
             break;
+        default:
+            console.log('ERROR default::',payload.target)
+
     }
     return { ...rest, offenseHeroAilgments: offenseHeroAilgments, offenseHeroAilgmentsDuration: offenseHeroAilgmentsDuration, utilityHeroAilgments: utilityHeroAilgments, utilityHeroAilgmentsDuration: utilityHeroAilgmentsDuration, defenseHeroAilgments: defenseHeroAilgments, defenseHeroAilgmentsDuration: defenseHeroAilgmentsDuration }
 }
@@ -141,13 +167,21 @@ const reduceRemoveAilgments = ({offenseHeroAilgments, offenseHeroAilgmentsDurati
     return { ...rest, offenseHeroAilgments: [], offenseHeroAilgmentsDuration: [], utilityHeroAilgments: [], utilityHeroAilgmentsDuration: [], defenseHeroAilgments: [], defenseHeroAilgmentsDuration: [] }
 }
 
-const reduceRemoveDeckAfflictions = ({ deck ,...rest}) => {
+const reduceRemoveDeckAfflictions = ({ deck, ...rest}) => {
     let newDeck = deck.filter( card => {
         if ( !(card.type === 'affliction') ){
-            console.log('accept: ', card.name)
             return card
         }
-        console.log('reject: ',card.name)
+    })
+
+    return {...rest, deck : newDeck}
+}
+
+const reduceRemoveCurses = ({deck, ...rest}) => {
+    let newDeck = deck.filter( card => {
+        if ( !(card.type === 'curse') ){
+            return card
+        }
     })
 
     return {...rest, deck : newDeck}
@@ -164,6 +198,7 @@ export default handleActions({
     [addAilgments]: reduceAddAilgments,
 
     [removeDeckAfflictions]: reduceRemoveDeckAfflictions,
+    [removeCurses]: reduceRemoveCurses,
 
     [drawCard]: reduceDrawCard,
     [playCard]: reducePlayCard,

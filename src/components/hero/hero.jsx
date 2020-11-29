@@ -95,19 +95,29 @@ const Hero = (props) => {
     }else{
         return(
             <div id='shield' className={styles.heroContainer}> 
+            {
+                player.defenseHeroAilgments.includes('stun') ?
+                <div className={styles.stunCounter}>⚡ {player.defenseHeroAilgmentsDuration[player.defenseHeroAilgments.indexOf("stun")]}</div>:<div></div>
+            }
                 <div id="shieldBody" className={styles.heroBody}>
+
+                    {/* status ailgments */}
+                    {
+                        player.defenseHeroAilgments.includes('stun') ? 
+                        <div className={styles.stun}></div> : <div></div>
+                    }
             
-                <div className={styles.headContainer}>
-                    <div className={styles.hood}>
-                    <div className={styles.headShieldHero}></div>
+                    <div className={styles.headContainer}>
+                        <div className={styles.hood}>
+                        <div className={styles.headShieldHero}></div>
+                        </div>
                     </div>
-                </div>
-            
-                <div className={styles.chest}></div>
-                <div className={styles.waist}></div>
                 
-                <div id='shield' className={styles.shield}> 
-                </div>
+                    <div className={styles.chest}></div>
+                    <div className={styles.waist}></div>
+                    
+                    <div id='shield' className={styles.shield}> 
+                    </div>
                 
                 </div>
             </div>

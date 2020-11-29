@@ -9,7 +9,7 @@
     justify-content: center;
     align-items: center;
     color: white;
-    background: white;
+    background: black;
 }
 
 .screen{
@@ -50,12 +50,16 @@
     padding: 10px;
     margin: 10px;
     outline-style: solid;
-    outline-color: white;
+    outline-color: slategray;
     background-color: $mainBackgroundColor;
     color: white;
 
     &:active{
         outline: none;
+    }
+
+    &:hover{
+        outline-color: dodgerblue;
     }
 }
 

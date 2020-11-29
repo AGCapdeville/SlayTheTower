@@ -4,42 +4,97 @@ export const monsters = [
         aligment: [],
         aligmentDuration: [],
         // health: 36, <- normal health
-        health: 10,
+        health: 1,
         total: 36,
         defense: 0,
-        gold: 10,
+        gold: 15,
         telegraphing: { 
                 name: ['Spit'],
-                order: 0,
                 target: ['hero'],
                 effect: ['damage'],
-                moves: 1,
                 power: [8]
             },
+        nMoves: 3,
         moves: [
             {
                 name: ['Spit'],
-                order: 0,
                 target: ['hero'],
                 effect: ['damage'],
-                moves: 1,
                 power: [8]
             },
             {
                 name: ['Whip','Whip'],
-                order: 1,
                 target: ['hero','hero'],
                 effect: ['bleed','damage'],
-                moves: 2,
-                power: [2, 5]
+                power: [2, 3]
             },
             {
-                name : ['Soften'],
-                order: 2,
+                name : ['Replenish'],
                 target: ['self'],
-                effect: ['defense'],
-                moves: 1,
-                power: [12]
+                effect: ['heal'],
+                power: [25]
+            }
+        ]
+    },
+    {
+        name: 'Nul',
+        aligment: [],
+        aligmentDuration: [],
+        // health: 36, <- normal health
+        health: 1,
+        total: 36,
+        defense: 0,
+        gold: 25,
+        telegraphing: { 
+                name: ['Force','Sleep'],
+                target: ['hero','hero'],
+                effect: ['damage','fatigue'],
+                power: [5,2]
+            },
+        nMoves: 2,
+        moves: [
+            {
+                name: ['Power','Drain'],
+                target: ['hero','foe'],
+                effect: ['damage','heal'],
+                power: [13,10]
+            },
+            {
+                name : ['Beam','Nul'],
+                target: ['hero','foe'],
+                effect: ['damage','idle'],
+                power: [20,2]
+            }
+        ]
+    },
+    {
+        name: 'Enforcer',
+        aligment: [],
+        aligmentDuration: [],
+        // health: 46, <- normal health
+        health: 1,
+        total: 36,
+        defense: 5,
+        gold: 25,
+        telegraphing: { 
+                name: ['Alert','Focus'],
+                target: ['hero','foe'],
+                effect: ['damage','defense'],
+                power: [10,20]
+            },
+        nMoves: 2,
+        moves: [
+            {
+                name: ['Alert','Focus'],
+                target: ['hero','foe'],
+                effect: ['damage','defense'],
+                power: [10,20]
+            },
+            {
+                name : ['Fire','Recharge'],
+                target: ['hero','foe'],
+                effect: ['damage','idle'],
+                power: [20,2]
             }
         ]
     },
@@ -48,34 +103,64 @@ export const monsters = [
         aligment: [],
         aligmentDuration: [],
         // health: 36, <- normal health
-        health: 10,
+        health: 1,
         total: 40,
         defense: 0,
         gold: 30,
         telegraphing: { 
                 name: ['Overwhelming Fire'],
-                order: 0,
                 target: ['hero'],
                 effect: ['fatigue'],
-                moves: 1,
                 power: [3]
             },
+        nMoves: 2,
         moves: [
             {
                 name: ['Burn'],
-                order: 1,
                 target: ['hero'],
                 effect: ['damage'],
-                moves: 1,
                 power: [15]
             },
             {
                 name: ['Searing Sight'],
-                order: 0,
                 target: ['hero'],
                 effect: ['stun'],
-                moves: 1,
                 power: [1]
+            }
+        ]
+    },{
+        name: 'Stone',
+        aligment: [],
+        aligmentDuration: [],
+        // health: 80, <- normal health
+        health: 1,
+        total: 80,
+        defense: 5,
+        gold: 40,
+        telegraphing: { 
+                name: ['Slam','Shatter'],
+                target: ['hero','hero'],
+                effect: ['damage','bleed'],
+                power: [10,2]
+            },
+        nMoves: 3,
+        moves: [
+            {
+                name: ['Regenerate','idle'],
+                target: ['foe','foe'],
+                effect: ['heal','idle'],
+                power: [20, 2]
+            },
+            {
+                name: ['Slam'],
+                target: ['hero'],
+                effect: ['damage'],
+                power: [10]
+            },{
+                name: ['Timber','Shatter'],
+                target: ['hero','foe'],
+                effect: ['stun','damage'],
+                power: [2,5]
             }
         ]
     }
