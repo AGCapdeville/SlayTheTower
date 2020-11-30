@@ -6,7 +6,7 @@
     justify-content: start;
     align-items: center;
 
-    width: 100vw;
+    width: 100%;
     height: $playerStatusBar;
     
     background-color: #424542;
@@ -43,7 +43,13 @@
 }
 .healthEmoji{
     font-size: 15px;
-    margin: 5px;
+    margin: 10px;
+}
+
+.curse{
+    font-size: 15px;
+    margin: 10px;
+    color: white;
 }
 
 .healthBorder {

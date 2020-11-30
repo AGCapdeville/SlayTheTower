@@ -82,6 +82,10 @@
             width: 8px;
             height: 8px; 
         }
+        .blackDot{
+            width: 8px;
+            height: 8px; 
+        }
         .titleSection{
             font-size: 9px;
         }
@@ -150,7 +154,10 @@
     background-color: red;
     border-radius: 25%;
     border-color: white;
+    border-style: solid;
+    border-color: silver;
     border-width: 1px;
+    margin: 1px;
 }
 .blueDot{
     width: 5px;
@@ -158,23 +165,40 @@
     background-color: dodgerblue;
     border-radius: 25%;
     border-color: white;
+    border-style: solid;
+    border-color: silver;
     border-width: 1px;
+    margin: 1px;
 }
 .greenDot{
     width: 5px;
     height: 5px;
     background-color: green;
     border-radius: 25%;
-    border-color: white;
+    border-style: solid;
+    border-color: silver;
     border-width: 1px;
+    margin: 1px;
 }
 .whiteDot{
     width: 5px;
     height: 5px;
     background-color: silver;
     border-radius: 25%;
-    border-color: white;
+    border-style: solid;
+    border-color: silver;
     border-width: 1px;
+    margin: 1px;
+}
+.blackDot{
+    width: 5px;
+    height: 5px;
+    background-color: black;
+    border-radius: 25%;
+    border-style: solid;
+    border-color: silver;
+    border-width: 1px;
+    margin: 1px;
 }
 
 

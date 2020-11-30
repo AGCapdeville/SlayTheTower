@@ -7,6 +7,8 @@ import { updatePlayer, usePlayer, removeCurses } from '../../../ducks/player';
 import { updateScreen } from '../../../ducks/screen';
 import Hero from "../../hero";
 
+import PartyStatus from '../../combat-components/player-status';
+
 import menuSound from '../../../sound_clips/menu_select.mp3'
 
 // import { useShop } from '../../../ducks/shop';
@@ -31,8 +33,6 @@ function handleOption(option, dispatch, player){
             break;
 
         case 'rest':
-            let healthPoints = document.getElementById('healthPointsBonfire');
-
             let twentyFivePercent = player.health * 0.25
             
             if( Math.floor(player.health + twentyFivePercent) > player.maxHealth){
@@ -40,15 +40,6 @@ function handleOption(option, dispatch, player){
             }else{
                 dispatch(updatePlayer({health: Math.floor(player.health + twentyFivePercent) }));
             }
-
-            healthPoints.animate([
-                {transform: 'scale(1)'},
-                {transform: 'scale(1.4)'},
-                {transform: 'scale(1)'}
-            ], {
-                duration: 500,
-                iterations: 1
-            })
 
             dispatch(updateGameState({screen:'Map'}));
             setTimeout( function(){
@@ -78,53 +69,54 @@ const BonfireScreen = () => {
 
     return (
         <div className={styles.screenContainer}>
-        <div className={styles.screen}>
-
-        <h1>🔥 Bonfire 🔥 </h1>
-
-        <h4 id="healthPointsBonfire">❤️{player.health} / {player.maxHealth}</h4>
-
-        <div className={styles.heroLineUp}>
-            <Hero 
-                heroType={'mage'} 
-                status={'normal'}
-            />
-
-            <Hero 
-                heroType={'sword'} 
-                status={'normal'}
-            />
-
-            <Hero 
-                heroType={'shield'} 
-                status={'normal'}
-            />
-        </div>
+            <div className={styles.screen}>
+                <PartyStatus />
 
 
-        <div style={{display: 'flex', flexDirection: 'column'}}>
-            <div style={{display: 'flex', flexDirection: 'row'}}>
+                <h1>🔥 Bonfire 🔥 </h1>
 
-                <button id="trainButton" onMouseEnter={()=>playMenuSound()} className={styles.bonfireOption} onClick={() => handleOption('cleanse', dispatch, player)} >
-                    🕯️ Cleanse
-                    <div className={styles.subtext}>Remove all curses from deck...</div>
-                </button>
 
-                <button id="restButton" onMouseEnter={()=>playMenuSound()} className={styles.bonfireOption} onClick={() => handleOption('rest', dispatch, player)}>
-                    🔥 Rest
-                    <div className={styles.subtext}>Heal 25% of parties health points...</div>
-                </button>
+                <div className={styles.heroLineUp}>
+                    <Hero 
+                        heroType={'mage'} 
+                        status={'normal'}
+                    />
 
-                <button id="resurectButton"  onMouseEnter={()=>playMenuSound()} className={styles.bonfireOption} onClick={() => handleOption('resurrect', dispatch, player)}>
-                    ✨ Resurrect 
-                    <div className={styles.subtext}>Resurect all dead heros...</div>
-                </button>
+                    <Hero 
+                        heroType={'sword'} 
+                        status={'normal'}
+                    />
+
+                    <Hero 
+                        heroType={'shield'} 
+                        status={'normal'}
+                    />
+                </div>
+
+
+                <div style={{display: 'flex', flexDirection: 'column'}}>
+                    <div style={{display: 'flex', flexDirection: 'row'}}>
+
+                        <button id="trainButton" onMouseEnter={()=>playMenuSound()} className={styles.bonfireOption} onClick={() => handleOption('cleanse', dispatch, player)} >
+                            🕯️ Cleanse
+                            <div className={styles.subtext}>Remove all curses from deck...</div>
+                        </button>
+
+                        <button id="restButton" onMouseEnter={()=>playMenuSound()} className={styles.bonfireOption} onClick={() => handleOption('rest', dispatch, player)}>
+                            🔥 Rest
+                            <div className={styles.subtext}>Heal 25% of parties health points...</div>
+                        </button>
+
+                        <button id="resurectButton"  onMouseEnter={()=>playMenuSound()} className={styles.bonfireOptionOff} >
+                            ✨ Resurrect  
+                            <div className={styles.subtext}>Resurect all dead heros... [ currently not in the game ]</div>
+                        </button>
+
+                    </div>
+                </div>
 
             </div>
         </div>
-
-        </div>
-    </div>
     );
 }
 

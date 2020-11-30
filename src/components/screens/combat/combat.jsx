@@ -45,7 +45,7 @@ const CombatScreen = () => {
                     }]
             }))
  
-            dispatch(updateGameState({screen:'Resolution'}));
+            dispatch( updateGameState({screen:'Resolution'}));
             dispatch( updateScreen('Resolution') ) 
 
         }
@@ -64,7 +64,7 @@ const CombatScreen = () => {
                     }]
             }))
 
-            dispatch(updateGameState({screen:'Resolution'}));
+            dispatch( updateGameState({screen:'Resolution'}));
             dispatch( updateScreen('Resolution') ) 
         }
     }, [player.health]);

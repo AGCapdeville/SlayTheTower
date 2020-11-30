@@ -163,5 +163,45 @@ export const monsters = [
                 power: [2,5]
             }
         ]
+    },{
+        name: 'Eye',
+        aligment: [],
+        aligmentDuration: [],
+        health: 100,
+        total: 100,
+        defense: 0,
+        gold: 100,
+        telegraphing: { 
+                name: ['Glare','Horrify','Horrify'],
+                target: ['hero','hero','hero'],
+                effect: ['damage','stun','stun'],
+                power: [15,2,2]
+            },
+        nMoves: 4,
+        moves: [
+            {
+                name: ['Glare','Horrify','Horrify'],
+                target: ['hero','hero','hero'],
+                effect: ['damage','stun','stun'],
+                power: [15,2,2]
+            },
+            {
+                name: ['Regenerate','Sleep'],
+                target: ['foe','foe'],
+                effect: ['heal','idle'],
+                power: [35,2]
+            },{
+                name: ['Drain','Absorb','Fatigue'],
+                target: ['hero','foe','hero'],
+                effect: ['damage','heal','fatigue'],
+                power: [10,20,4]
+            },
+            {
+                name: ['Eat','Chew','Bleed'],
+                target: ['hero','foe','hero'],
+                effect: ['damage','heal','bleed'],
+                power: [10,10,4]
+            }
+        ]
     }
 ]

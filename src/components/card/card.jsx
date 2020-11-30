@@ -63,13 +63,28 @@ function requiredHeroIcon(reqHeros){
         case 'd':
             return( <div className={styles.greenDot}/> )
         case 'do':
-            return( <div className={styles.whiteDot}/> )
-        case 'ud':
-            return( <div className={styles.whiteDot}/> )
+            return( 
+                <> 
+                    <div className={styles.greenDot}/>
+                    <div className={styles.rednDot}/>
+                </>
+            )
+        case 'du':
+            return(
+                <> 
+                    <div className={styles.greenDot}/>
+                    <div className={styles.blueDot}/> 
+                </>
+            )
         case 'ou':
-            return( <div className={styles.whiteDot}/> )
+            return( 
+                <> 
+                    <div className={styles.redDot}/>
+                    <div className={styles.blueDot}/>
+                </>
+            )
         case 'e':
-            return( <div className={styles.whiteDot}/> )
+            return( <div className={styles.blackDot}/> )
         default:
             return( <div className={styles.whiteDot}/> )
     }

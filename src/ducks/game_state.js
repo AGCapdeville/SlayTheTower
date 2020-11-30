@@ -16,11 +16,11 @@ const initialState = {
 }
 
 function getRandomRange(min, max) {
-    return Math.floor(Math.random() * (max - min+1) + min);
+    return Math.floor(Math.random() * (max - min) + min);
 }
 
 const reduceResolutionCards = ({ resolutionCards, ...rest}) => {
-    let newResolutionCards = [...resolutionCards, cards[getRandomRange(3,6)], cards[getRandomRange(3,6)] ]
+    let newResolutionCards = [...resolutionCards, cards[getRandomRange(3,cards.length)], cards[getRandomRange(3,cards.length)] ]
     return { ...rest, resolutionCards: newResolutionCards}
 }
 

@@ -167,19 +167,29 @@ const reduceRemoveAilgments = ({offenseHeroAilgments, offenseHeroAilgmentsDurati
     return { ...rest, offenseHeroAilgments: [], offenseHeroAilgmentsDuration: [], utilityHeroAilgments: [], utilityHeroAilgmentsDuration: [], defenseHeroAilgments: [], defenseHeroAilgmentsDuration: [] }
 }
 
-const reduceRemoveDeckAfflictions = ({ deck, ...rest}) => {
+const reduceRemoveDeckAfflictions = ({ deck, hand, discard, ...rest}) => {
     let newDeck = deck.filter( card => {
         if ( !(card.type === 'affliction') ){
             return card
         }
     })
+    let newHand = hand.filter( card => {
+        if ( !(card.type === 'affliction') ){
+            return card
+        }
+    })
+    let newDiscard = discard.filter( card => {
+        if ( !(card.type === 'affliction') ){
+            return card
+        }
+    })
 
-    return {...rest, deck : newDeck}
+    return {...rest, deck : newDeck, hand: newHand, discard: newDiscard}
 }
 
 const reduceRemoveCurses = ({deck, ...rest}) => {
     let newDeck = deck.filter( card => {
-        if ( !(card.type === 'curse') ){
+        if ( !(card.type == 'curse') ){
             return card
         }
     })
@@ -274,31 +284,20 @@ function heroStrikeAnimation(heroElement){
 }
 
 function damageFlash(bodyElement){
+    let transitionTime = 500;
+    bodyElement.animate([
+        {opacity: 1},
+        {opacity: 0},
+        {opacity: .75},
+        {opacity: .5},
+        {opacity: 0},
+        {opacity: .75},
+        {opacity: 1}
 
-    setTimeout( function(){
-        bodyElement.style.opacity = 1;
-    }, 300)
-        
-    setTimeout( function(){
-        bodyElement.style.opacity = .75;
-    }, 100)
-
-    setTimeout( function(){
-        bodyElement.style.opacity = .5;
-    }, 150)
-    
-    setTimeout( function(){
-        bodyElement.style.opacity = 0;
-    }, 200)
-
-    setTimeout( function(){
-        bodyElement.style.opacity = .75;
-    }, 240)
-
-    setTimeout( function(){
-        bodyElement.style.opacity = 0;
-    }, 280)
-    
+    ], {
+        duration: transitionTime,
+        iterations: 1
+    });
 }
 
 function shakeHero(state, requiredHero, mage, koMage, sword, shield){
@@ -417,7 +416,6 @@ function moveHero(requiredHeros, mageBody, shieldBody, swordBody){
 // Async Actions
 export const applyCard = (cardIndex) => (dispatch, getState) => {
     const state = getState();
-    // const musicDriver = state.useMusic;
 
     const card = state.player.hand[cardIndex]
     const energyCost = card.energy;
@@ -451,6 +449,7 @@ export const applyCard = (cardIndex) => (dispatch, getState) => {
 
                 if (card.action.target[i] == "foe"){
                     if (card.action.effect[i] == 'damage'){
+                        damageFlash(document.getElementById('monsterOuterContainer'))
                         const trample = foeDefense - card.action.power[i];
                         if (trample < 0) {
                             const newFoeHealth = parseInt(state.monster.health) + parseInt(trample);
@@ -477,32 +476,34 @@ export const applyCard = (cardIndex) => (dispatch, getState) => {
                             dispatch(updateMonster({ defense: newFoeDefense }));
                             dispatch(logCombat({ origin: 'player', description: ('Player used: '+card.name+' dealing 0 damage.' ) }))
                         }
+                        dispatch(updatePlayer({ energy: newEnergy }))
                     }
                 }else if (card.action.target[i] == "player"){
                     if (card.action.effect[i]=="heal"){
                         const newPlayerHealth = ( parseInt(state.player.health) + parseInt(card.action.power[i]) ) > parseInt(state.player.maxHealth) ? (parseInt(state.player.maxHealth)) : (parseInt(state.player.health) + parseInt(card.action.power[i]));
                         dispatch(updatePlayer({ health: newPlayerHealth, energy: newEnergy }))
                         dispatch(logCombat({ origin: 'player', description: ('Player used: '+card.name+' healing '+card.action.power[i]+' party health' ) }))
-    
+                    }else if (card.action.effect[i] == "mend"){
+                        dispatch(removeDeckAfflictions()); 
                     } else if (card.action.effect[i] == "defense"){
                         const defense = card.action.power[i]
                         const newPlayerDefense = parseInt(state.player.defense) + parseInt(defense)
                         dispatch(updatePlayer({ defense: newPlayerDefense, energy: newEnergy}))
                         dispatch(logCombat({ origin: 'player', description: ('Player used: '+card.name+' gaining '+defense+' party defense' ) }))
                     } else if (card.action.effect[i] == 'delayUtility'){
-                        state.player.utilityHeroAilgments.push('stun');
-                        state.player.utilityHeroAilgmentsDuration.push(card.action.power[i]);
+                        state.player.utilityHeroAilgments.push('stun')
+                        state.player.utilityHeroAilgmentsDuration.push(card.action.power[i])
                         dispatch(updatePlayer({ energy: newEnergy }))
                     } else if (card.action.effect[i] == 'delayDefense'){
-                        state.player.defenseHeroAilgments.push('stun');
-                        state.player.defenseHeroAilgmentsDuration.push(card.action.power[i]);
+                        state.player.defenseHeroAilgments.push('stun')
+                        state.player.defenseHeroAilgmentsDuration.push(card.action.power[i])
                         dispatch(updatePlayer({ energy: newEnergy }))
                     } else if (card.action.effect[i] == 'delayOffense'){
-                        state.player.offenseHeroAilgments.push('stun');
-                        state.player.offenseHeroAilgmentsDuration.push(card.action.power[i]);
+                        state.player.offenseHeroAilgments.push('stun')
+                        state.player.offenseHeroAilgmentsDuration.push(card.action.power[i])
                         dispatch(updatePlayer({ energy: newEnergy }))
                     } else if (card.action.effect[i] == 'damage'){
-                        dispatch(updatePlayer({ health: state.player.health - card.action.power[i] }));
+                        state.player.health -= card.action.power[i]
                         dispatch(updatePlayer({ energy: newEnergy }))
                     }
 

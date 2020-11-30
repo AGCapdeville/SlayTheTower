@@ -15,8 +15,7 @@
     width: 90vw;
     height: 90vh;
     align-items: center;
-    justify-content: space-around;
-    flex-direction: row;
+    flex-direction: column;
     background-color: $mainBackgroundColor;
 }
 
@@ -73,4 +72,26 @@
     display: flex;
     flex-direction: column;
     margin: 5px;
+}
+
+.resultWindow{
+    display: flex;
+    width: 90vw;
+    height: 90vh;
+    align-items: center;
+    flex-direction: column;
+    position: absolute;
+    z-index: -100;
+    background-color: black;
+    opacity: 0;
+}
+
+.reultText{
+    display: flex;
+    width: 90vw;
+    height: 90vh;
+    align-items: center;
+    flex-direction: column;
+    position: absolute;
+    background-color: $mainBackgroundColor;
 }

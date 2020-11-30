@@ -20,7 +20,7 @@ function rollDice(min, max) {
 }
 
 const reduceSetUpShop = ({ shopCards, ...rest}) => {
-    let newShopCards = [...shopCards, cards[rollDice(3,7)], cards[rollDice(3,7)], cards[rollDice(3,7)] ]
+    let newShopCards = [...shopCards, cards[rollDice(3,cards.length)], cards[rollDice(3,cards.length)]]
     return { ...rest, shopCards: newShopCards}
 }
 

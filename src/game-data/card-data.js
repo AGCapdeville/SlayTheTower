@@ -81,12 +81,12 @@ export const cards = [
         energy: 1,
         exhaust: true,
         action: {
-            target: ['foe', 'hero'],
+            target: ['foe', 'player'],
             effect: ['damage', 'damage'],
             power: [20, 7]
         },
-        description: "Deal 20 Damage, take 5 Damage \nVOID",
-        cost: 55,
+        description: "Deal 20 Damage, take 7 Damage \nVOID",
+        cost: 70,
     },
     {
         name: 'Radiant Shield',
@@ -101,7 +101,7 @@ export const cards = [
             power: [10,5]
         },
         description: "+10 Defense, +5 health \nVOID",
-        cost: 65,
+        cost: 85,
     },
     {
         name: 'Shield Bash',
@@ -116,7 +116,7 @@ export const cards = [
             power: [1]
         },
         description: "Deal damage equal to your armor",
-        cost: 70,
+        cost: 80,
     },
     {
         name: 'Blinding Ray',
@@ -128,10 +128,25 @@ export const cards = [
         action: {
             target: ['foe','player'],
             effect: ['stun','delayUtility'],
-            power: [1,2]
+            power: [1,3]
         },
-        description: "Stun enemy & hero until the end of the next turn. \nVOID",
-        cost: 50,
+        description: "Stun enemy for 1 turn & mage for 3 turns. \nVOID",
+        cost: 90,
+    },
+    {   
+        name: 'Mend',
+        requiredHero: 'u',
+        art: '<art url>',
+        type: 'skill',
+        energy: 2,
+        exhaust: false,
+        action: {
+            target: ['player'],
+            effect: ['mend'],
+            power: [0]
+        },
+        description: "Remove all afflictions from deck / hand & discard piles. \nVOID",
+        cost: 100,
     },
 ];
 

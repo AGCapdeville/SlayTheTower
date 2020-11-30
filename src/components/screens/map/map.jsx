@@ -14,6 +14,8 @@ import { usePlayer, drawHand, shuffleDeck, resetDeck } from '../../../ducks/play
 import { spawnMonster } from '../../../ducks/monster';
 import { setupShop } from '../../../ducks/shop';
 
+import PartyStatus from '../../combat-components/player-status';
+
 import menuSound from '../../../sound_clips/path_game_sound.mp3'
 
 
@@ -27,12 +29,11 @@ function eventHandler(event, dispatcher){
       dispatcher(shuffleDeck());
       dispatcher(drawHand());
 
-      dispatcher( updateGameState({floorComplete: true}) );
-      dispatcher(updateMap(startingField(3)));
-      dispatcher(updateScreen({count:0}));
+      
+      // dispatcher( updateGameState({floorComplete: true}) );
 
-      dispatcher(updateGameState({screen:'Combat'}));
-      dispatcher(updateScreen('Combat'));
+      dispatcher( updateGameState({screen:'Combat'}) );
+      dispatcher( updateScreen('Combat') );
 
       break;
     case '💢':
@@ -267,11 +268,7 @@ const MapScreen = () => {
   return (
     <div className={styles.screenContainer}>
       <div className={styles.screen}>
-        
-        <div className={styles.screenHeader}>
-          <strong style={{color:'red', margin:'10px' }}> ❤️ {UsePlayer.health}/{UsePlayer.maxHealth}</strong>
-          <strong style={{color:'gold', margin:'10px'}}> 💰{UsePlayer.gold}</strong>
-        </div>
+        <PartyStatus />
 
         <div className={styles.screenBody}>
 

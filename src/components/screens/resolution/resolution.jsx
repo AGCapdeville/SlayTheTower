@@ -137,10 +137,15 @@ const ResolutionScreen = () => {
     const gameComplete = () => {
         dispatch( updateGameState({resolutionCards:[]}) );
         dispatch( updateGameState({screen:'Title'}) );
+        // dispatch( updateMap(startingField(3)));
+        // dispatch( updateScreen({count:0}));
         dispatch( updateScreen('Title') );
     }
 
     if ( gameState.floorComplete ) {
+
+
+
         return (
             <div className={styles.gameScreen}>
                 <div className={styles.menuContainer}>

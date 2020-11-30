@@ -21,6 +21,28 @@
     }
 }
 
+.bonfireOptionOff{
+    display: flex;
+    width: 150px;
+    height: 150px;
+    margin: 20px;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+
+    flex-direction: column;
+    
+    font-weight: bold;
+    font-size: 20px;
+    color: white;
+    opacity: .5;
+
+    background-color: #131313;
+    &:hover{
+        background-color: #303030;
+    }
+}
+
 .subtext{
     font-size: small;
 }
@@ -39,7 +61,6 @@
     width: 90vw;
     height: 90vh;
     align-items: center;
-    justify-content: center;
     flex-direction: column;
     background-color: $mainBackgroundColor;
 }

@@ -34,49 +34,52 @@ export const useCombat = () => useSelector(selectCombat);
 
 
 function strikeAnimation(bodyElement){
+    let transitionTime = 500;
+    bodyElement.animate([
+        {transform: 'translate(0px,0px)'},
+        {transform: 'translate(-50px, 0px)'},
+        {transform: 'translate(-105px, 0px)'},
+        {transform: 'translate(1px, 0px)'},
+        {transform: 'translate(0, 0px)'}
 
-    setTimeout( function(){
-        bodyElement.style.marginLeft = '15px';
-    }, 300)
-        
-    setTimeout( function(){
-        bodyElement.style.marginLeft = '10px';
-    }, 100)
-    
-    setTimeout( function(){
-        bodyElement.style.marginLeft = '0px';
-    }, 200)
+    ], {
+        duration: transitionTime,
+        iterations: 1
+    });
+}
 
-    setTimeout( function(){
-        bodyElement.style.marginLeft = '5px';
-    }, 240)
+function hitHero(){
+    let roll = getRandomRange(0,3);
+
+    switch (roll) {
+        case 0:
+            damageFlash(document.getElementById('mageBody'))
+            break;
+        case 1:
+            damageFlash(document.getElementById('swordBody'))
+            break;
+        case 2:
+            damageFlash(document.getElementById('shieldBody'))
+            break;
+    }
 }
 
 function damageFlash(bodyElement){
 
-    setTimeout( function(){
-        bodyElement.style.opacity = 1;
-    }, 300)
-        
-    setTimeout( function(){
-        bodyElement.style.opacity = .75;
-    }, 100)
+    let transitionTime = 500;
+    bodyElement.animate([
+        {opacity: 1},
+        {opacity: 0},
+        {opacity: .75},
+        {opacity: .5},
+        {opacity: 0},
+        {opacity: .75},
+        {opacity: 1}
 
-    setTimeout( function(){
-        bodyElement.style.opacity = .5;
-    }, 150)
-    
-    setTimeout( function(){
-        bodyElement.style.opacity = 0;
-    }, 200)
-
-    setTimeout( function(){
-        bodyElement.style.opacity = .75;
-    }, 240)
-
-    setTimeout( function(){
-        bodyElement.style.opacity = 0;
-    }, 280)
+    ], {
+        duration: transitionTime,
+        iterations: 1
+    });
     
 }
 
@@ -140,6 +143,8 @@ function getRandomRange(min, max) {
     return Math.floor(Math.random() * (max - min) + min);
 }
 
+
+
 export const endTurn = () => (dispatch, getState) => {
 
     let playerOverlay = document.getElementById('playerOverlay');
@@ -176,6 +181,7 @@ export const endTurn = () => (dispatch, getState) => {
             if ( telegraphing.effect[m] == "damage" ){
 
                 strikeAnimation(monsterBody);
+                hitHero();
 
                 const dmg = telegraphing.power[m]
                 const moveMsg = monster.name + " used " + telegraphing.name[m] + ", dealing\n" + telegraphing.power[m] + " damage."

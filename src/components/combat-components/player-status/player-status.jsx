@@ -1,8 +1,11 @@
 import React from 'react';
 import styles from './player-status.module.scss'
 
-import { usePlayer } from '../../../ducks/player';
+import { updatePlayer, usePlayer } from '../../../ducks/player';
 import { useEffect } from 'react';
+
+import { useDispatch } from 'react-redux';
+
 
 
 function updateHeroHealthBar(health, maxHealth){
@@ -25,9 +28,31 @@ const PlayerStatus = () =>{
     const { health: heroHealth } = usePlayer();
     const { maxHealth: heroMaxHealth } = usePlayer();
 
+    const dispatch = useDispatch();
+
     useEffect(() => {
         updateHeroHealthBar(heroHealth, heroMaxHealth)
     }, [heroHealth]);
+
+    useEffect(() => {
+        let count = 0;
+        for(var i = 0; i < player.deck.length; ++i){
+            if(player.deck[i].type == 'curse')
+                count++;
+        }
+
+        for (let i = 0; i < player.discard.length; i++) {
+            if(player.discard[i].type == 'curse')
+                count++;            
+        }
+
+        for (let i = 0; i < player.hand.length; i++) {
+            if(player.hand[i].type == 'curse')
+                count++;            
+        }
+
+        dispatch( updatePlayer( { curseCount: count } ) )
+    }, [player.deck])
     
     return(
         <div className = {styles.playerStatusContainer}>
@@ -48,6 +73,11 @@ const PlayerStatus = () =>{
                     <div id="patyHealthBar"> </div>
                 </div>
             </div>
+
+            {
+                ( player.curseCount > 0 ) ? <div className={styles.curse}> Curses : {player.curseCount}</div> : <div></div>
+            }
+
             
         </div>
     );
