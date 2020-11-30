@@ -3,8 +3,7 @@ export const monsters = [
         name: 'Slime',
         aligment: [],
         aligmentDuration: [],
-        // health: 36, <- normal health
-        health: 1,
+        health: 36,
         total: 36,
         defense: 0,
         gold: 15,
@@ -40,8 +39,7 @@ export const monsters = [
         name: 'Nul',
         aligment: [],
         aligmentDuration: [],
-        // health: 36, <- normal health
-        health: 1,
+        health: 36,
         total: 36,
         defense: 0,
         gold: 25,
@@ -71,8 +69,7 @@ export const monsters = [
         name: 'Enforcer',
         aligment: [],
         aligmentDuration: [],
-        // health: 46, <- normal health
-        health: 1,
+        health: 36,
         total: 36,
         defense: 5,
         gold: 25,
@@ -102,8 +99,7 @@ export const monsters = [
         name: 'Fire',
         aligment: [],
         aligmentDuration: [],
-        // health: 36, <- normal health
-        health: 1,
+        health: 40,
         total: 40,
         defense: 0,
         gold: 30,
@@ -132,8 +128,7 @@ export const monsters = [
         name: 'Stone',
         aligment: [],
         aligmentDuration: [],
-        // health: 80, <- normal health
-        health: 1,
+        health: 80,
         total: 80,
         defense: 5,
         gold: 40,
