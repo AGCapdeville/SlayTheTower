@@ -1,25 +1,28 @@
 {
   "files": {
-    "main.css": "/SlayTheTower/static/css/main.2f7efca7.chunk.css",
-    "main.js": "/SlayTheTower/static/js/main.bc503095.chunk.js",
-    "main.js.map": "/SlayTheTower/static/js/main.bc503095.chunk.js.map",
+    "main.css": "/SlayTheTower/static/css/main.9b346a7b.chunk.css",
+    "main.js": "/SlayTheTower/static/js/main.9188a0c9.chunk.js",
+    "main.js.map": "/SlayTheTower/static/js/main.9188a0c9.chunk.js.map",
     "runtime-main.js": "/SlayTheTower/static/js/runtime-main.e29efde5.js",
     "runtime-main.js.map": "/SlayTheTower/static/js/runtime-main.e29efde5.js.map",
-    "static/js/2.a08a9531.chunk.js": "/SlayTheTower/static/js/2.a08a9531.chunk.js",
-    "static/js/2.a08a9531.chunk.js.map": "/SlayTheTower/static/js/2.a08a9531.chunk.js.map",
+    "static/js/2.cbf302d4.chunk.js": "/SlayTheTower/static/js/2.cbf302d4.chunk.js",
+    "static/js/2.cbf302d4.chunk.js.map": "/SlayTheTower/static/js/2.cbf302d4.chunk.js.map",
     "index.html": "/SlayTheTower/index.html",
-    "precache-manifest.e81d4f1f6040330f0c0cc16021596b16.js": "/SlayTheTower/precache-manifest.e81d4f1f6040330f0c0cc16021596b16.js",
+    "precache-manifest.74901ec55e33e791ba62339468900a78.js": "/SlayTheTower/precache-manifest.74901ec55e33e791ba62339468900a78.js",
     "service-worker.js": "/SlayTheTower/service-worker.js",
-    "static/css/main.2f7efca7.chunk.css.map": "/SlayTheTower/static/css/main.2f7efca7.chunk.css.map",
-    "static/js/2.a08a9531.chunk.js.LICENSE.txt": "/SlayTheTower/static/js/2.a08a9531.chunk.js.LICENSE.txt",
+    "static/css/main.9b346a7b.chunk.css.map": "/SlayTheTower/static/css/main.9b346a7b.chunk.css.map",
+    "static/js/2.cbf302d4.chunk.js.LICENSE.txt": "/SlayTheTower/static/js/2.cbf302d4.chunk.js.LICENSE.txt",
+    "static/media/bearGrunt.mp3": "/SlayTheTower/static/media/bearGrunt.1bc27cf1.mp3",
+    "static/media/coins_purchase.mp3": "/SlayTheTower/static/media/coins_purchase.88db2063.mp3",
     "static/media/error_sound.mp3": "/SlayTheTower/static/media/error_sound.12329e7a.mp3",
     "static/media/menu_select.mp3": "/SlayTheTower/static/media/menu_select.90345373.mp3",
+    "static/media/path_game_sound.mp3": "/SlayTheTower/static/media/path_game_sound.eba816ab.mp3",
     "static/media/play_card_zapsplat_foley.mp3": "/SlayTheTower/static/media/play_card_zapsplat_foley.dc8b7ab4.mp3"
   },
   "entrypoints": [
     "static/js/runtime-main.e29efde5.js",
-    "static/js/2.a08a9531.chunk.js",
-    "static/css/main.2f7efca7.chunk.css",
-    "static/js/main.bc503095.chunk.js"
+    "static/js/2.cbf302d4.chunk.js",
+    "static/css/main.9b346a7b.chunk.css",
+    "static/js/main.9188a0c9.chunk.js"
   ]
 }
