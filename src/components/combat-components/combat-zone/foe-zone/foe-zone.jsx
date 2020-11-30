@@ -37,38 +37,21 @@ function updateFoeHealthBar(foeHealth, foeMax){
     }
 }
 
-// function updateFoeDefBar(defense){
-//     var x = document.getElementById("foeDefenseBar")
-//     x.style.backgroundColor = "lightblue"
-//     x.style.opacity = "1"
-//     // x.style.position = "absolute"
-
-//     if (defense === 0){
-//         x.style.height = "2vh"
-//         x.style.width = "0vw"
-//     }else{
-//         x.style.width = ((defense/100)*20)+"vw"
-//     }
-// }
 
 function getTelegraph(monster){
     
-    console.log(monster)
+    const effect = monster.telegraphing.effect[0];
+    const power = monster.telegraphing.power[0];
 
-    // const effect = monster.telegraphing.effect[0];
-    // console.log("effect:",effect)
-    // const power = monster.telegraphing.power[0];
-    // console.log("power:",power)
-
-    // if (effect === "damage"){
-    //     return ('🔪 '+power);
-    // }else if (effect === "defense"){
-    //     return ('🛡️ '+power);
-    // }else if (effect === "fatigue" || effect === "bleed" || effect === "stun"){
-    //     return '💢';
-    // }else {
-    //     return '💭';
-    // }
+    if (effect === "damage"){
+        return ('🔪 '+power);
+    }else if (effect === "defense"){
+        return ('🛡️ '+power);
+    }else if (effect === "fatigue" || effect === "bleed" || effect === "stun"){
+        return '💢';
+    }else {
+        return '💭';
+    }
 
 }
 
@@ -76,19 +59,13 @@ const FoeZone = () => {
 
     const { health: foeHealth } = useMonster();
     const { total: foeMax } = useMonster();
-    // const { defense: foeDefense } = useMonster();
     const monster = useMonster();
     const Monster = monsterList[monster.name];
     const telegraph = getTelegraph(monster)
 
-
     useEffect(() => {
         updateFoeHealthBar(foeHealth, foeMax)
     }, [foeHealth]);
-
-    // useEffect(() => {
-    //     updateFoeDefBar(foeDefense)
-    // }, [foeDefense])
     
     return(
         <div className={styles.foeZone}>

@@ -31,7 +31,7 @@ export const monsters = [
                 name : ['Replenish'],
                 target: ['self'],
                 effect: ['heal'],
-                power: [25]
+                power: [20]
             }
         ]
     },
@@ -61,7 +61,7 @@ export const monsters = [
                 name : ['Beam','Nul'],
                 target: ['hero','foe'],
                 effect: ['damage','idle'],
-                power: [20,2]
+                power: [15,2]
             }
         ]
     },

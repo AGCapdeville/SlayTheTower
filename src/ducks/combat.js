@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { createSelector } from "reselect";
 import { updateMonster } from './monster';
 
-import { updatePlayer, discardHand, drawCard, addCard, addAilgments, playCard } from './player';
+import { updatePlayer, discardHand, drawCard, addCardDiscard, addAilgments, playCard } from './player';
 import {afflictionCards} from '../game-data/affliction-card-data';
 
 export const updateCombat = createAction('combat/UPDATE_COMBAT');
@@ -225,7 +225,7 @@ export const endTurn = () => (dispatch, getState) => {
                 }, 1000);
 
                 for (let each = 0; each < telegraphing.power[m]; each++) {
-                    dispatch( addCard(afflictionCards.find( affliction => affliction.name === 'Fatigue')) )
+                    dispatch( addCardDiscard(afflictionCards.find( affliction => affliction.name === 'Fatigue')) )
                 }
 
             } else if (telegraphing.effect[m] == 'bleed') {
@@ -238,7 +238,7 @@ export const endTurn = () => (dispatch, getState) => {
                 console.log('bleed move! :', afflictionCards.find( a => a.name ==='bleed'))
 
                 for (let each = 0; each < telegraphing.power[m]; each++) {
-                    dispatch( addCard(afflictionCards.find( affliction => affliction.name === 'Bleed')) )
+                    dispatch( addCardDiscard(afflictionCards.find( affliction => affliction.name === 'Bleed')) )
                 }
 
             }else if (telegraphing.effect[m] == 'stun') {

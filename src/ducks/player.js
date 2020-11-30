@@ -22,13 +22,14 @@ export const discardHand = createAction('player/DISCARD_HAND');
 
 export const voidCard = createAction('player/VOID_CARD');
 export const shuffleDeck = createAction('player/SHUFFLE_DECK');
-export const resetDeck = createAction('player/RESET_DECK')
+export const resetDeck = createAction('player/RESET_DECK');
 
 // Hand actions
 export const drawHand = createAction('player/DRAW_HAND');
 
 // deck altering
-export const addCard = createAction('player/ADD_CARD')
+export const addCard = createAction('player/ADD_CARD');
+export const addCardDiscard = createAction('player/ADD_CARD_DISCARD');
 
 // Ailgment
 export const removeAilgments = createAction('player/REMOVE_AILGMENTS');
@@ -58,13 +59,11 @@ function shuffle(deck) {
     }
     return deck
 }
-
 const reduceResetDeck = ({ deck, hand, discard, voidDeck, ...rest }) => {
     let resetDeck = [...deck, ...hand, ...discard, ...voidDeck];
     console.log('reset deck:', resetDeck);
     return { ...rest, deck: resetDeck, hand:[], voidDeck:[], discard:[] }
 }
-
 const reduceDrawCard = ({ discard, deck, hand, ...rest }) => {
     if ( deck.length == 0 ){
         if ( discard.length == 0 ){
@@ -80,7 +79,6 @@ const reduceDrawCard = ({ discard, deck, hand, ...rest }) => {
         return { ...rest, hand: [...hand, deck[deck.length-1]], deck: deck.slice( 0, deck.length -1), discard }
     }
 }
-
 const reducePlayCard = ({ discard, hand, ...rest }) => {
     const emptyHand = hand.length < 1;
     
@@ -92,7 +90,6 @@ const reducePlayCard = ({ discard, hand, ...rest }) => {
         return { ...rest, hand, discard}
     }
 }
-
 const reducePlayIndexedCard = ({ voidDeck, discard, hand, ...rest } , {payload}) => {
     const grabCard = hand[payload]
     hand.splice(payload, 1)
@@ -103,7 +100,6 @@ const reducePlayIndexedCard = ({ voidDeck, discard, hand, ...rest } , {payload})
         return { ...rest, voidDeck: voidDeck, hand: hand, discard: [...discard, grabCard]}
     }
 }
-
 const reduceDiscardHand = ({ discard, hand, ...rest }) => {
     const emptyHand = hand.length < 1;
 
@@ -115,12 +111,14 @@ const reduceDiscardHand = ({ discard, hand, ...rest }) => {
         return { ...rest, hand, discard}
     }
 }
-
 const reduceAddCard = ({ deck, ...rest }, {payload}) => {
     const newDeck = [...deck, payload]
     return { ...rest, deck: newDeck }
 }
-
+const reduceAddCardDiscard = ({discard, ...rest}, {payload}) => {
+    const newDiscard = [...discard, payload]
+    return { ...rest, discard: newDiscard }
+}
 const reduceAddAilgments = ({offenseHeroAilgments, offenseHeroAilgmentsDuration, utilityHeroAilgments, utilityHeroAilgmentsDuration, defenseHeroAilgments, defenseHeroAilgmentsDuration, ...rest}, {payload}) => {
 
     console.log("Ailgments Payload:",payload)
@@ -162,11 +160,9 @@ const reduceAddAilgments = ({offenseHeroAilgments, offenseHeroAilgmentsDuration,
     }
     return { ...rest, offenseHeroAilgments: offenseHeroAilgments, offenseHeroAilgmentsDuration: offenseHeroAilgmentsDuration, utilityHeroAilgments: utilityHeroAilgments, utilityHeroAilgmentsDuration: utilityHeroAilgmentsDuration, defenseHeroAilgments: defenseHeroAilgments, defenseHeroAilgmentsDuration: defenseHeroAilgmentsDuration }
 }
-
 const reduceRemoveAilgments = ({offenseHeroAilgments, offenseHeroAilgmentsDuration, utilityHeroAilgments, utilityHeroAilgmentsDuration, defenseHeroAilgments, defenseHeroAilgmentsDuration, ...rest}) => {
     return { ...rest, offenseHeroAilgments: [], offenseHeroAilgmentsDuration: [], utilityHeroAilgments: [], utilityHeroAilgmentsDuration: [], defenseHeroAilgments: [], defenseHeroAilgmentsDuration: [] }
 }
-
 const reduceRemoveDeckAfflictions = ({ deck, hand, discard, ...rest}) => {
     let newDeck = deck.filter( card => {
         if ( !(card.type === 'affliction') ){
@@ -186,7 +182,6 @@ const reduceRemoveDeckAfflictions = ({ deck, hand, discard, ...rest}) => {
 
     return {...rest, deck : newDeck, hand: newHand, discard: newDiscard}
 }
-
 const reduceRemoveCurses = ({deck, ...rest}) => {
     let newDeck = deck.filter( card => {
         if ( !(card.type == 'curse') ){
@@ -196,6 +191,7 @@ const reduceRemoveCurses = ({deck, ...rest}) => {
 
     return {...rest, deck : newDeck}
 }
+
 
 export default handleActions({
     [drawHand]: (state) => ({...state, deck: state.deck.slice( 0, state.deck.length -5), hand: [...state.hand, ...state.deck.slice(-5)]}),
@@ -217,12 +213,12 @@ export default handleActions({
     [discardHand]: reduceDiscardHand,
 
     [addCard]: reduceAddCard,
+    [addCardDiscard]: reduceAddCardDiscard,
 
     [voidCard]: (state, action) => ({...state, hand: state.hand.slice(action.payload, 1), voidPile: [...state.void, state.hand.slice(action.payload, 1)]}),
 }, initialState);
 
 
-// how we grab data from the store
 const selectPlayer = createSelector(
     state => state.player,
     player => player   
