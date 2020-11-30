@@ -1,23 +1,23 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "99426f8426441c87a486ced1d9c63589",
+    "revision": "26e3496693f861f1666fa90ce99dd3f5",
     "url": "/SlayTheTower/index.html"
   },
   {
-    "revision": "fdfd7ea8219796195575",
+    "revision": "4b1d5ab090879f6fb792",
     "url": "/SlayTheTower/static/css/main.9b346a7b.chunk.css"
   },
   {
-    "revision": "07d22ae943c72c882111",
-    "url": "/SlayTheTower/static/js/2.cbf302d4.chunk.js"
+    "revision": "c56eca2022946790d426",
+    "url": "/SlayTheTower/static/js/2.b1a0c8db.chunk.js"
   },
   {
     "revision": "72fd7dcecfb72610baf3434a00f57e1b",
-    "url": "/SlayTheTower/static/js/2.cbf302d4.chunk.js.LICENSE.txt"
+    "url": "/SlayTheTower/static/js/2.b1a0c8db.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "fdfd7ea8219796195575",
-    "url": "/SlayTheTower/static/js/main.c8d6ccb3.chunk.js"
+    "revision": "4b1d5ab090879f6fb792",
+    "url": "/SlayTheTower/static/js/main.a841df3d.chunk.js"
   },
   {
     "revision": "38ea944e57d559baa53d",
