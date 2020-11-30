@@ -1,7 +1,7 @@
 export const trials = [
     {
         title: 'Great Relics',
-        description: 'The party stumbles upon a cavern of treasure. The tresaure reek of decay and death. Do you risk your party for great reward or avoid the risk?',
+        description: 'The party stumbles upon a cavern of relics, but the tresaure reeks of death.',
         skipable: true,
         options: [
             {
