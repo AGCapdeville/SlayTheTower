@@ -1,23 +1,23 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "3140700fa80de5dcb4d161eb0ff7aa11",
+    "revision": "2662baa66c879385f3b3abf483b799ed",
     "url": "/SlayTheTower/index.html"
   },
   {
-    "revision": "1bbb8d3ed51e5f5c4006",
-    "url": "/SlayTheTower/static/css/main.9b346a7b.chunk.css"
+    "revision": "c5982ab2184c5266304c",
+    "url": "/SlayTheTower/static/css/main.73124980.chunk.css"
   },
   {
-    "revision": "56f51d8f6622d94006ea",
-    "url": "/SlayTheTower/static/js/2.5b4a21a4.chunk.js"
+    "revision": "1c145ca070233c0881b7",
+    "url": "/SlayTheTower/static/js/2.ba6e0720.chunk.js"
   },
   {
     "revision": "72fd7dcecfb72610baf3434a00f57e1b",
-    "url": "/SlayTheTower/static/js/2.5b4a21a4.chunk.js.LICENSE.txt"
+    "url": "/SlayTheTower/static/js/2.ba6e0720.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "1bbb8d3ed51e5f5c4006",
-    "url": "/SlayTheTower/static/js/main.2fb750ab.chunk.js"
+    "revision": "c5982ab2184c5266304c",
+    "url": "/SlayTheTower/static/js/main.8deebc6c.chunk.js"
   },
   {
     "revision": "38ea944e57d559baa53d",
