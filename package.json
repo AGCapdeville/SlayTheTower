@@ -47,6 +47,6 @@
   },
   "devDependencies": {
     "gh-pages": "^2.2.0",
-    "lodash": "^4.17.19"
+    "lodash": "^4.17.21"
   }
 }
